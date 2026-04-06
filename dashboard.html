@@ -138,7 +138,7 @@
           <span class="material-symbols-outlined text-tm-orange">engineering</span>
           <span class="text-xs text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full">+0</span>
         </div>
-        <p class="text-3xl font-headline font-bold text-tm-blue">0</p>
+        <p class="text-3xl font-headline font-bold text-tm-blue" id="kpi-technici">0</p>
         <p class="text-sm text-tm-text-light mt-1">Technici aangemeld</p>
       </div>
       <div class="bg-white rounded-xl p-5 shadow-sm">
@@ -146,7 +146,7 @@
           <span class="material-symbols-outlined text-tm-orange">business</span>
           <span class="text-xs text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full">+0</span>
         </div>
-        <p class="text-3xl font-headline font-bold text-tm-blue">0</p>
+        <p class="text-3xl font-headline font-bold text-tm-blue" id="kpi-bedrijven">0</p>
         <p class="text-sm text-tm-text-light mt-1">Bedrijven aangemeld</p>
       </div>
       <div class="bg-white rounded-xl p-5 shadow-sm">
@@ -174,25 +174,26 @@
           <h2 class="text-xl font-headline font-bold text-tm-blue">AI Agents</h2>
           <p class="text-sm text-tm-text-light">Automatiseer je platform met intelligente agents</p>
         </div>
-        <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">0 / 7 actief</span>
+        <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">1 / 7 actief</span>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 
-        <!-- Inbox Agent -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:border-tm-orange/30 transition-colors">
+        <!-- Inbox Agent (ACTIEF) -->
+        <div class="bg-white rounded-xl p-5 shadow-sm border-2 border-green-400 hover:border-green-500 transition-colors relative">
+          <div class="absolute -top-2 -right-2 bg-green-500 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">Live</div>
           <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+            <div class="w-10 h-10 bg-tm-orange rounded-lg flex items-center justify-center">
               <span class="material-symbols-outlined text-white text-xl">mail</span>
             </div>
             <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-              <span class="text-xs text-gray-400 font-medium">Inactief</span>
+              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span class="text-xs text-green-600 font-medium">Actief</span>
             </div>
           </div>
           <h3 class="font-bold text-tm-blue mb-1">Inbox Agent</h3>
           <p class="text-xs text-tm-text-light leading-relaxed mb-4">Leest en classificeert inkomende berichten en formulierinzendingen</p>
-          <button disabled class="w-full py-2 rounded-lg text-sm font-medium bg-tm-muted text-tm-text-light/50 cursor-not-allowed">Configureren</button>
+          <button class="w-full py-2 rounded-lg text-sm font-medium bg-tm-blue text-white hover:bg-tm-navy transition-colors cursor-pointer">Configureren</button>
         </div>
 
         <!-- Matching Agent -->
@@ -294,6 +295,19 @@
       </div>
     </div>
 
+    <!-- Inbox -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="text-xl font-headline font-bold text-tm-blue">Inbox</h2>
+          <p class="text-sm text-tm-text-light">Inkomende aanmeldingen en berichten</p>
+        </div>
+      </div>
+      <div id="inbox-container">
+        <p class="text-tm-text-light text-sm">Laden...</p>
+      </div>
+    </div>
+
     <!-- Recent Activity -->
     <div class="bg-white rounded-xl shadow-sm p-5 md:p-6 mb-8">
       <h2 class="text-lg font-headline font-bold text-tm-blue mb-4">Recente activiteit</h2>
@@ -353,8 +367,11 @@ document.addEventListener('DOMContentLoaded', function() {
     first.classList.add('text-white', 'bg-white/10', 'border-l-4', 'border-tm-orange');
     first.classList.remove('text-white/70');
   }
+  // Initialize Inbox Agent
+  if (window.InboxAgent) InboxAgent.init();
 });
 </script>
+<script src="agents/inbox.js"></script>
 
 </body>
 </html>
