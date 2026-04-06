@@ -4,6 +4,13 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>TechMaat — Technisch talent. Direct beschikbaar.</title>
+<meta name="description" content="TechMaat verbindt ZZP technici met bedrijven in Nederland. Hydrauliek, elektrotechniek, PLC, mechanica — direct beschikbaar. Meld je aan op de wachtlijst."/>
+<meta property="og:title" content="TechMaat — Technisch talent. Direct beschikbaar."/>
+<meta property="og:description" content="Het platform dat vakmanschap en flexibiliteit verbindt. Voor ZZP technici en bedrijven in Nederland."/>
+<meta property="og:url" content="https://jairmercelino.github.io/TechMaat/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="nl_NL"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23003082'/><text x='16' y='22' font-size='16' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>TM</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -59,13 +66,13 @@
 <!-- Navigation -->
 <header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm">
   <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <div class="flex items-center gap-3">
+    <a href="index.html" class="flex items-center gap-3">
       <!-- TechMaat Logo Placeholder -->
       <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
         <span class="text-white font-headline font-bold text-lg">TM</span>
       </div>
       <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
-    </div>
+    </a>
     <div class="hidden md:flex gap-8 items-center">
       <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="#hoe-het-werkt">Hoe het werkt</a>
       <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="#voordelen">Voordelen</a>
@@ -97,7 +104,7 @@
       <div>
         <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-tm-muted rounded-full mb-6">
           <span class="w-2 h-2 rounded-full bg-tm-orange"></span>
-          <span class="text-xs font-bold tracking-widest uppercase text-tm-text-light">Nu Live in Nederland</span>
+          <span class="text-xs font-bold tracking-widest uppercase text-tm-text-light">Wachtlijst Open</span>
         </div>
         <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-headline font-bold text-tm-blue tracking-tight leading-[0.9] mb-8">
           Technisch talent. <span class="text-tm-orange">Direct</span> beschikbaar.
@@ -123,8 +130,8 @@
           <img alt="Technicus aan het werk in een professionele werkplaats" class="w-full h-full object-cover grayscale contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCApoN9tVskZyD0QPNJS2wjYI76xJ99-0oRci2HyirO9joozrMbrU5JWaNRmRNZrEL4YSnO3YHqOpQ6SvPZ_WRPjPnnNcJnET_pNkwWythFmjUCtOTnCe-GEA_6njkzqiLN5-QpVaAPDjHdeh-RMakFhwno8IFIxJUX7EKwMrQu18DCQRwzMkRQtzSQEzJQSiXR34BXMdVPDZgf-zyVmivEP4xCquyJ5Pez5ryCVJlsYIuiT4EexjJpE2A0M8H-hTaY4ZMYripOEHV4"/>
         </div>
         <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-lg shadow-xl max-w-[220px] -rotate-3 border-l-4 border-tm-orange">
-          <p class="text-sm font-bold text-tm-blue">"Via TechMaat had ik binnen 24 uur een match. Ongelooflijke snelheid."</p>
-          <p class="text-xs text-tm-orange mt-2 font-semibold">— Mark T., ZZP Installateur</p>
+          <p class="text-sm font-bold text-tm-blue">"Vakmanschap verdient een platform dat net zo betrouwbaar is."</p>
+          <p class="text-xs text-tm-orange mt-2 font-semibold">— TechMaat</p>
         </div>
       </div>
     </div>
@@ -248,7 +255,7 @@
         <div class="grid md:grid-cols-2 gap-6 mb-8">
           <div>
             <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Volledige Naam</label>
-            <input name="name" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 transition-all" placeholder="Jan de Vries" type="text"/>
+            <input name="naam" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 transition-all" placeholder="Jan de Vries" type="text"/>
           </div>
           <div>
             <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Emailadres</label>
@@ -256,7 +263,7 @@
           </div>
           <div>
             <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Telefoonnummer</label>
-            <input name="phone" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 transition-all" placeholder="06 12345678" type="tel"/>
+            <input name="telefoon" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 transition-all" placeholder="06 12345678" type="tel"/>
           </div>
           <div>
             <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Ik ben een...</label>
@@ -270,7 +277,7 @@
         <button class="w-full kinetic-gradient text-white py-5 rounded-lg font-bold text-xl shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase tracking-tight cursor-pointer" type="submit">
           Inschrijven op wachtlijst
         </button>
-        <p class="text-center text-xs text-tm-text-light mt-6">Door in te schrijven ga je akkoord met onze privacyvoorwaarden.</p>
+        <p class="text-center text-xs text-tm-text-light mt-6">Door in te schrijven ga je akkoord met de <a href="voorwaarden.html" class="text-tm-orange underline hover:text-tm-orange-dark">algemene voorwaarden</a> en het <a href="privacy.html" class="text-tm-orange underline hover:text-tm-orange-dark">privacybeleid</a>.</p>
       </form>
     </div>
   </section>
@@ -290,18 +297,24 @@
       <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">
         Het platform dat vakmanschap en flexibiliteit verbindt. Voor ZZP technici en bedrijven in Nederland.
       </p>
-      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2025 TechMaat. Alle rechten voorbehouden.</p>
+      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2026 TechMaat. Alle rechten voorbehouden.</p>
     </div>
-    <div class="grid grid-cols-2 gap-8">
+    <div class="grid grid-cols-3 gap-8">
       <div class="flex flex-col gap-3">
         <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Platform</h4>
         <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="#hoe-het-werkt">Hoe het werkt</a>
         <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="#voordelen">Voordelen</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="aanmelden.html">Aanmelden</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Juridisch</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="privacy.html">Privacybeleid</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="voorwaarden.html">Voorwaarden</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="verzekering.html">Verzekering</a>
       </div>
       <div class="flex flex-col gap-3">
         <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Contact</h4>
         <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="mailto:info@jmmechanica.nl">info@jmmechanica.nl</a>
-        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="#aanmelden">Aanmelden</a>
       </div>
     </div>
   </div>
