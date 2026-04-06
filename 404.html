@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>404 — Pagina niet gevonden | TechMaat</title>
+<meta name="description" content="Deze pagina bestaat niet of is verplaatst. Ga terug naar de homepage van TechMaat."/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23003082'/><text x='16' y='22' font-size='16' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>TM</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-white": "#ffffff",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        borderRadius: {
+          DEFAULT: "0.5rem",
+          lg: "0.75rem",
+          xl: "1rem",
+          full: "9999px",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .kinetic-gradient {
+    background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%);
+  }
+</style>
+</head>
+<body class="bg-tm-surface font-body text-tm-text min-h-screen flex flex-col">
+
+<!-- Navigation -->
+<header class="w-full bg-white/95 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-lg">TM</span>
+      </div>
+      <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
+    </a>
+  </nav>
+  <div class="bg-tm-muted h-[1px]"></div>
+</header>
+
+<!-- 404 Content -->
+<main class="flex-1 flex items-center justify-center px-6 py-20">
+  <div class="text-center max-w-lg">
+    <p class="text-[10rem] sm:text-[12rem] font-headline font-bold text-tm-blue leading-none tracking-tight">404</p>
+    <h1 class="text-3xl sm:text-4xl font-headline font-bold text-tm-blue mt-4 mb-4">Pagina niet gevonden</h1>
+    <p class="text-lg text-tm-text-light mb-10">Deze pagina bestaat niet of is verplaatst.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="index.html">
+        <button class="w-full sm:w-auto bg-tm-blue text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-tm-navy transition-colors active:scale-95">
+          Naar homepage
+        </button>
+      </a>
+      <a href="aanmelden.html">
+        <button class="w-full sm:w-auto kinetic-gradient text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:brightness-110 active:scale-95 transition-all">
+          Aanmelden
+        </button>
+      </a>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-8 border-t border-tm-navy bg-tm-blue text-white">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-tm-orange rounded-md flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-sm">TM</span>
+      </div>
+      <span class="font-headline font-bold text-xl text-tm-orange">TechMaat</span>
+    </div>
+    <p class="font-body text-sm opacity-50">&copy; 2026 TechMaat. Alle rechten voorbehouden.</p>
+  </div>
+</footer>
+
+<script src="cookies.js" defer></script>
+</body>
+</html>
