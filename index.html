@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TechMaat — Technisch talent. Direct beschikbaar.</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-white": "#ffffff",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        borderRadius: {
+          DEFAULT: "0.5rem",
+          lg: "0.75rem",
+          xl: "1rem",
+          full: "9999px",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .kinetic-gradient {
+    background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%);
+  }
+  .blueprint-bg {
+    background-image: radial-gradient(#003082 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  body {
+    min-height: max(884px, 100dvh);
+  }
+</style>
+</head>
+<body class="bg-tm-surface font-body text-tm-text">
+
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <!-- TechMaat Logo Placeholder -->
+      <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-lg">TM</span>
+      </div>
+      <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
+    </div>
+    <div class="hidden md:flex gap-8 items-center">
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="#hoe-het-werkt">Hoe het werkt</a>
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="#voordelen">Voordelen</a>
+      <a href="#aanmelden">
+        <button class="bg-tm-blue text-white px-6 py-2 rounded-lg font-bold cursor-pointer active:scale-95 transition-all hover:bg-tm-navy">Meld je aan</button>
+      </a>
+    </div>
+    <button class="md:hidden text-tm-blue" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-tm-muted px-6 py-4 space-y-4">
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="#hoe-het-werkt">Hoe het werkt</a>
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="#voordelen">Voordelen</a>
+    <a class="block" href="#aanmelden">
+      <button class="w-full bg-tm-blue text-white px-6 py-3 rounded-lg font-bold">Meld je aan</button>
+    </a>
+  </div>
+  <div class="bg-tm-muted h-[1px]"></div>
+</header>
+
+<main class="pt-20">
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden min-h-[700px] flex items-center bg-tm-surface">
+    <div class="absolute inset-0 blueprint-bg opacity-[0.04]"></div>
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10 py-16 md:py-20">
+      <div>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-tm-muted rounded-full mb-6">
+          <span class="w-2 h-2 rounded-full bg-tm-orange"></span>
+          <span class="text-xs font-bold tracking-widest uppercase text-tm-text-light">Nu Live in Nederland</span>
+        </div>
+        <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-headline font-bold text-tm-blue tracking-tight leading-[0.9] mb-8">
+          Technisch talent. <span class="text-tm-orange">Direct</span> beschikbaar.
+        </h1>
+        <p class="text-lg sm:text-xl text-tm-text-light max-w-lg mb-10 leading-relaxed">
+          Het platform dat vakmanschap en flexibiliteit verbindt. Voor ZZP technici en bedrijven in Nederland.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#aanmelden">
+            <button class="w-full sm:w-auto kinetic-gradient text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:translate-y-[-2px] transition-transform active:scale-95">
+              Ik ben een technicus
+            </button>
+          </a>
+          <a href="#aanmelden">
+            <button class="w-full sm:w-auto border-2 border-tm-blue text-tm-blue px-8 py-4 rounded-lg font-bold text-lg hover:bg-tm-blue hover:text-white transition-colors">
+              Ik ben een bedrijf
+            </button>
+          </a>
+        </div>
+      </div>
+      <div class="relative hidden md:block">
+        <div class="aspect-square bg-tm-muted rounded-xl overflow-hidden shadow-2xl rotate-3">
+          <img alt="Technicus aan het werk in een professionele werkplaats" class="w-full h-full object-cover grayscale contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCApoN9tVskZyD0QPNJS2wjYI76xJ99-0oRci2HyirO9joozrMbrU5JWaNRmRNZrEL4YSnO3YHqOpQ6SvPZ_WRPjPnnNcJnET_pNkwWythFmjUCtOTnCe-GEA_6njkzqiLN5-QpVaAPDjHdeh-RMakFhwno8IFIxJUX7EKwMrQu18DCQRwzMkRQtzSQEzJQSiXR34BXMdVPDZgf-zyVmivEP4xCquyJ5Pez5ryCVJlsYIuiT4EexjJpE2A0M8H-hTaY4ZMYripOEHV4"/>
+        </div>
+        <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-lg shadow-xl max-w-[220px] -rotate-3 border-l-4 border-tm-orange">
+          <p class="text-sm font-bold text-tm-blue">"Via TechMaat had ik binnen 24 uur een match. Ongelooflijke snelheid."</p>
+          <p class="text-xs text-tm-orange mt-2 font-semibold">— Mark T., ZZP Installateur</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-20 md:py-24 bg-tm-light" id="hoe-het-werkt">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="mb-16">
+        <span class="text-tm-orange font-bold tracking-tighter text-5xl opacity-20">01.</span>
+        <h2 class="text-3xl sm:text-4xl font-headline font-bold text-tm-blue -mt-6">Zo werkt het proces</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="bg-white p-8 rounded-xl relative overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div class="text-6xl font-headline font-black text-tm-light absolute -right-4 -top-4">01</div>
+          <div class="w-12 h-12 bg-tm-blue flex items-center justify-center rounded-lg mb-6">
+            <span class="material-symbols-outlined text-white">person_add</span>
+          </div>
+          <h3 class="text-2xl font-headline font-bold text-tm-blue mb-4">Maak een profiel</h3>
+          <p class="text-tm-text-light leading-relaxed">
+            Upload je certificaten en ervaring. Wij verifiëren elk talent binnen 4 uur voor maximale betrouwbaarheid.
+          </p>
+        </div>
+        <!-- Step 2 -->
+        <div class="bg-white p-8 rounded-xl relative overflow-hidden shadow-sm hover:shadow-md transition-shadow border-l-4 border-tm-orange">
+          <div class="text-6xl font-headline font-black text-tm-light absolute -right-4 -top-4">02</div>
+          <div class="w-12 h-12 bg-tm-orange flex items-center justify-center rounded-lg mb-6 shadow-lg">
+            <span class="material-symbols-outlined text-white">bolt</span>
+          </div>
+          <h3 class="text-2xl font-headline font-bold text-tm-blue mb-4">Ontvang matches</h3>
+          <p class="text-tm-text-light leading-relaxed">
+            Ons algoritme koppelt projecten aan de juiste vaardigheden. Je krijgt alleen relevante aanvragen in je inbox.
+          </p>
+        </div>
+        <!-- Step 3 -->
+        <div class="bg-white p-8 rounded-xl relative overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div class="text-6xl font-headline font-black text-tm-light absolute -right-4 -top-4">03</div>
+          <div class="w-12 h-12 bg-tm-blue flex items-center justify-center rounded-lg mb-6">
+            <span class="material-symbols-outlined text-white">handshake</span>
+          </div>
+          <h3 class="text-2xl font-headline font-bold text-tm-blue mb-4">Start direct</h3>
+          <p class="text-tm-text-light leading-relaxed">
+            Bevestig de samenwerking en begin met bouwen. De administratie en betalingen regelen wij voor je.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="py-20 md:py-24 bg-tm-surface" id="voordelen">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+        <!-- For Technicians -->
+        <div class="space-y-8">
+          <h2 class="text-4xl sm:text-5xl font-headline font-bold text-tm-blue leading-none">Voor de <br/><span class="text-tm-orange">Vakman</span></h2>
+          <div class="space-y-6">
+            <div class="flex gap-6 items-start">
+              <span class="material-symbols-outlined text-tm-orange mt-1">check_circle</span>
+              <div>
+                <h4 class="font-bold text-xl text-tm-blue mb-1">Hoogste uurtarieven</h4>
+                <p class="text-tm-text-light">Wij geloven in de waarde van echt vakmanschap. Geen race naar de bodem.</p>
+              </div>
+            </div>
+            <div class="flex gap-6 items-start">
+              <span class="material-symbols-outlined text-tm-orange mt-1">check_circle</span>
+              <div>
+                <h4 class="font-bold text-xl text-tm-blue mb-1">Snelle uitbetaling</h4>
+                <p class="text-tm-text-light">Binnen 7 dagen staat het geld op je rekening, ongeacht wanneer de klant betaalt.</p>
+              </div>
+            </div>
+            <div class="flex gap-6 items-start">
+              <span class="material-symbols-outlined text-tm-orange mt-1">check_circle</span>
+              <div>
+                <h4 class="font-bold text-xl text-tm-blue mb-1">Flexibiliteit</h4>
+                <p class="text-tm-text-light">Werk wanneer jij wilt. Jij bepaalt je eigen rooster en projectradius.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- For Companies -->
+        <div class="bg-tm-blue text-white p-8 sm:p-12 rounded-xl space-y-8 shadow-2xl relative">
+          <div class="absolute top-0 right-10 w-20 h-1 bg-tm-orange"></div>
+          <h2 class="text-4xl sm:text-5xl font-headline font-bold leading-none">Voor het <br/>Bedrijf</h2>
+          <div class="space-y-6">
+            <div class="flex gap-6 items-start">
+              <span class="material-symbols-outlined text-tm-orange mt-1">verified</span>
+              <div>
+                <h4 class="font-bold text-xl mb-1">Geverifieerd talent</h4>
+                <p class="text-white/70">Elke technicus is gescreend op diploma's, VCA en relevante werkervaring.</p>
+              </div>
+            </div>
+            <div class="flex gap-6 items-start">
+              <span class="material-symbols-outlined text-tm-orange mt-1">speed</span>
+              <div>
+                <h4 class="font-bold text-xl mb-1">Opschalen in uren</h4>
+                <p class="text-white/70">Vandaag een tekort? Morgen een expert op de werkvloer. Zonder wervingskosten.</p>
+              </div>
+            </div>
+            <div class="flex gap-6 items-start">
+              <span class="material-symbols-outlined text-tm-orange mt-1">description</span>
+              <div>
+                <h4 class="font-bold text-xl mb-1">Geen papierwerk</h4>
+                <p class="text-white/70">Eén verzamelfactuur voor al je externe krachten. Wij regelen de wet DBA.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist Form -->
+  <section class="py-20 md:py-24 bg-tm-muted relative overflow-hidden" id="aanmelden">
+    <div class="absolute inset-0 blueprint-bg opacity-[0.03]"></div>
+    <div class="max-w-3xl mx-auto px-6 relative z-10 text-center">
+      <h2 class="text-4xl sm:text-5xl font-headline font-bold text-tm-blue mb-6">Sluit je aan bij TechMaat</h2>
+      <p class="text-lg sm:text-xl text-tm-text-light mb-12">De wachtlijst is momenteel open voor technici en bedrijven in heel Nederland. Wees de eerste die toegang krijgt.</p>
+      <form action="https://formspree.io/f/info@jmmechanica.nl" method="POST" class="bg-white p-8 md:p-12 rounded-xl shadow-xl text-left">
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Volledige Naam</label>
+            <input name="name" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 transition-all" placeholder="Jan de Vries" type="text"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Emailadres</label>
+            <input name="email" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 transition-all" placeholder="jan@techniek.nl" type="email"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Telefoonnummer</label>
+            <input name="phone" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 transition-all" placeholder="06 12345678" type="tel"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Ik ben een...</label>
+            <select name="type" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 transition-all">
+              <option>ZZP Technicus</option>
+              <option>Bedrijf (Op zoek naar personeel)</option>
+              <option>Technicus in loondienst</option>
+            </select>
+          </div>
+        </div>
+        <button class="w-full kinetic-gradient text-white py-5 rounded-lg font-bold text-xl shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase tracking-tight cursor-pointer" type="submit">
+          Inschrijven op wachtlijst
+        </button>
+        <p class="text-center text-xs text-tm-text-light mt-6">Door in te schrijven ga je akkoord met onze privacyvoorwaarden.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-tm-navy bg-tm-blue text-white">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-tm-orange rounded-md flex items-center justify-center">
+          <span class="text-white font-headline font-bold text-sm">TM</span>
+        </div>
+        <span class="font-headline font-bold text-2xl text-tm-orange">TechMaat</span>
+      </div>
+      <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">
+        Het platform dat vakmanschap en flexibiliteit verbindt. Voor ZZP technici en bedrijven in Nederland.
+      </p>
+      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2025 TechMaat. Alle rechten voorbehouden.</p>
+    </div>
+    <div class="grid grid-cols-2 gap-8">
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Platform</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="#hoe-het-werkt">Hoe het werkt</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="#voordelen">Voordelen</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Contact</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="mailto:info@jmmechanica.nl">info@jmmechanica.nl</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="#aanmelden">Aanmelden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
