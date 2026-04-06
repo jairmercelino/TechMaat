@@ -207,7 +207,7 @@
           </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 mb-6">
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div>
             <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Uurtarief</label>
             <div class="relative">
@@ -215,6 +215,18 @@
               <input name="uurtarief" type="number" min="20" max="200" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 pl-9 pr-4" placeholder="65"/>
             </div>
           </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Kilometervergoeding</label>
+            <div class="relative">
+              <span class="absolute left-4 top-3 text-tm-text-light font-bold">&euro;</span>
+              <input name="kilometervergoeding" type="number" min="0" max="1.00" step="0.01" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 pl-9 pr-16" placeholder="0.23"/>
+              <span class="absolute right-4 top-3 text-tm-text-light text-sm">/km</span>
+            </div>
+            <p class="text-xs text-tm-text-light mt-1">Belastingvrij max. €0,23/km. Vanuit thuislocatie.</p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-6">
           <div>
             <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Werkradius</label>
             <div class="relative">
@@ -229,6 +241,16 @@
               <option>Binnen 1 week</option>
               <option>Binnen 1 maand</option>
               <option>Op afspraak</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Ploegendienst</label>
+            <select name="ploegendienst" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4">
+              <option>Dagdienst</option>
+              <option>2-ploegen</option>
+              <option>3-ploegen</option>
+              <option>5-ploegen (volcontinue)</option>
+              <option>Flexibel</option>
             </select>
           </div>
         </div>
