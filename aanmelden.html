@@ -412,8 +412,34 @@ function switchTab(tab) {
 window.addEventListener('DOMContentLoaded', function() {
   switchTab(window.location.hash === '#bedrijf' ? 'bedrijf' : 'technicus');
 });
-</script>
 
+// Save to Supabase on form submit (alongside Formspree)
+document.getElementById('form-technicus').addEventListener('submit', function(e) {
+  if (!window.TechMaatDB) return; // Formspree still works as fallback
+  var form = e.target;
+  var specs = []; form.querySelectorAll('input[name="specialismen"]:checked').forEach(function(c) { specs.push(c.value); });
+  var certs = []; form.querySelectorAll('input[name="certificeringen"]:checked').forEach(function(c) { certs.push(c.value); });
+  TechMaatDB.insertTechnicus({
+    naam: form.naam.value, email: form.email.value, telefoon: form.telefoon.value,
+    woonplaats: form.woonplaats.value, specialismen: specs, certificeringen: certs,
+    uurtarief: parseFloat(form.uurtarief.value) || null, werkradius: parseInt(form.werkradius.value) || null,
+    beschikbaarheid: form.beschikbaarheid.value, ploegendienst: form.ploegendienst.value,
+    kilometervergoeding: parseFloat(form.kilometervergoeding.value) || null,
+    omschrijving: form.omschrijving.value
+  });
+});
+
+document.getElementById('form-bedrijf').addEventListener('submit', function(e) {
+  if (!window.TechMaatDB) return;
+  var form = e.target;
+  TechMaatDB.insertBedrijf({
+    bedrijfsnaam: form.bedrijfsnaam.value, contactpersoon: form.contactpersoon.value,
+    email: form.email.value, telefoon: form.telefoon.value, locatie: form.locatie.value,
+    branche: form.branche.value, type_werk: form.type_werk.value, omschrijving: form.omschrijving.value
+  });
+});
+</script>
+<script src="supabase.js"></script>
 <script src="cookies.js" defer></script>
 </body>
 </html>

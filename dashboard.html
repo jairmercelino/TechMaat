@@ -400,6 +400,7 @@
   </footer>
 </main>
 
+<script src="supabase.js"></script>
 <script src="agents/inbox.js"></script>
 <script>
 // Auth check
@@ -519,6 +520,15 @@ document.addEventListener('DOMContentLoaded', function() {
       var badge = document.getElementById('inbox-badge');
       if (badge) badge.textContent = stats.nieuw;
     }, 500);
+  }
+  // Load live stats from Supabase
+  if (window.TechMaatDB) {
+    TechMaatDB.getStats().then(function(stats) {
+      var tEl = document.getElementById('kpi-technici');
+      var bEl = document.getElementById('kpi-bedrijven');
+      if (tEl && stats.technici > 0) tEl.textContent = stats.technici;
+      if (bEl && stats.bedrijven > 0) bEl.textContent = stats.bedrijven;
+    });
   }
 });
 </script>
