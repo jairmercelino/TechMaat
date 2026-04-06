@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aanmelden — TechMaat</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-white": "#ffffff",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        borderRadius: {
+          DEFAULT: "0.5rem",
+          lg: "0.75rem",
+          xl: "1rem",
+          full: "9999px",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .kinetic-gradient {
+    background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%);
+  }
+  .blueprint-bg {
+    background-image: radial-gradient(#003082 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  body { min-height: 100dvh; }
+</style>
+</head>
+<body class="bg-tm-surface font-body text-tm-text">
+
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-lg">TM</span>
+      </div>
+      <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
+    </a>
+    <div class="hidden md:flex gap-8 items-center">
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="index.html#voordelen">Voordelen</a>
+      <a href="#formulier">
+        <button class="bg-tm-blue text-white px-6 py-2 rounded-lg font-bold cursor-pointer active:scale-95 transition-all hover:bg-tm-navy">Meld je aan</button>
+      </a>
+    </div>
+    <button class="md:hidden text-tm-blue" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-tm-muted px-6 py-4 space-y-4">
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="index.html#voordelen">Voordelen</a>
+    <a class="block" href="#formulier">
+      <button class="w-full bg-tm-blue text-white px-6 py-3 rounded-lg font-bold">Meld je aan</button>
+    </a>
+  </div>
+  <div class="bg-tm-muted h-[1px]"></div>
+</header>
+
+<main class="pt-24 pb-12">
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-tm-surface py-12 md:py-16">
+    <div class="absolute inset-0 blueprint-bg opacity-[0.04]"></div>
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-headline font-bold text-tm-blue tracking-tight leading-tight mb-4">
+        Word lid van <span class="text-tm-orange">TechMaat</span>
+      </h1>
+      <p class="text-lg sm:text-xl text-tm-text-light max-w-2xl mx-auto leading-relaxed">
+        Schrijf je in als ZZP technicus of als bedrijf. Wij matchen vakmanschap met vraag.
+      </p>
+    </div>
+  </section>
+
+  <!-- Registration Form -->
+  <section class="py-8 md:py-12" id="formulier">
+    <div class="max-w-3xl mx-auto px-6">
+
+      <!-- Tabs -->
+      <div class="flex rounded-xl overflow-hidden shadow-sm mb-8 border border-tm-muted">
+        <button id="tab-technicus" onclick="switchTab('technicus')"
+          class="flex-1 py-4 px-6 font-bold text-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <span class="material-symbols-outlined">engineering</span>
+          Ik ben Technicus
+        </button>
+        <button id="tab-bedrijf" onclick="switchTab('bedrijf')"
+          class="flex-1 py-4 px-6 font-bold text-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <span class="material-symbols-outlined">business</span>
+          Ik ben een Bedrijf
+        </button>
+      </div>
+
+      <!-- Technicus Form -->
+      <form id="form-technicus" action="https://formspree.io/f/xaqlakdb" method="POST"
+        class="bg-white p-6 sm:p-8 md:p-10 rounded-xl shadow-xl">
+        <input type="hidden" name="type" value="technicus"/>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Volledige Naam</label>
+            <input name="naam" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Jan de Vries" type="text"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Emailadres</label>
+            <input name="email" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="jan@techniek.nl" type="email"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Telefoonnummer</label>
+            <input name="telefoon" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="06 12345678" type="tel"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Woonplaats</label>
+            <input name="woonplaats" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Amsterdam" type="text"/>
+          </div>
+        </div>
+
+        <!-- Specialismen -->
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-tm-blue mb-3 uppercase tracking-widest">Specialismen</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="specialismen" value="Hydrauliek" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">Hydrauliek</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="specialismen" value="Elektrotechniek" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">Elektrotechniek</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="specialismen" value="Pneumatiek" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">Pneumatiek</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="specialismen" value="Mechanica" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">Mechanica</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="specialismen" value="PLC/Besturingen" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">PLC/Besturingen</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="specialismen" value="Lassen" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">Lassen</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="specialismen" value="Koeltechniek" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">Koeltechniek</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="specialismen" value="Instrumentatie" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">Instrumentatie</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Certificeringen -->
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-tm-blue mb-3 uppercase tracking-widest">Certificeringen</label>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="certificeringen" value="VCA Basis" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">VCA Basis</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="certificeringen" value="VCA VOL" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">VCA VOL</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="certificeringen" value="NEN 3140" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">NEN 3140</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="certificeringen" value="F-gassen" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">F-gassen</span>
+            </label>
+            <label class="flex items-center gap-2 bg-tm-light rounded-lg px-3 py-2.5 cursor-pointer hover:bg-tm-muted transition-colors">
+              <input type="checkbox" name="certificeringen" value="Overig" class="rounded text-tm-orange focus:ring-tm-orange"/>
+              <span class="text-sm">Overig</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-6">
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Uurtarief</label>
+            <div class="relative">
+              <span class="absolute left-4 top-3 text-tm-text-light font-bold">&euro;</span>
+              <input name="uurtarief" type="number" min="20" max="200" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 pl-9 pr-4" placeholder="65"/>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Werkradius</label>
+            <div class="relative">
+              <input name="werkradius" type="number" min="5" max="300" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4 pr-12" placeholder="50"/>
+              <span class="absolute right-4 top-3 text-tm-text-light text-sm">km</span>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Beschikbaarheid</label>
+            <select name="beschikbaarheid" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4">
+              <option>Direct beschikbaar</option>
+              <option>Binnen 1 week</option>
+              <option>Binnen 1 maand</option>
+              <option>Op afspraak</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Korte omschrijving van jezelf</label>
+          <textarea name="omschrijving" rows="3" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Vertel iets over je ervaring, specialiteiten en wat je zoekt..."></textarea>
+        </div>
+
+        <div class="mb-8">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
+            <span class="text-sm text-tm-text-light">
+              Ik ga akkoord met de <a href="voorwaarden.html" class="text-tm-orange underline hover:text-tm-orange-dark">algemene voorwaarden</a>
+              en het <a href="privacy.html" class="text-tm-orange underline hover:text-tm-orange-dark">privacybeleid</a>.
+            </span>
+          </label>
+        </div>
+
+        <button class="w-full kinetic-gradient text-white py-5 rounded-lg font-bold text-xl shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase tracking-tight cursor-pointer" type="submit">
+          Aanmelden als Technicus
+        </button>
+      </form>
+
+      <!-- Bedrijf Form -->
+      <form id="form-bedrijf" action="https://formspree.io/f/xaqlakdb" method="POST"
+        class="bg-white p-6 sm:p-8 md:p-10 rounded-xl shadow-xl hidden">
+        <input type="hidden" name="type" value="bedrijf"/>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Bedrijfsnaam</label>
+            <input name="bedrijfsnaam" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Machinefabriek BV" type="text"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Contactpersoon</label>
+            <input name="contactpersoon" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Pieter Jansen" type="text"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Emailadres</label>
+            <input name="email" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="info@bedrijf.nl" type="email"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Telefoonnummer</label>
+            <input name="telefoon" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="020 1234567" type="tel"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Vestigingsplaats</label>
+            <input name="locatie" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Rotterdam" type="text"/>
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Branche</label>
+            <select name="branche" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4">
+              <option value="">Selecteer branche...</option>
+              <option>Voedingsindustrie</option>
+              <option>Metaalindustrie</option>
+              <option>Logistiek</option>
+              <option>Bouw</option>
+              <option>Energie</option>
+              <option>Overig</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Type werk</label>
+          <select name="type_werk" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4">
+            <option value="">Selecteer type werk...</option>
+            <option>Onderhoud</option>
+            <option>Storingsdienst</option>
+            <option>Projectmatig</option>
+            <option>Detachering</option>
+          </select>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Omschrijving van uw behoefte</label>
+          <textarea name="omschrijving" rows="4" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Beschrijf wat voor technisch personeel u zoekt, welke vaardigheden nodig zijn en de verwachte duur..."></textarea>
+        </div>
+
+        <div class="mb-8">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
+            <span class="text-sm text-tm-text-light">
+              Ik ga akkoord met de <a href="voorwaarden.html" class="text-tm-orange underline hover:text-tm-orange-dark">algemene voorwaarden</a>
+              en het <a href="privacy.html" class="text-tm-orange underline hover:text-tm-orange-dark">privacybeleid</a>.
+            </span>
+          </label>
+        </div>
+
+        <button class="w-full kinetic-gradient text-white py-5 rounded-lg font-bold text-xl shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase tracking-tight cursor-pointer" type="submit">
+          Aanmelden als Bedrijf
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-tm-navy bg-tm-blue text-white">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-tm-orange rounded-md flex items-center justify-center">
+          <span class="text-white font-headline font-bold text-sm">TM</span>
+        </div>
+        <span class="font-headline font-bold text-2xl text-tm-orange">TechMaat</span>
+      </div>
+      <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">
+        Het platform dat vakmanschap en flexibiliteit verbindt. Voor ZZP technici en bedrijven in Nederland.
+      </p>
+      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2025 TechMaat. Alle rechten voorbehouden.</p>
+    </div>
+    <div class="grid grid-cols-2 gap-8">
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Platform</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="index.html#voordelen">Voordelen</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Contact</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="mailto:info@jmmechanica.nl">info@jmmechanica.nl</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="#formulier">Aanmelden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function switchTab(tab) {
+  const tabTechnicus = document.getElementById('tab-technicus');
+  const tabBedrijf = document.getElementById('tab-bedrijf');
+  const formTechnicus = document.getElementById('form-technicus');
+  const formBedrijf = document.getElementById('form-bedrijf');
+
+  if (tab === 'technicus') {
+    tabTechnicus.className = 'flex-1 py-4 px-6 font-bold text-lg transition-all flex items-center justify-center gap-2 cursor-pointer bg-tm-orange text-white';
+    tabBedrijf.className = 'flex-1 py-4 px-6 font-bold text-lg transition-all flex items-center justify-center gap-2 cursor-pointer bg-white text-tm-text hover:bg-tm-light';
+    formTechnicus.classList.remove('hidden');
+    formBedrijf.classList.add('hidden');
+  } else {
+    tabBedrijf.className = 'flex-1 py-4 px-6 font-bold text-lg transition-all flex items-center justify-center gap-2 cursor-pointer bg-tm-orange text-white';
+    tabTechnicus.className = 'flex-1 py-4 px-6 font-bold text-lg transition-all flex items-center justify-center gap-2 cursor-pointer bg-white text-tm-text hover:bg-tm-light';
+    formBedrijf.classList.remove('hidden');
+    formTechnicus.classList.add('hidden');
+  }
+}
+
+// Init default tab + support #bedrijf hash
+window.addEventListener('DOMContentLoaded', function() {
+  switchTab(window.location.hash === '#bedrijf' ? 'bedrijf' : 'technicus');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Verzekering &amp; Aansprakelijkheid — TechMaat</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .kinetic-gradient { background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%); }
+  body { min-height: 100dvh; }
+</style>
+</head>
+<body class="bg-tm-surface font-body text-tm-text">
+
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-lg">TM</span>
+      </div>
+      <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
+    </a>
+    <div class="hidden md:flex gap-8 items-center">
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="index.html#voordelen">Voordelen</a>
+      <a href="aanmelden.html">
+        <button class="bg-tm-blue text-white px-6 py-2 rounded-lg font-bold cursor-pointer active:scale-95 transition-all hover:bg-tm-navy">Meld je aan</button>
+      </a>
+    </div>
+    <button class="md:hidden text-tm-blue" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-tm-muted px-6 py-4 space-y-4">
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="index.html#voordelen">Voordelen</a>
+    <a class="block" href="aanmelden.html">
+      <button class="w-full bg-tm-blue text-white px-6 py-3 rounded-lg font-bold">Meld je aan</button>
+    </a>
+  </div>
+  <div class="bg-tm-muted h-[1px]"></div>
+</header>
+
+<main class="pt-24 pb-16">
+
+  <!-- Hero -->
+  <section class="py-12 md:py-16 bg-tm-surface">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-tm-muted rounded-full mb-6">
+        <span class="material-symbols-outlined text-tm-orange text-sm">shield</span>
+        <span class="text-xs font-bold tracking-widest uppercase text-tm-text-light">Informatie voor ZZP'ers</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-headline font-bold text-tm-blue tracking-tight mb-4">Verzekering &amp; Aansprakelijkheid</h1>
+      <p class="text-lg text-tm-text-light leading-relaxed">
+        Als ZZP technicus ben je zelf verantwoordelijk voor je verzekeringen. Hier leggen we uit welke verzekeringen essentieel zijn en wat TechMaat wel en niet dekt.
+      </p>
+    </div>
+  </section>
+
+  <!-- Important notice -->
+  <section class="pb-8">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="bg-tm-blue text-white p-6 sm:p-8 rounded-xl relative">
+        <div class="absolute top-0 right-8 w-16 h-1 bg-tm-orange"></div>
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-tm-orange text-2xl mt-0.5">info</span>
+          <div>
+            <h3 class="font-headline font-bold text-xl mb-2">Belangrijk om te weten</h3>
+            <p class="text-white/80 leading-relaxed">
+              TechMaat is een <strong>bemiddelingsplatform</strong>, geen verzekeraar en geen werkgever. Wij brengen technici en bedrijven samen, maar de Technicus blijft als zelfstandig ondernemer volledig verantwoordelijk voor zijn eigen verzekeringen en aansprakelijkheid. Deze pagina is informatief en vormt geen juridisch advies.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insurance cards -->
+  <section class="pb-12">
+    <div class="max-w-3xl mx-auto px-6 space-y-6">
+
+      <!-- BAV -->
+      <div class="bg-white rounded-xl shadow-sm p-6 sm:p-8 border-l-4 border-tm-orange">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-tm-orange/10 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-tm-orange">verified_user</span>
+          </div>
+          <div>
+            <h2 class="text-xl font-headline font-bold text-tm-blue">Beroepsaansprakelijkheidsverzekering (BAV)</h2>
+            <span class="text-xs font-bold text-tm-orange uppercase tracking-widest">Essentieel</span>
+          </div>
+        </div>
+        <p class="text-tm-text-light leading-relaxed mb-4">
+          De BAV dekt schade die ontstaat door fouten in je werk. Als technicus kun je per ongeluk een fout maken bij een installatie, onderhoud of reparatie die leidt tot schade bij de opdrachtgever.
+        </p>
+        <h3 class="font-bold text-tm-text mb-2">Wat dekt het?</h3>
+        <ul class="text-tm-text-light space-y-1 ml-5 list-disc mb-4">
+          <li>Fouten en vergissingen bij technische werkzaamheden</li>
+          <li>Onjuist advies dat tot schade leidt</li>
+          <li>Nalatigheid bij installatie of onderhoud</li>
+          <li>Juridische kosten bij claims</li>
+        </ul>
+        <h3 class="font-bold text-tm-text mb-2">Waarom essentieel?</h3>
+        <p class="text-tm-text-light leading-relaxed">
+          Veel opdrachtgevers eisen een BAV voordat je aan de slag mag. Een enkele fout in een industriele installatie kan tienduizenden euro's schade veroorzaken. Zonder BAV ben je persoonlijk aansprakelijk met je eigen vermogen.
+        </p>
+      </div>
+
+      <!-- AVB -->
+      <div class="bg-white rounded-xl shadow-sm p-6 sm:p-8 border-l-4 border-tm-orange">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-tm-orange/10 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-tm-orange">health_and_safety</span>
+          </div>
+          <div>
+            <h2 class="text-xl font-headline font-bold text-tm-blue">Bedrijfsaansprakelijkheidsverzekering (AVB)</h2>
+            <span class="text-xs font-bold text-tm-orange uppercase tracking-widest">Essentieel</span>
+          </div>
+        </div>
+        <p class="text-tm-text-light leading-relaxed mb-4">
+          De AVB dekt schade die je toebrengt aan derden tijdens je werk. Dit gaat niet om fouten in je vakwerk, maar om ongelukken die tijdens het werk gebeuren.
+        </p>
+        <h3 class="font-bold text-tm-text mb-2">Wat dekt het?</h3>
+        <ul class="text-tm-text-light space-y-1 ml-5 list-disc mb-4">
+          <li>Materiaalschade aan eigendommen van de opdrachtgever</li>
+          <li>Letsel aan derden op de werklocatie</li>
+          <li>Schade door je gereedschap of materialen</li>
+          <li>Zaakschade tijdens transport of verplaatsing</li>
+        </ul>
+        <h3 class="font-bold text-tm-text mb-2">Voorbeeld</h3>
+        <p class="text-tm-text-light leading-relaxed">
+          Je laat per ongeluk gereedschap vallen op een dure machine, of je stoot een leiding los waardoor waterlekkage ontstaat. De AVB dekt de schade aan de machine of het pand.
+        </p>
+      </div>
+
+      <!-- AOV -->
+      <div class="bg-white rounded-xl shadow-sm p-6 sm:p-8 border-l-4 border-tm-blue">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-tm-blue/10 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-tm-blue">personal_injury</span>
+          </div>
+          <div>
+            <h2 class="text-xl font-headline font-bold text-tm-blue">Arbeidsongeschiktheidsverzekering (AOV)</h2>
+            <span class="text-xs font-bold text-tm-blue uppercase tracking-widest">Sterk aanbevolen</span>
+          </div>
+        </div>
+        <p class="text-tm-text-light leading-relaxed mb-4">
+          Als ZZP'er heb je geen werkgever die doorbetaalt bij ziekte of een ongeval. De AOV zorgt voor inkomensbescherming als je tijdelijk of langdurig niet kunt werken.
+        </p>
+        <h3 class="font-bold text-tm-text mb-2">Wat dekt het?</h3>
+        <ul class="text-tm-text-light space-y-1 ml-5 list-disc mb-4">
+          <li>Maandelijkse uitkering bij arbeidsongeschiktheid</li>
+          <li>Dekking bij zowel ziekte als ongevallen</li>
+          <li>Keuze in wachttijd (14 dagen tot 2 jaar) en looptijd</li>
+          <li>Uitkering tot een percentage van je laatstverdiende inkomen</li>
+        </ul>
+        <h3 class="font-bold text-tm-text mb-2">Waarom belangrijk?</h3>
+        <p class="text-tm-text-light leading-relaxed">
+          Technisch werk is fysiek. Een blessure, val of ongeluk kan je maanden uitschakelen. Zonder AOV heb je als ZZP'er geen vangnet — geen ziekengeld, geen WIA-uitkering.
+        </p>
+      </div>
+
+      <!-- Gereedschap -->
+      <div class="bg-white rounded-xl shadow-sm p-6 sm:p-8 border-l-4 border-tm-blue">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-tm-blue/10 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-tm-blue">construction</span>
+          </div>
+          <div>
+            <h2 class="text-xl font-headline font-bold text-tm-blue">Gereedschapsverzekering</h2>
+            <span class="text-xs font-bold text-tm-blue uppercase tracking-widest">Aanbevolen</span>
+          </div>
+        </div>
+        <p class="text-tm-text-light leading-relaxed mb-4">
+          Als technicus werk je vaak met eigen gereedschap en meetapparatuur op locatie. Een gereedschapsverzekering beschermt je investering.
+        </p>
+        <h3 class="font-bold text-tm-text mb-2">Wat dekt het?</h3>
+        <ul class="text-tm-text-light space-y-1 ml-5 list-disc">
+          <li>Diefstal van gereedschap uit je bus of op locatie</li>
+          <li>Schade aan gereedschap door ongevallen</li>
+          <li>Verlies tijdens transport</li>
+          <li>Vervanging van essentieel meetapparatuur</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- What TechMaat covers -->
+  <section class="py-12 bg-tm-light">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-3xl font-headline font-bold text-tm-blue mb-8">Wat dekt TechMaat wel en niet?</h2>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow-sm">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="material-symbols-outlined text-green-600">check_circle</span>
+            <h3 class="font-headline font-bold text-lg text-tm-blue">Wat TechMaat WEL doet</h3>
+          </div>
+          <ul class="text-tm-text-light space-y-3">
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+              <span>Verificatie van certificeringen en werkervaring</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+              <span>Betrouwbare matching op basis van vaardigheden</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+              <span>Ondersteuning bij facturatie en administratie</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+              <span>Beoordelingssysteem voor kwaliteitsborging</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-green-500 text-sm mt-1">check</span>
+              <span>Klachtenprocedure en bemiddeling bij geschillen</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-sm">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="material-symbols-outlined text-red-500">cancel</span>
+            <h3 class="font-headline font-bold text-lg text-tm-blue">Wat TechMaat NIET dekt</h3>
+          </div>
+          <ul class="text-tm-text-light space-y-3">
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-red-400 text-sm mt-1">close</span>
+              <span>Aansprakelijkheid voor uitgevoerde werkzaamheden</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-red-400 text-sm mt-1">close</span>
+              <span>Schade aan eigendommen van derden</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-red-400 text-sm mt-1">close</span>
+              <span>Arbeidsongeschiktheid of ziekte van de technicus</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-red-400 text-sm mt-1">close</span>
+              <span>Diefstal of schade aan gereedschap</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="material-symbols-outlined text-red-400 text-sm mt-1">close</span>
+              <span>Verzekeringen of sociale premies</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips -->
+  <section class="py-12">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-3xl font-headline font-bold text-tm-blue mb-6">Tips voor het kiezen van de juiste verzekering</h2>
+      <div class="bg-white rounded-xl shadow-sm p-6 sm:p-8 space-y-4">
+        <div class="flex gap-4 items-start">
+          <span class="text-tm-orange font-headline font-bold text-xl">1.</span>
+          <p class="text-tm-text-light leading-relaxed"><strong class="text-tm-text">Vergelijk meerdere aanbieders.</strong> Premies en voorwaarden verschillen sterk. Gebruik vergelijkingssites als Independer of Knab.</p>
+        </div>
+        <div class="flex gap-4 items-start">
+          <span class="text-tm-orange font-headline font-bold text-xl">2.</span>
+          <p class="text-tm-text-light leading-relaxed"><strong class="text-tm-text">Let op de verzekerde som.</strong> Zorg dat de dekking past bij het type werk dat je doet. Industrieel werk vereist vaak een hogere dekking dan residentieel werk.</p>
+        </div>
+        <div class="flex gap-4 items-start">
+          <span class="text-tm-orange font-headline font-bold text-xl">3.</span>
+          <p class="text-tm-text-light leading-relaxed"><strong class="text-tm-text">Check het eigen risico.</strong> Een lager eigen risico betekent een hogere premie, maar minder risico bij schade. Kies wat past bij je financiele situatie.</p>
+        </div>
+        <div class="flex gap-4 items-start">
+          <span class="text-tm-orange font-headline font-bold text-xl">4.</span>
+          <p class="text-tm-text-light leading-relaxed"><strong class="text-tm-text">Vraag naar branchespecifieke polissen.</strong> Sommige verzekeraars bieden pakketten specifiek voor technische ZZP'ers, met gecombineerde BAV + AVB dekking.</p>
+        </div>
+        <div class="flex gap-4 items-start">
+          <span class="text-tm-orange font-headline font-bold text-xl">5.</span>
+          <p class="text-tm-text-light leading-relaxed"><strong class="text-tm-text">Houd je polissen actueel.</strong> Bij uitbreiding van je werkzaamheden of specialismen, pas je verzekering aan. Een polis voor mechanisch werk dekt mogelijk niet elektrisch werk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-12">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <div class="bg-tm-muted rounded-xl p-8 sm:p-12">
+        <h2 class="text-3xl font-headline font-bold text-tm-blue mb-4">Goed verzekerd aan de slag?</h2>
+        <p class="text-tm-text-light mb-8 max-w-lg mx-auto">Meld je aan bij TechMaat en word gekoppeld aan de beste opdrachten in je regio. Wij checken je profiel en certificeringen zodat opdrachtgevers weten dat je betrouwbaar bent.</p>
+        <a href="aanmelden.html">
+          <button class="kinetic-gradient text-white px-10 py-4 rounded-lg font-bold text-lg shadow-lg hover:translate-y-[-2px] transition-transform active:scale-95 cursor-pointer">
+            Aanmelden bij TechMaat
+          </button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-tm-navy bg-tm-blue text-white">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-tm-orange rounded-md flex items-center justify-center">
+          <span class="text-white font-headline font-bold text-sm">TM</span>
+        </div>
+        <span class="font-headline font-bold text-2xl text-tm-orange">TechMaat</span>
+      </div>
+      <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">Het platform dat vakmanschap en flexibiliteit verbindt.</p>
+      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2025 TechMaat. Alle rechten voorbehouden.</p>
+    </div>
+    <div class="grid grid-cols-2 gap-8">
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Juridisch</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="privacy.html">Privacybeleid</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="voorwaarden.html">Voorwaarden</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="verzekering.html">Verzekering</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Contact</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="mailto:info@jmmechanica.nl">info@jmmechanica.nl</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="aanmelden.html">Aanmelden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

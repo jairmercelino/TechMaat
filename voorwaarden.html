@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Algemene Voorwaarden — TechMaat</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { min-height: 100dvh; }
+  .legal-content h2 { font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; font-weight: 700; color: #003082; margin-top: 2.5rem; margin-bottom: 1rem; }
+  .legal-content h3 { font-size: 1.125rem; font-weight: 700; color: #0a1a3a; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  .legal-content p, .legal-content li { color: #4a5568; line-height: 1.75; }
+  .legal-content ul, .legal-content ol { padding-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 1rem; }
+  .legal-content ul { list-style-type: disc; }
+  .legal-content ol { list-style-type: decimal; }
+</style>
+</head>
+<body class="bg-tm-surface font-body text-tm-text">
+
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-lg">TM</span>
+      </div>
+      <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
+    </a>
+    <div class="hidden md:flex gap-8 items-center">
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="index.html#voordelen">Voordelen</a>
+      <a href="aanmelden.html">
+        <button class="bg-tm-blue text-white px-6 py-2 rounded-lg font-bold cursor-pointer active:scale-95 transition-all hover:bg-tm-navy">Meld je aan</button>
+      </a>
+    </div>
+    <button class="md:hidden text-tm-blue" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-tm-muted px-6 py-4 space-y-4">
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="index.html#voordelen">Voordelen</a>
+    <a class="block" href="aanmelden.html">
+      <button class="w-full bg-tm-blue text-white px-6 py-3 rounded-lg font-bold">Meld je aan</button>
+    </a>
+  </div>
+  <div class="bg-tm-muted h-[1px]"></div>
+</header>
+
+<main class="pt-24 pb-16">
+  <div class="max-w-3xl mx-auto px-6">
+
+    <div class="mb-8">
+      <h1 class="text-4xl sm:text-5xl font-headline font-bold text-tm-blue tracking-tight mb-3">Algemene Voorwaarden</h1>
+      <p class="text-tm-text-light">Laatst bijgewerkt: april 2025</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 sm:p-10 legal-content">
+
+      <h2>1. Definities</h2>
+      <ul>
+        <li><strong>Platform:</strong> De website en diensten van TechMaat, bereikbaar via techmaat.nl</li>
+        <li><strong>TechMaat:</strong> Het platform beheerd door JM Mechanica, gevestigd in Nederland</li>
+        <li><strong>Technicus:</strong> Een zelfstandig ondernemer (ZZP'er) die zich via het Platform aanbiedt voor technische werkzaamheden</li>
+        <li><strong>Opdrachtgever:</strong> Een bedrijf dat via het Platform technisch personeel zoekt</li>
+        <li><strong>Opdracht / Klus:</strong> Een concrete werkaanvraag geplaatst door een Opdrachtgever</li>
+        <li><strong>Gebruiker:</strong> Iedere Technicus of Opdrachtgever met een account op het Platform</li>
+      </ul>
+
+      <h2>2. Aard van de dienst</h2>
+      <p>TechMaat is uitsluitend een <strong>bemiddelingsplatform</strong>. TechMaat is:</p>
+      <ul>
+        <li><strong>Geen werkgever</strong> — Er bestaat geen arbeidsrelatie tussen TechMaat en de Technicus</li>
+        <li><strong>Geen uitzendbureau</strong> — TechMaat bemiddelt, maar detacheert niet</li>
+        <li><strong>Geen partij bij de overeenkomst</strong> — De overeenkomst voor werkzaamheden wordt rechtstreeks gesloten tussen Technicus en Opdrachtgever</li>
+      </ul>
+      <p>TechMaat faciliteert het contact en biedt ondersteunende diensten zoals matching, communicatie en factuurverwerking.</p>
+
+      <h2>3. Registratie en account</h2>
+      <p>Om gebruik te maken van het Platform dient u zich te registreren. Bij registratie garandeert u dat:</p>
+      <ul>
+        <li>De verstrekte informatie juist en volledig is</li>
+        <li>U bevoegd bent om namens het bedrijf te handelen (voor Opdrachtgevers)</li>
+        <li>U als Technicus beschikt over een geldige KvK-inschrijving als zelfstandig ondernemer</li>
+        <li>Uw certificeringen actueel en geldig zijn</li>
+      </ul>
+
+      <h2>4. Verplichtingen van de Technicus</h2>
+      <p>De Technicus:</p>
+      <ul>
+        <li>Is een zelfstandig ondernemer met eigen KvK-inschrijving</li>
+        <li>Is zelf verantwoordelijk voor het afdragen van belastingen en sociale premies</li>
+        <li>Is zelf verantwoordelijk voor het afsluiten en onderhouden van adequate verzekeringen, waaronder minimaal een beroepsaansprakelijkheidsverzekering (BAV) en bedrijfsaansprakelijkheidsverzekering (AVB)</li>
+        <li>Voert werkzaamheden uit conform geldende veiligheidsnormen en wet- en regelgeving</li>
+        <li>Beschikt over geldige certificeringen voor het uitgevoerde werk</li>
+        <li>Werkt conform de Wet DBA (Deregulering Beoordeling Arbeidsrelaties)</li>
+      </ul>
+
+      <h2>5. Verplichtingen van de Opdrachtgever</h2>
+      <p>De Opdrachtgever:</p>
+      <ul>
+        <li>Verstrekt accurate informatie over de opdracht, locatie en vereisten</li>
+        <li>Zorgt voor een veilige werkomgeving conform Arbo-wetgeving</li>
+        <li>Betaalt de overeengekomen vergoeding binnen de gestelde betalingstermijn</li>
+        <li>Behandelt de Technicus als zelfstandig ondernemer, niet als werknemer</li>
+      </ul>
+
+      <h2>6. Commissie en betalingen</h2>
+      <ul>
+        <li>TechMaat brengt een commissie van <strong>10-15%</strong> in rekening per opdracht, te betalen door de Opdrachtgever</li>
+        <li>De exacte commissie wordt vooraf gecommuniceerd bij elke opdracht</li>
+        <li>Het gebruik van het Platform is <strong>gratis voor Technici</strong></li>
+        <li>Betalingstermijn: 14 dagen na factuurdatum, tenzij anders overeengekomen</li>
+        <li>Bij te late betaling is TechMaat gerechtigd wettelijke handelsrente in rekening te brengen</li>
+      </ul>
+
+      <h2>7. Annulering</h2>
+      <ul>
+        <li><strong>Door Opdrachtgever:</strong> Kosteloos annuleren tot 24 uur voor aanvang. Bij latere annulering kan een vergoeding van maximaal 4 uur arbeid in rekening worden gebracht</li>
+        <li><strong>Door Technicus:</strong> Kosteloos annuleren tot 48 uur voor aanvang. Bij herhaaldelijke late annuleringen kan het account worden opgeschort</li>
+      </ul>
+
+      <h2>8. Aansprakelijkheid</h2>
+      <p>TechMaat is als bemiddelingsplatform <strong>niet aansprakelijk</strong> voor:</p>
+      <ul>
+        <li>De kwaliteit, juistheid of volledigheid van de door Technici uitgevoerde werkzaamheden</li>
+        <li>Schade ontstaan door of tijdens de uitvoering van opdrachten</li>
+        <li>Letsel of ongevallen op de werklocatie</li>
+        <li>Geschillen tussen Technicus en Opdrachtgever</li>
+        <li>Indirecte schade, gevolgschade of gederfde winst</li>
+      </ul>
+      <p>De totale aansprakelijkheid van TechMaat is in alle gevallen beperkt tot het bedrag van de commissie die TechMaat heeft ontvangen voor de betreffende opdracht.</p>
+
+      <h2>9. Verzekeringen</h2>
+      <p>De Technicus is zelf verantwoordelijk voor het afsluiten van adequate verzekeringen. TechMaat raadt minimaal aan:</p>
+      <ul>
+        <li>Beroepsaansprakelijkheidsverzekering (BAV)</li>
+        <li>Bedrijfsaansprakelijkheidsverzekering (AVB)</li>
+        <li>Arbeidsongeschiktheidsverzekering (AOV)</li>
+      </ul>
+      <p>Zie onze <a href="verzekering.html" class="text-tm-orange hover:underline">verzekeringspagina</a> voor meer informatie.</p>
+
+      <h2>10. Intellectueel eigendom</h2>
+      <p>Alle intellectuele eigendomsrechten op het Platform, inclusief maar niet beperkt tot de software, het ontwerp, teksten, logo's en het matchingsalgoritme, berusten bij TechMaat. Gebruikers verkrijgen uitsluitend een beperkt, niet-exclusief gebruiksrecht voor de duur van hun accountregistratie.</p>
+
+      <h2>11. Klachtenprocedure</h2>
+      <p>Bij klachten over het Platform, een Technicus of een Opdrachtgever kunt u contact opnemen via <a href="mailto:info@jmmechanica.nl" class="text-tm-orange hover:underline">info@jmmechanica.nl</a>. Wij streven ernaar klachten binnen 14 werkdagen te behandelen. TechMaat kan bij ernstige klachten besluiten om accounts op te schorten of te verwijderen.</p>
+
+      <h2>12. Opschorting en beeindiging</h2>
+      <p>TechMaat behoudt zich het recht voor om accounts op te schorten of te beeindigen bij:</p>
+      <ul>
+        <li>Verstrekking van onjuiste informatie</li>
+        <li>Overtreding van deze voorwaarden</li>
+        <li>Herhaaldelijke negatieve beoordelingen</li>
+        <li>Fraude of misbruik van het Platform</li>
+        <li>Het omzeilen van het Platform voor directe bemiddeling</li>
+      </ul>
+
+      <h2>13. Toepasselijk recht</h2>
+      <p>Op deze algemene voorwaarden en alle overeenkomsten die daaruit voortvloeien is uitsluitend <strong>Nederlands recht</strong> van toepassing.</p>
+
+      <h2>14. Geschillenbeslechting</h2>
+      <p>Geschillen tussen TechMaat en een Gebruiker worden bij voorkeur in onderling overleg opgelost. Indien dit niet lukt, wordt het geschil voorgelegd aan de bevoegde rechter in het arrondissement waar TechMaat is gevestigd. Partijen kunnen ook kiezen voor mediation alvorens een gerechtelijke procedure te starten.</p>
+
+      <h2>15. Wijzigingen</h2>
+      <p>TechMaat behoudt zich het recht voor deze voorwaarden te wijzigen. Gebruikers worden minimaal 30 dagen voor inwerkingtreding via e-mail geinformeerd over wezenlijke wijzigingen. Voortgezet gebruik van het Platform na inwerkingtreding geldt als acceptatie van de gewijzigde voorwaarden.</p>
+
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-tm-navy bg-tm-blue text-white">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-tm-orange rounded-md flex items-center justify-center">
+          <span class="text-white font-headline font-bold text-sm">TM</span>
+        </div>
+        <span class="font-headline font-bold text-2xl text-tm-orange">TechMaat</span>
+      </div>
+      <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">Het platform dat vakmanschap en flexibiliteit verbindt.</p>
+      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2025 TechMaat. Alle rechten voorbehouden.</p>
+    </div>
+    <div class="grid grid-cols-2 gap-8">
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Juridisch</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="privacy.html">Privacybeleid</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="voorwaarden.html">Voorwaarden</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="verzekering.html">Verzekering</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Contact</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="mailto:info@jmmechanica.nl">info@jmmechanica.nl</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="aanmelden.html">Aanmelden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

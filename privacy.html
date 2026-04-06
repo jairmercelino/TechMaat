@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Privacybeleid — TechMaat</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { min-height: 100dvh; }
+  .legal-content h2 { font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; font-weight: 700; color: #003082; margin-top: 2.5rem; margin-bottom: 1rem; }
+  .legal-content h3 { font-size: 1.125rem; font-weight: 700; color: #0a1a3a; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  .legal-content p, .legal-content li { color: #4a5568; line-height: 1.75; }
+  .legal-content ul { list-style-type: disc; padding-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 1rem; }
+</style>
+</head>
+<body class="bg-tm-surface font-body text-tm-text">
+
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-lg">TM</span>
+      </div>
+      <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
+    </a>
+    <div class="hidden md:flex gap-8 items-center">
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="index.html#voordelen">Voordelen</a>
+      <a href="aanmelden.html">
+        <button class="bg-tm-blue text-white px-6 py-2 rounded-lg font-bold cursor-pointer active:scale-95 transition-all hover:bg-tm-navy">Meld je aan</button>
+      </a>
+    </div>
+    <button class="md:hidden text-tm-blue" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-tm-muted px-6 py-4 space-y-4">
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="index.html#hoe-het-werkt">Hoe het werkt</a>
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="index.html#voordelen">Voordelen</a>
+    <a class="block" href="aanmelden.html">
+      <button class="w-full bg-tm-blue text-white px-6 py-3 rounded-lg font-bold">Meld je aan</button>
+    </a>
+  </div>
+  <div class="bg-tm-muted h-[1px]"></div>
+</header>
+
+<main class="pt-24 pb-16">
+  <div class="max-w-3xl mx-auto px-6">
+
+    <div class="mb-8">
+      <h1 class="text-4xl sm:text-5xl font-headline font-bold text-tm-blue tracking-tight mb-3">Privacybeleid</h1>
+      <p class="text-tm-text-light">Laatst bijgewerkt: april 2025</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 sm:p-10 legal-content">
+
+      <p>TechMaat, onderdeel van JM Mechanica, hecht grote waarde aan de bescherming van uw persoonsgegevens. In dit privacybeleid leggen wij uit welke gegevens wij verzamelen, waarom wij dit doen, en welke rechten u heeft. Dit beleid is opgesteld in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG/GDPR).</p>
+
+      <h2>1. Verantwoordelijke</h2>
+      <p>De verantwoordelijke voor de verwerking van persoonsgegevens is:</p>
+      <p><strong>TechMaat / JM Mechanica</strong><br/>
+      E-mail: <a href="mailto:info@jmmechanica.nl" class="text-tm-orange hover:underline">info@jmmechanica.nl</a></p>
+
+      <h2>2. Welke gegevens verzamelen wij</h2>
+      <h3>Voor technici (ZZP'ers):</h3>
+      <ul>
+        <li>Volledige naam</li>
+        <li>E-mailadres</li>
+        <li>Telefoonnummer</li>
+        <li>Woonplaats</li>
+        <li>Specialismen en vaardigheden</li>
+        <li>Certificeringen (VCA, NEN 3140, F-gassen, etc.)</li>
+        <li>Uurtarief en werkradius</li>
+        <li>Beschikbaarheid</li>
+        <li>Werkervaring en omschrijving</li>
+      </ul>
+      <h3>Voor bedrijven:</h3>
+      <ul>
+        <li>Bedrijfsnaam en vestigingsplaats</li>
+        <li>Contactpersoon</li>
+        <li>E-mailadres en telefoonnummer</li>
+        <li>Branche en type werk</li>
+        <li>Omschrijving van behoefte</li>
+      </ul>
+      <h3>Automatisch verzamelde gegevens:</h3>
+      <ul>
+        <li>IP-adres</li>
+        <li>Browsertype en apparaatgegevens</li>
+        <li>Bezoekgedrag op de website (via cookies)</li>
+      </ul>
+
+      <h2>3. Doel van de verwerking</h2>
+      <p>Wij verwerken uw gegevens voor de volgende doeleinden:</p>
+      <ul>
+        <li><strong>Matching:</strong> Het koppelen van technici aan bedrijven op basis van vaardigheden, locatie en beschikbaarheid</li>
+        <li><strong>Communicatie:</strong> Contact opnemen over opdrachten, updates en service-gerelateerde berichten</li>
+        <li><strong>Facturatie:</strong> Het verwerken van betalingen en het genereren van facturen</li>
+        <li><strong>Verbetering:</strong> Het verbeteren van ons platform en onze dienstverlening</li>
+        <li><strong>Wettelijke verplichtingen:</strong> Het voldoen aan fiscale en administratieve verplichtingen</li>
+      </ul>
+
+      <h2>4. Rechtsgrond</h2>
+      <p>Wij verwerken uw gegevens op basis van:</p>
+      <ul>
+        <li><strong>Toestemming:</strong> U geeft actief toestemming bij het aanmelden op het platform</li>
+        <li><strong>Uitvoering overeenkomst:</strong> De verwerking is noodzakelijk voor de uitvoering van onze dienstverlening</li>
+        <li><strong>Gerechtvaardigd belang:</strong> Voor het verbeteren van onze diensten en het beveiligen van het platform</li>
+      </ul>
+
+      <h2>5. Bewaartermijnen</h2>
+      <p>Wij bewaren uw persoonsgegevens niet langer dan noodzakelijk:</p>
+      <ul>
+        <li><strong>Accountgegevens:</strong> Zolang uw account actief is, plus 12 maanden na deactivering</li>
+        <li><strong>Financiele gegevens:</strong> 7 jaar conform fiscale bewaarplicht</li>
+        <li><strong>Communicatie:</strong> Maximaal 24 maanden</li>
+        <li><strong>Cookies:</strong> Maximaal 12 maanden</li>
+      </ul>
+
+      <h2>6. Uw rechten</h2>
+      <p>Op grond van de AVG heeft u de volgende rechten:</p>
+      <ul>
+        <li><strong>Recht op inzage:</strong> U kunt opvragen welke gegevens wij van u verwerken</li>
+        <li><strong>Recht op correctie:</strong> U kunt onjuiste gegevens laten aanpassen</li>
+        <li><strong>Recht op verwijdering:</strong> U kunt verzoeken om verwijdering van uw gegevens</li>
+        <li><strong>Recht op dataportabiliteit:</strong> U kunt uw gegevens in een gangbaar formaat ontvangen</li>
+        <li><strong>Recht op beperking:</strong> U kunt de verwerking van uw gegevens laten beperken</li>
+        <li><strong>Recht van bezwaar:</strong> U kunt bezwaar maken tegen de verwerking van uw gegevens</li>
+        <li><strong>Recht om toestemming in te trekken:</strong> U kunt uw toestemming op elk moment intrekken</li>
+      </ul>
+      <p>Om uw rechten uit te oefenen kunt u contact opnemen via <a href="mailto:info@jmmechanica.nl" class="text-tm-orange hover:underline">info@jmmechanica.nl</a>. Wij reageren binnen 30 dagen op uw verzoek.</p>
+
+      <h2>7. Cookies</h2>
+      <p>TechMaat maakt gebruik van de volgende cookies:</p>
+      <ul>
+        <li><strong>Functionele cookies:</strong> Noodzakelijk voor het functioneren van de website (sessie, voorkeuren)</li>
+        <li><strong>Analytische cookies:</strong> Voor het meten van websitegebruik (Google Analytics). Deze gegevens worden geanonimiseerd</li>
+      </ul>
+      <p>U kunt cookies beheren via uw browserinstellingen.</p>
+
+      <h2>8. Delen met derden</h2>
+      <p>Wij delen uw gegevens uitsluitend met de volgende partijen, en alleen voor zover noodzakelijk:</p>
+      <ul>
+        <li><strong>Formspree:</strong> Voor het verwerken van formulierinzendingen</li>
+        <li><strong>Supabase:</strong> Voor gegevensopslag en authenticatie</li>
+        <li><strong>Stripe:</strong> Voor het verwerken van betalingen (toekomstig)</li>
+        <li><strong>Google Analytics:</strong> Voor websiteanalyse (geanonimiseerd)</li>
+      </ul>
+      <p>Wij verkopen uw gegevens nooit aan derden.</p>
+
+      <h2>9. Beveiliging</h2>
+      <p>Wij nemen passende technische en organisatorische maatregelen om uw gegevens te beschermen tegen ongeautoriseerde toegang, verlies of misbruik. Dit omvat onder andere:</p>
+      <ul>
+        <li>Versleutelde verbindingen (HTTPS/SSL)</li>
+        <li>Beveiligde opslag met toegangscontrole</li>
+        <li>Regelmatige beveiligingsaudits</li>
+        <li>Beperkte toegang tot persoonsgegevens (need-to-know basis)</li>
+      </ul>
+
+      <h2>10. Klachten</h2>
+      <p>Heeft u een klacht over de verwerking van uw persoonsgegevens? Neem dan contact met ons op via <a href="mailto:info@jmmechanica.nl" class="text-tm-orange hover:underline">info@jmmechanica.nl</a>. U heeft ook het recht om een klacht in te dienen bij de Autoriteit Persoonsgegevens (<a href="https://autoriteitpersoonsgegevens.nl" class="text-tm-orange hover:underline" target="_blank" rel="noopener">autoriteitpersoonsgegevens.nl</a>).</p>
+
+      <h2>11. Wijzigingen</h2>
+      <p>Wij behouden ons het recht voor dit privacybeleid te wijzigen. Wijzigingen worden op deze pagina gepubliceerd. Bij ingrijpende wijzigingen informeren wij u via e-mail.</p>
+
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-tm-navy bg-tm-blue text-white">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-tm-orange rounded-md flex items-center justify-center">
+          <span class="text-white font-headline font-bold text-sm">TM</span>
+        </div>
+        <span class="font-headline font-bold text-2xl text-tm-orange">TechMaat</span>
+      </div>
+      <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">Het platform dat vakmanschap en flexibiliteit verbindt.</p>
+      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2025 TechMaat. Alle rechten voorbehouden.</p>
+    </div>
+    <div class="grid grid-cols-2 gap-8">
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Juridisch</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="privacy.html">Privacybeleid</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="voorwaarden.html">Voorwaarden</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="verzekering.html">Verzekering</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Contact</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="mailto:info@jmmechanica.nl">info@jmmechanica.nl</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="aanmelden.html">Aanmelden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
