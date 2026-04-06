@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inloggen — TechMaat Dashboard</title>
+<meta name="description" content="Log in op het TechMaat dashboard."/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23003082'/><text x='16' y='22' font-size='16' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>TM</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .kinetic-gradient { background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%); }
+  .blueprint-bg { background-image: radial-gradient(#003082 1px, transparent 1px); background-size: 24px 24px; }
+  body { min-height: 100dvh; }
+</style>
+</head>
+<body class="bg-tm-blue font-body text-tm-text">
+
+<div class="min-h-screen flex items-center justify-center px-4 relative">
+  <div class="absolute inset-0 blueprint-bg opacity-[0.06]"></div>
+
+  <div class="w-full max-w-md relative z-10">
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <a href="index.html" class="inline-flex items-center gap-3">
+        <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-lg">
+          <span class="text-tm-blue font-headline font-bold text-2xl">TM</span>
+        </div>
+      </a>
+      <h1 class="text-3xl font-headline font-bold text-white mt-4">TechMaat</h1>
+      <p class="text-white/60 mt-1">Dashboard Login</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="bg-white rounded-xl shadow-2xl p-8">
+      <form id="login-form" onsubmit="return handleLogin(event)">
+        <div class="mb-5">
+          <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">E-mailadres</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-3 text-tm-text-light text-xl">mail</span>
+            <input id="login-email" name="email" required autocomplete="email"
+              class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 pl-11 pr-4"
+              placeholder="admin@techmaat.nl" type="email"/>
+          </div>
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Wachtwoord</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-3 text-tm-text-light text-xl">lock</span>
+            <input id="login-password" name="password" required autocomplete="current-password"
+              class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 pl-11 pr-12"
+              placeholder="••••••••" type="password"/>
+            <button type="button" onclick="togglePassword()" class="absolute right-3 top-3 text-tm-text-light hover:text-tm-blue cursor-pointer">
+              <span id="eye-icon" class="material-symbols-outlined text-xl">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="login-error" class="hidden mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 flex items-center gap-2">
+          <span class="material-symbols-outlined text-red-500 text-lg">error</span>
+          <span>Onjuist e-mailadres of wachtwoord.</span>
+        </div>
+
+        <button type="submit" class="w-full kinetic-gradient text-white py-4 rounded-lg font-bold text-lg shadow-lg hover:brightness-110 active:scale-95 transition-all cursor-pointer">
+          Inloggen
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <a href="index.html" class="text-sm text-tm-text-light hover:text-tm-orange transition-colors">
+          &larr; Terug naar website
+        </a>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <p class="text-center text-white/40 text-xs mt-6">
+      Alleen voor geautoriseerde beheerders. Wordt later beveiligd via Supabase Auth.
+    </p>
+  </div>
+</div>
+
+<script>
+// Temporary credentials — will be replaced by Supabase Auth
+var VALID_USERS = [
+  { email: 'admin@techmaat.nl', password: 'TechMaat2026!' },
+  { email: 'info@jmmechanica.nl', password: 'TechMaat2026!' }
+];
+
+function handleLogin(e) {
+  e.preventDefault();
+  var email = document.getElementById('login-email').value.trim().toLowerCase();
+  var password = document.getElementById('login-password').value;
+  var errorEl = document.getElementById('login-error');
+
+  var match = VALID_USERS.find(function(u) {
+    return u.email === email && u.password === password;
+  });
+
+  if (match) {
+    sessionStorage.setItem('tm_auth', JSON.stringify({ email: match.email, time: Date.now() }));
+    window.location.href = 'dashboard.html';
+  } else {
+    errorEl.classList.remove('hidden');
+    document.getElementById('login-password').value = '';
+    document.getElementById('login-password').focus();
+  }
+  return false;
+}
+
+function togglePassword() {
+  var input = document.getElementById('login-password');
+  var icon = document.getElementById('eye-icon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.textContent = 'visibility_off';
+  } else {
+    input.type = 'password';
+    icon.textContent = 'visibility';
+  }
+}
+
+// If already logged in, redirect
+if (sessionStorage.getItem('tm_auth')) {
+  window.location.href = 'dashboard.html';
+}
+</script>
+
+</body>
+</html>

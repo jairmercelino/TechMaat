@@ -38,9 +38,9 @@
   body { min-height: 100dvh; }
   #sidebar { transition: transform 0.3s ease; }
   #sidebar.closed { transform: translateX(-100%); }
-  @media (min-width: 768px) {
-    #sidebar.closed { transform: translateX(0); }
-  }
+  @media (min-width: 768px) { #sidebar.closed { transform: translateX(0); } }
+  .page-section { display: none; }
+  .page-section.active { display: block; }
 </style>
 </head>
 <body class="bg-tm-surface font-body text-tm-text">
@@ -61,10 +61,10 @@
       <span class="text-[10px] font-bold uppercase tracking-widest bg-tm-orange text-white px-2 py-0.5 rounded-full">Beta</span>
     </div>
     <div class="flex items-center gap-4">
-      <a href="index.html" class="text-tm-text-light hover:text-tm-orange text-sm hidden sm:block">Terug naar website</a>
-      <div class="w-8 h-8 bg-tm-muted rounded-full flex items-center justify-center">
-        <span class="material-symbols-outlined text-tm-blue text-lg">person</span>
-      </div>
+      <span id="user-email" class="text-tm-text-light text-sm hidden sm:block"></span>
+      <button onclick="logout()" class="text-tm-text-light hover:text-red-500 text-sm cursor-pointer flex items-center gap-1" title="Uitloggen">
+        <span class="material-symbols-outlined text-lg">logout</span>
+      </button>
     </div>
   </div>
 </header>
@@ -75,19 +75,20 @@
     <div class="px-4 mb-4">
       <p class="text-white/40 text-[10px] font-bold uppercase tracking-widest">Beheer</p>
     </div>
-    <button onclick="setActive(this)" class="sidebar-item active w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('overzicht', this)" data-page="overzicht" class="sidebar-item active w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">dashboard</span>
       <span class="font-medium">Overzicht</span>
     </button>
-    <button onclick="setActive(this)" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('inbox', this)" data-page="inbox" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">mail</span>
       <span class="font-medium">Inbox</span>
+      <span class="ml-auto bg-tm-orange text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full" id="inbox-badge">0</span>
     </button>
-    <button onclick="setActive(this)" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('matching', this)" data-page="matching" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">swap_horiz</span>
       <span class="font-medium">Matching</span>
     </button>
-    <button onclick="setActive(this)" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('facturen', this)" data-page="facturen" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">receipt_long</span>
       <span class="font-medium">Facturen</span>
     </button>
@@ -95,11 +96,11 @@
     <div class="px-4 mt-6 mb-4">
       <p class="text-white/40 text-[10px] font-bold uppercase tracking-widest">Database</p>
     </div>
-    <button onclick="setActive(this)" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('technici', this)" data-page="technici" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">engineering</span>
       <span class="font-medium">Technici</span>
     </button>
-    <button onclick="setActive(this)" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('bedrijven', this)" data-page="bedrijven" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">business</span>
       <span class="font-medium">Bedrijven</span>
     </button>
@@ -107,11 +108,11 @@
     <div class="px-4 mt-6 mb-4">
       <p class="text-white/40 text-[10px] font-bold uppercase tracking-widest">Inzicht</p>
     </div>
-    <button onclick="setActive(this)" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('analytics', this)" data-page="analytics" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">insights</span>
       <span class="font-medium">Analytics</span>
     </button>
-    <button onclick="setActive(this)" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('instellingen', this)" data-page="instellingen" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">settings</span>
       <span class="font-medium">Instellingen</span>
     </button>
@@ -125,210 +126,268 @@
 <main class="pt-[57px] md:ml-64">
   <div class="p-4 md:p-8 max-w-7xl">
 
-    <!-- Page header -->
-    <div class="mb-8">
-      <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Overzicht</h1>
-      <p class="text-tm-text-light mt-1">Welkom terug. Hier is de status van je platform.</p>
-    </div>
-
-    <!-- KPI Cards -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-3">
-          <span class="material-symbols-outlined text-tm-orange">engineering</span>
-          <span class="text-xs text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full">+0</span>
-        </div>
-        <p class="text-3xl font-headline font-bold text-tm-blue" id="kpi-technici">0</p>
-        <p class="text-sm text-tm-text-light mt-1">Technici aangemeld</p>
-      </div>
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-3">
-          <span class="material-symbols-outlined text-tm-orange">business</span>
-          <span class="text-xs text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full">+0</span>
-        </div>
-        <p class="text-3xl font-headline font-bold text-tm-blue" id="kpi-bedrijven">0</p>
-        <p class="text-sm text-tm-text-light mt-1">Bedrijven aangemeld</p>
-      </div>
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-3">
-          <span class="material-symbols-outlined text-tm-orange">work</span>
-          <span class="text-xs text-tm-text-light font-bold bg-tm-light px-2 py-0.5 rounded-full">0 actief</span>
-        </div>
-        <p class="text-3xl font-headline font-bold text-tm-blue">0</p>
-        <p class="text-sm text-tm-text-light mt-1">Actieve klussen</p>
-      </div>
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-3">
-          <span class="material-symbols-outlined text-tm-orange">euro</span>
-          <span class="text-xs text-tm-text-light font-bold bg-tm-light px-2 py-0.5 rounded-full">deze maand</span>
-        </div>
-        <p class="text-3xl font-headline font-bold text-tm-blue">&euro;0</p>
-        <p class="text-sm text-tm-text-light mt-1">Omzet commissie</p>
-      </div>
-    </div>
-
-    <!-- AI Agents -->
-    <div class="mb-8">
-      <div class="flex items-center justify-between mb-5">
-        <div>
-          <h2 class="text-xl font-headline font-bold text-tm-blue">AI Agents</h2>
-          <p class="text-sm text-tm-text-light">Automatiseer je platform met intelligente agents</p>
-        </div>
-        <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">1 / 7 actief</span>
+    <!-- ==================== OVERZICHT ==================== -->
+    <div id="page-overzicht" class="page-section active">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Overzicht</h1>
+        <p class="text-tm-text-light mt-1">Welkom terug. Hier is de status van je platform.</p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <span class="material-symbols-outlined text-tm-orange">engineering</span>
+          </div>
+          <p class="text-3xl font-headline font-bold text-tm-blue" id="kpi-technici">0</p>
+          <p class="text-sm text-tm-text-light mt-1">Technici</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <span class="material-symbols-outlined text-tm-orange">business</span>
+          </div>
+          <p class="text-3xl font-headline font-bold text-tm-blue" id="kpi-bedrijven">0</p>
+          <p class="text-sm text-tm-text-light mt-1">Bedrijven</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <span class="material-symbols-outlined text-tm-orange">work</span>
+          </div>
+          <p class="text-3xl font-headline font-bold text-tm-blue">0</p>
+          <p class="text-sm text-tm-text-light mt-1">Actieve klussen</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <span class="material-symbols-outlined text-tm-orange">euro</span>
+          </div>
+          <p class="text-3xl font-headline font-bold text-tm-blue">&euro;0</p>
+          <p class="text-sm text-tm-text-light mt-1">Omzet deze maand</p>
+        </div>
+      </div>
 
-        <!-- Inbox Agent (ACTIEF) -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border-2 border-green-400 hover:border-green-500 transition-colors relative">
-          <div class="absolute -top-2 -right-2 bg-green-500 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">Live</div>
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 bg-tm-orange rounded-lg flex items-center justify-center">
-              <span class="material-symbols-outlined text-white text-xl">mail</span>
+      <!-- AI Agents -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h2 class="text-xl font-headline font-bold text-tm-blue">AI Agents</h2>
+            <p class="text-sm text-tm-text-light">Automatiseer je platform met intelligente agents</p>
+          </div>
+          <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">1 / 7 actief</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <!-- Inbox Agent (ACTIEF) -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border-2 border-green-400 hover:border-green-500 transition-colors relative cursor-pointer" onclick="navigateTo('inbox', document.querySelector('[data-page=inbox]'))">
+            <div class="absolute -top-2 -right-2 bg-green-500 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">Live</div>
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-10 h-10 bg-tm-orange rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-xl">mail</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-xs text-green-600 font-medium">Actief</span>
+              </div>
             </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-              <span class="text-xs text-green-600 font-medium">Actief</span>
+            <h3 class="font-bold text-tm-blue mb-1">Inbox Agent</h3>
+            <p class="text-xs text-tm-text-light leading-relaxed">Leest en classificeert inkomende berichten</p>
+          </div>
+          <!-- Matching Agent -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted cursor-pointer" onclick="navigateTo('matching', document.querySelector('[data-page=matching]'))">
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">swap_horiz</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+            </div>
+            <h3 class="font-bold text-tm-blue mb-1">Matching Agent</h3>
+            <p class="text-xs text-tm-text-light leading-relaxed">Koppelt technici aan klussen via AI</p>
+          </div>
+          <!-- Factuur Agent -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted cursor-pointer" onclick="navigateTo('facturen', document.querySelector('[data-page=facturen]'))">
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">receipt_long</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+            </div>
+            <h3 class="font-bold text-tm-blue mb-1">Factuur Agent</h3>
+            <p class="text-xs text-tm-text-light leading-relaxed">Genereert en verstuurt facturen</p>
+          </div>
+          <!-- Verificatie Agent -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">verified_user</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+            </div>
+            <h3 class="font-bold text-tm-blue mb-1">Verificatie Agent</h3>
+            <p class="text-xs text-tm-text-light leading-relaxed">Controleert certificeringen en documenten</p>
+          </div>
+          <!-- Analytics Agent -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted cursor-pointer" onclick="navigateTo('analytics', document.querySelector('[data-page=analytics]'))">
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">insights</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+            </div>
+            <h3 class="font-bold text-tm-blue mb-1">Analytics Agent</h3>
+            <p class="text-xs text-tm-text-light leading-relaxed">Analyseert KPI's en markttrends</p>
+          </div>
+          <!-- CRM Agent -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">contacts</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+            </div>
+            <h3 class="font-bold text-tm-blue mb-1">CRM Agent</h3>
+            <p class="text-xs text-tm-text-light leading-relaxed">Beheert relaties en follow-ups</p>
+          </div>
+          <!-- Content Agent -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">edit_note</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+            </div>
+            <h3 class="font-bold text-tm-blue mb-1">Content Agent</h3>
+            <p class="text-xs text-tm-text-light leading-relaxed">Genereert social media en wervingscontent</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="bg-white rounded-xl shadow-sm p-5 md:p-6">
+        <h2 class="text-lg font-headline font-bold text-tm-blue mb-4">Recente activiteit</h2>
+        <div class="space-y-4">
+          <div class="flex items-start gap-4 text-sm">
+            <div class="w-8 h-8 bg-green-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-green-600 text-base">check_circle</span>
+            </div>
+            <div>
+              <p class="text-tm-text">Inbox Agent geactiveerd</p>
+              <p class="text-xs text-tm-text-light/50 mt-1">Classificeert inkomende aanmeldingen automatisch</p>
             </div>
           </div>
-          <h3 class="font-bold text-tm-blue mb-1">Inbox Agent</h3>
-          <p class="text-xs text-tm-text-light leading-relaxed mb-4">Leest en classificeert inkomende berichten en formulierinzendingen</p>
-          <button class="w-full py-2 rounded-lg text-sm font-medium bg-tm-blue text-white hover:bg-tm-navy transition-colors cursor-pointer">Configureren</button>
-        </div>
-
-        <!-- Matching Agent -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:border-tm-orange/30 transition-colors">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
-              <span class="material-symbols-outlined text-white text-xl">swap_horiz</span>
+          <div class="border-t border-tm-muted/50 pt-4 flex items-start gap-4 text-sm">
+            <div class="w-8 h-8 bg-green-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-green-600 text-base">check_circle</span>
             </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-              <span class="text-xs text-gray-400 font-medium">Inactief</span>
+            <div>
+              <p class="text-tm-text">Platform gelanceerd</p>
+              <p class="text-xs text-tm-text-light/50 mt-1">6 april 2026 — Wachtlijst, aanmeldformulier en juridische pagina's live</p>
             </div>
           </div>
-          <h3 class="font-bold text-tm-blue mb-1">Matching Agent</h3>
-          <p class="text-xs text-tm-text-light leading-relaxed mb-4">Koppelt technici aan klussen via AI op basis van skills en locatie</p>
-          <button disabled class="w-full py-2 rounded-lg text-sm font-medium bg-tm-muted text-tm-text-light/50 cursor-not-allowed">Configureren</button>
         </div>
-
-        <!-- Factuur Agent -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:border-tm-orange/30 transition-colors">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
-              <span class="material-symbols-outlined text-white text-xl">receipt_long</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-              <span class="text-xs text-gray-400 font-medium">Inactief</span>
-            </div>
-          </div>
-          <h3 class="font-bold text-tm-blue mb-1">Factuur Agent</h3>
-          <p class="text-xs text-tm-text-light leading-relaxed mb-4">Genereert en verstuurt facturen automatisch na afgeronde opdrachten</p>
-          <button disabled class="w-full py-2 rounded-lg text-sm font-medium bg-tm-muted text-tm-text-light/50 cursor-not-allowed">Configureren</button>
-        </div>
-
-        <!-- Verificatie Agent -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:border-tm-orange/30 transition-colors">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
-              <span class="material-symbols-outlined text-white text-xl">verified_user</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-              <span class="text-xs text-gray-400 font-medium">Inactief</span>
-            </div>
-          </div>
-          <h3 class="font-bold text-tm-blue mb-1">Verificatie Agent</h3>
-          <p class="text-xs text-tm-text-light leading-relaxed mb-4">Controleert certificeringen, VCA, NEN en documenten op geldigheid</p>
-          <button disabled class="w-full py-2 rounded-lg text-sm font-medium bg-tm-muted text-tm-text-light/50 cursor-not-allowed">Configureren</button>
-        </div>
-
-        <!-- Analytics Agent -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:border-tm-orange/30 transition-colors">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
-              <span class="material-symbols-outlined text-white text-xl">insights</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-              <span class="text-xs text-gray-400 font-medium">Inactief</span>
-            </div>
-          </div>
-          <h3 class="font-bold text-tm-blue mb-1">Analytics Agent</h3>
-          <p class="text-xs text-tm-text-light leading-relaxed mb-4">Analyseert KPI's, markttrends en platformprestaties</p>
-          <button disabled class="w-full py-2 rounded-lg text-sm font-medium bg-tm-muted text-tm-text-light/50 cursor-not-allowed">Configureren</button>
-        </div>
-
-        <!-- CRM Agent -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:border-tm-orange/30 transition-colors">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
-              <span class="material-symbols-outlined text-white text-xl">contacts</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-              <span class="text-xs text-gray-400 font-medium">Inactief</span>
-            </div>
-          </div>
-          <h3 class="font-bold text-tm-blue mb-1">CRM Agent</h3>
-          <p class="text-xs text-tm-text-light leading-relaxed mb-4">Beheert relaties, follow-ups en communicatie met gebruikers</p>
-          <button disabled class="w-full py-2 rounded-lg text-sm font-medium bg-tm-muted text-tm-text-light/50 cursor-not-allowed">Configureren</button>
-        </div>
-
-        <!-- Content Agent -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:border-tm-orange/30 transition-colors">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
-              <span class="material-symbols-outlined text-white text-xl">edit_note</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-              <span class="text-xs text-gray-400 font-medium">Inactief</span>
-            </div>
-          </div>
-          <h3 class="font-bold text-tm-blue mb-1">Content Agent</h3>
-          <p class="text-xs text-tm-text-light leading-relaxed mb-4">Genereert social media posts en wervingscontent voor LinkedIn</p>
-          <button disabled class="w-full py-2 rounded-lg text-sm font-medium bg-tm-muted text-tm-text-light/50 cursor-not-allowed">Configureren</button>
-        </div>
-
       </div>
     </div>
 
-    <!-- Inbox -->
-    <div class="mb-8">
-      <div class="flex items-center justify-between mb-5">
-        <div>
-          <h2 class="text-xl font-headline font-bold text-tm-blue">Inbox</h2>
-          <p class="text-sm text-tm-text-light">Inkomende aanmeldingen en berichten</p>
-        </div>
+    <!-- ==================== INBOX ==================== -->
+    <div id="page-inbox" class="page-section">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Inbox</h1>
+        <p class="text-tm-text-light mt-1">Inkomende aanmeldingen en berichten</p>
       </div>
       <div id="inbox-container">
         <p class="text-tm-text-light text-sm">Laden...</p>
       </div>
     </div>
 
-    <!-- Recent Activity -->
-    <div class="bg-white rounded-xl shadow-sm p-5 md:p-6 mb-8">
-      <h2 class="text-lg font-headline font-bold text-tm-blue mb-4">Recente activiteit</h2>
-      <div class="space-y-4">
-        <div class="flex items-start gap-4 text-sm">
-          <div class="w-8 h-8 bg-tm-light rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-            <span class="material-symbols-outlined text-tm-text-light text-base">info</span>
-          </div>
-          <div>
-            <p class="text-tm-text-light">Nog geen activiteit. Agents worden binnenkort geactiveerd.</p>
-            <p class="text-xs text-tm-text-light/50 mt-1">Wachtend op eerste aanmeldingen via het platform</p>
+    <!-- ==================== MATCHING ==================== -->
+    <div id="page-matching" class="page-section">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Matching</h1>
+        <p class="text-tm-text-light mt-1">AI-gestuurde koppeling van technici aan klussen</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-8 text-center">
+        <span class="material-symbols-outlined text-tm-muted text-6xl mb-4">swap_horiz</span>
+        <h3 class="font-headline font-bold text-xl text-tm-blue mb-2">Matching Agent</h3>
+        <p class="text-tm-text-light max-w-md mx-auto mb-6">De Matching Agent koppelt technici aan klussen op basis van specialisme, locatie, beschikbaarheid en ratings. Wordt aangedreven door Claude API.</p>
+        <span class="inline-flex items-center gap-2 text-sm text-tm-text-light bg-tm-light px-4 py-2 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-gray-300"></span> Binnenkort beschikbaar
+        </span>
+      </div>
+    </div>
+
+    <!-- ==================== FACTUREN ==================== -->
+    <div id="page-facturen" class="page-section">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Facturen</h1>
+        <p class="text-tm-text-light mt-1">Automatische facturatie en betalingsoverzicht</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-8 text-center">
+        <span class="material-symbols-outlined text-tm-muted text-6xl mb-4">receipt_long</span>
+        <h3 class="font-headline font-bold text-xl text-tm-blue mb-2">Factuur Agent</h3>
+        <p class="text-tm-text-light max-w-md mx-auto mb-6">Genereert automatisch facturen na afgeronde opdrachten. Commissie (10-15%) wordt berekend en gefactureerd aan het bedrijf. Stripe integratie komt in Phase 4.</p>
+        <span class="inline-flex items-center gap-2 text-sm text-tm-text-light bg-tm-light px-4 py-2 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-gray-300"></span> Binnenkort beschikbaar
+        </span>
+      </div>
+    </div>
+
+    <!-- ==================== TECHNICI ==================== -->
+    <div id="page-technici" class="page-section">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Technici</h1>
+        <p class="text-tm-text-light mt-1">Overzicht van alle aangemelde ZZP technici</p>
+      </div>
+      <div id="technici-container"></div>
+    </div>
+
+    <!-- ==================== BEDRIJVEN ==================== -->
+    <div id="page-bedrijven" class="page-section">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Bedrijven</h1>
+        <p class="text-tm-text-light mt-1">Overzicht van alle aangemelde bedrijven</p>
+      </div>
+      <div id="bedrijven-container"></div>
+    </div>
+
+    <!-- ==================== ANALYTICS ==================== -->
+    <div id="page-analytics" class="page-section">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Analytics</h1>
+        <p class="text-tm-text-light mt-1">Platformstatistieken en inzichten</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-8 text-center">
+        <span class="material-symbols-outlined text-tm-muted text-6xl mb-4">insights</span>
+        <h3 class="font-headline font-bold text-xl text-tm-blue mb-2">Analytics Agent</h3>
+        <p class="text-tm-text-light max-w-md mx-auto mb-6">Analyseert aanmeldingen, matches, conversie en omzet. Toont trends en voorspellingen op basis van platformdata.</p>
+        <span class="inline-flex items-center gap-2 text-sm text-tm-text-light bg-tm-light px-4 py-2 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-gray-300"></span> Binnenkort beschikbaar
+        </span>
+      </div>
+    </div>
+
+    <!-- ==================== INSTELLINGEN ==================== -->
+    <div id="page-instellingen" class="page-section">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Instellingen</h1>
+        <p class="text-tm-text-light mt-1">Platform configuratie en API keys</p>
+      </div>
+      <div class="space-y-4 max-w-2xl">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="font-bold text-tm-blue mb-3 flex items-center gap-2">
+            <span class="material-symbols-outlined text-tm-orange">key</span> API Keys
+          </h3>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-bold text-tm-text-light uppercase tracking-widest mb-1">Formspree Form ID</label>
+              <input class="w-full bg-tm-light border-none rounded-lg py-2 px-3 text-sm" value="xaqlakdb" disabled/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-tm-text-light uppercase tracking-widest mb-1">Formspree API Key</label>
+              <input class="w-full bg-tm-light border-none rounded-lg py-2 px-3 text-sm" placeholder="Nog niet geconfigureerd" disabled/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-tm-text-light uppercase tracking-widest mb-1">Supabase URL</label>
+              <input class="w-full bg-tm-light border-none rounded-lg py-2 px-3 text-sm" placeholder="Nog niet geconfigureerd" disabled/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-tm-text-light uppercase tracking-widest mb-1">Claude API Key</label>
+              <input class="w-full bg-tm-light border-none rounded-lg py-2 px-3 text-sm" placeholder="Nog niet geconfigureerd" disabled/>
+            </div>
           </div>
         </div>
-        <div class="border-t border-tm-muted/50 pt-4 flex items-start gap-4 text-sm">
-          <div class="w-8 h-8 bg-green-50 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-            <span class="material-symbols-outlined text-green-600 text-base">check_circle</span>
-          </div>
-          <div>
-            <p class="text-tm-text">Platform gelanceerd</p>
-            <p class="text-xs text-tm-text-light/50 mt-1">6 april 2026 — Wachtlijst, aanmeldformulier en juridische pagina's live</p>
-          </div>
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="font-bold text-tm-blue mb-3 flex items-center gap-2">
+            <span class="material-symbols-outlined text-tm-orange">person</span> Account
+          </h3>
+          <p class="text-sm text-tm-text-light mb-3">Ingelogd als: <strong id="settings-email" class="text-tm-blue"></strong></p>
+          <button onclick="logout()" class="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors cursor-pointer">
+            Uitloggen
+          </button>
         </div>
       </div>
     </div>
@@ -341,37 +400,128 @@
   </footer>
 </main>
 
+<script src="agents/inbox.js"></script>
 <script>
-function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('sidebar-overlay');
-  sidebar.classList.toggle('closed');
-  overlay.classList.toggle('hidden');
+// Auth check
+(function() {
+  var auth = sessionStorage.getItem('tm_auth');
+  if (!auth) { window.location.href = 'login.html'; return; }
+  var user = JSON.parse(auth);
+  var emailEl = document.getElementById('user-email');
+  var settingsEl = document.getElementById('settings-email');
+  if (emailEl) emailEl.textContent = user.email;
+  if (settingsEl) settingsEl.textContent = user.email;
+})();
+
+function logout() {
+  sessionStorage.removeItem('tm_auth');
+  window.location.href = 'login.html';
 }
 
-function setActive(el) {
-  document.querySelectorAll('.sidebar-item').forEach(item => {
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('closed');
+  document.getElementById('sidebar-overlay').classList.toggle('hidden');
+}
+
+function navigateTo(page, btn) {
+  // Hide all sections
+  document.querySelectorAll('.page-section').forEach(function(s) { s.classList.remove('active'); });
+  // Show target
+  var target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+
+  // Update sidebar active state
+  document.querySelectorAll('.sidebar-item').forEach(function(item) {
     item.classList.remove('active', 'text-white', 'bg-white/10', 'border-l-4', 'border-tm-orange');
     item.classList.add('text-white/70');
   });
-  el.classList.add('active', 'text-white', 'bg-white/10', 'border-l-4', 'border-tm-orange');
-  el.classList.remove('text-white/70');
-  // Close sidebar on mobile after selection
+  if (btn) {
+    btn.classList.add('active', 'text-white', 'bg-white/10', 'border-l-4', 'border-tm-orange');
+    btn.classList.remove('text-white/70');
+  }
+
+  // Close sidebar on mobile
   if (window.innerWidth < 768) toggleSidebar();
+
+  // Render page-specific content
+  if (page === 'inbox' && window.InboxAgent) {
+    InboxAgent.renderInbox('inbox-container', 'alle');
+  }
+  if (page === 'technici' && window.InboxAgent) {
+    renderTechnici();
+  }
+  if (page === 'bedrijven' && window.InboxAgent) {
+    renderBedrijven();
+  }
+
+  window.scrollTo(0, 0);
 }
 
-// Set initial active state
+function renderTechnici() {
+  var subs = InboxAgent.getSubmissions().filter(function(s) { return s.type === 'technicus'; });
+  var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+  subs.forEach(function(s) {
+    html += '<div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">' +
+      '<div class="flex items-center gap-3 mb-3">' +
+      '<div class="w-10 h-10 bg-tm-orange/10 rounded-full flex items-center justify-center"><span class="material-symbols-outlined text-tm-orange">person</span></div>' +
+      '<div><h3 class="font-bold text-tm-blue">' + s.naam + '</h3><p class="text-xs text-tm-text-light">' + s.woonplaats + '</p></div>' +
+      '</div>' +
+      '<div class="flex flex-wrap gap-1.5 mb-3">' + (s.specialismen || []).map(function(sp) { return '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + sp + '</span>'; }).join('') + '</div>' +
+      '<div class="grid grid-cols-3 gap-2 text-xs text-tm-text-light">' +
+      '<div><span class="block font-bold text-tm-text">Tarief</span>&euro;' + s.uurtarief + '/uur</div>' +
+      '<div><span class="block font-bold text-tm-text">Radius</span>' + s.werkradius + ' km</div>' +
+      '<div><span class="block font-bold text-tm-text">Dienst</span>' + s.ploegendienst + '</div>' +
+      '</div>' +
+      '<div class="mt-3 pt-3 border-t border-tm-muted text-xs text-tm-text-light">' +
+      '<span class="font-bold text-tm-text">Cert: </span>' + (s.certificeringen || []).join(', ') +
+      ' &middot; <span class="font-bold text-tm-text">KM: </span>&euro;' + s.kilometervergoeding + '/km' +
+      '</div></div>';
+  });
+  html += '</div>';
+  if (subs.length === 0) html = '<div class="bg-white rounded-xl p-8 shadow-sm text-center text-tm-text-light">Nog geen technici aangemeld.</div>';
+  document.getElementById('technici-container').innerHTML = html;
+}
+
+function renderBedrijven() {
+  var subs = InboxAgent.getSubmissions().filter(function(s) { return s.type === 'bedrijf'; });
+  var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+  subs.forEach(function(s) {
+    html += '<div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">' +
+      '<div class="flex items-center gap-3 mb-3">' +
+      '<div class="w-10 h-10 bg-tm-blue/10 rounded-full flex items-center justify-center"><span class="material-symbols-outlined text-tm-blue">business</span></div>' +
+      '<div><h3 class="font-bold text-tm-blue">' + s.bedrijfsnaam + '</h3><p class="text-xs text-tm-text-light">' + s.locatie + '</p></div>' +
+      '</div>' +
+      '<div class="flex gap-2 mb-3">' +
+      '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + s.branche + '</span>' +
+      '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + s.type_werk + '</span>' +
+      '</div>' +
+      '<p class="text-sm text-tm-text-light">' + s.omschrijving + '</p>' +
+      '<div class="mt-3 pt-3 border-t border-tm-muted text-xs text-tm-text-light">' +
+      '<span class="font-bold text-tm-text">Contact: </span>' + s.contactpersoon + ' &middot; ' + s.email +
+      '</div></div>';
+  });
+  html += '</div>';
+  if (subs.length === 0) html = '<div class="bg-white rounded-xl p-8 shadow-sm text-center text-tm-text-light">Nog geen bedrijven aangemeld.</div>';
+  document.getElementById('bedrijven-container').innerHTML = html;
+}
+
+// Init
 document.addEventListener('DOMContentLoaded', function() {
-  const first = document.querySelector('.sidebar-item.active');
+  var first = document.querySelector('.sidebar-item.active');
   if (first) {
     first.classList.add('text-white', 'bg-white/10', 'border-l-4', 'border-tm-orange');
     first.classList.remove('text-white/70');
   }
-  // Initialize Inbox Agent
-  if (window.InboxAgent) InboxAgent.init();
+  if (window.InboxAgent) {
+    InboxAgent.init();
+    setTimeout(function() {
+      var stats = InboxAgent.getStats();
+      var badge = document.getElementById('inbox-badge');
+      if (badge) badge.textContent = stats.nieuw;
+    }, 500);
+  }
 });
 </script>
-<script src="agents/inbox.js"></script>
 
 </body>
 </html>
