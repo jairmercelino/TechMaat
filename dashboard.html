@@ -88,7 +88,7 @@
       <span class="material-symbols-outlined text-xl">swap_horiz</span>
       <span class="font-medium">Matching</span>
     </button>
-    <button onclick="navigateTo('facturen', this)" data-page="facturen" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('facturen', this)" data-page="facturen" class="sidebar-item admin-only w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">receipt_long</span>
       <span class="font-medium">Facturen</span>
     </button>
@@ -112,7 +112,7 @@
       <span class="material-symbols-outlined text-xl">insights</span>
       <span class="font-medium">Analytics</span>
     </button>
-    <button onclick="navigateTo('instellingen', this)" data-page="instellingen" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+    <button onclick="navigateTo('instellingen', this)" data-page="instellingen" class="sidebar-item admin-only w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
       <span class="material-symbols-outlined text-xl">settings</span>
       <span class="font-medium">Instellingen</span>
     </button>
@@ -407,8 +407,12 @@
   var user = JSON.parse(auth);
   var emailEl = document.getElementById('user-email');
   var settingsEl = document.getElementById('settings-email');
-  if (emailEl) emailEl.textContent = user.email;
+  if (emailEl) emailEl.textContent = user.naam || user.email;
   if (settingsEl) settingsEl.textContent = user.email;
+  // Partner role: hide admin-only sections
+  if (user.role === 'partner') {
+    document.querySelectorAll('.admin-only').forEach(function(el) { el.style.display = 'none'; });
+  }
 })();
 
 function logout() {

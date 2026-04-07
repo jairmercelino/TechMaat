@@ -109,8 +109,9 @@
 <script>
 // Temporary credentials — will be replaced by Supabase Auth
 var VALID_USERS = [
-  { email: 'admin@techmaat.nl', password: 'TechMaat2026!' },
-  { email: 'info@jmmechanica.nl', password: 'TechMaat2026!' }
+  { email: 'admin@techmaat.nl', password: 'TechMaat2026!', role: 'admin', naam: 'Jair' },
+  { email: 'info@jmmechanica.nl', password: 'TechMaat2026!', role: 'admin', naam: 'Jair' },
+  { email: 'info@qktechniek.nl', password: 'TechMaat2026!', role: 'partner', naam: 'Partner QK Techniek' }
 ];
 
 function handleLogin(e) {
@@ -124,7 +125,7 @@ function handleLogin(e) {
   });
 
   if (match) {
-    sessionStorage.setItem('tm_auth', JSON.stringify({ email: match.email, time: Date.now() }));
+    sessionStorage.setItem('tm_auth', JSON.stringify({ email: match.email, role: match.role, naam: match.naam, time: Date.now() }));
     window.location.href = 'dashboard.html';
   } else {
     errorEl.classList.remove('hidden');
