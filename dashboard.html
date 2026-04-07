@@ -92,6 +92,11 @@
       <span class="material-symbols-outlined text-xl">receipt_long</span>
       <span class="font-medium">Facturen</span>
     </button>
+    <button onclick="navigateTo('verificatie', this)" data-page="verificatie" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+      <span class="material-symbols-outlined text-xl">verified_user</span>
+      <span class="font-medium">Verificatie</span>
+      <span class="ml-auto bg-tm-orange text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full" id="verificatie-badge">0</span>
+    </button>
 
     <div class="px-4 mt-6 mb-4">
       <p class="text-white/40 text-[10px] font-bold uppercase tracking-widest">Database</p>
@@ -176,7 +181,7 @@
             <h2 class="text-xl font-headline font-bold text-tm-blue">AI Agents</h2>
             <p class="text-sm text-tm-text-light">Automatiseer je platform met intelligente agents</p>
           </div>
-          <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">3 / 7 actief</span>
+          <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">4 / 7 actief</span>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           <!-- Inbox Agent (ACTIEF) -->
@@ -214,11 +219,12 @@
             <h3 class="font-bold text-tm-blue mb-1">Factuur Agent</h3>
             <p class="text-xs text-tm-text-light leading-relaxed">Genereert en verstuurt facturen</p>
           </div>
-          <!-- Verificatie Agent -->
-          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">
+          <!-- Verificatie Agent (ACTIEF) -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border-2 border-green-400 hover:border-green-500 transition-colors relative cursor-pointer" onclick="navigateTo('verificatie', document.querySelector('[data-page=verificatie]'))">
+            <div class="absolute -top-2 -right-2 bg-green-500 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">Live</div>
             <div class="flex items-start justify-between mb-4">
-              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">verified_user</span></div>
-              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+              <div class="w-10 h-10 bg-tm-orange rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">verified_user</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span><span class="text-xs text-green-600 font-medium">Actief</span></div>
             </div>
             <h3 class="font-bold text-tm-blue mb-1">Verificatie Agent</h3>
             <p class="text-xs text-tm-text-light leading-relaxed">Controleert certificeringen en documenten</p>
@@ -328,6 +334,17 @@
         <p class="text-tm-text-light mt-1">Overzicht van alle aangemelde bedrijven</p>
       </div>
       <div id="bedrijven-container"></div>
+    </div>
+
+    <!-- ==================== VERIFICATIE ==================== -->
+    <div id="page-verificatie" class="page-section">
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Verificatie</h1>
+        <p class="text-tm-text-light mt-1">Controleer documenten en certificeringen van technici</p>
+      </div>
+      <div id="verificatie-container">
+        <p class="text-tm-text-light text-sm">Laden...</p>
+      </div>
     </div>
 
     <!-- ==================== KLUSSEN ==================== -->
@@ -480,6 +497,7 @@
 <script src="agents/inbox.js"></script>
 <script src="agents/factuur.js"></script>
 <script src="agents/matching.js"></script>
+<script src="agents/verificatie.js"></script>
 <script>
 // Auth check
 (function() {
@@ -543,6 +561,9 @@ function navigateTo(page, btn) {
   }
   if (page === 'klussen') {
     renderKlussen();
+  }
+  if (page === 'verificatie' && window.VerificatieAgent) {
+    VerificatieAgent.renderVerificatie('verificatie-container', 'alle');
   }
 
   window.scrollTo(0, 0);
@@ -710,6 +731,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   if (window.MatchingAgent) {
     MatchingAgent.init();
+  }
+  if (window.VerificatieAgent) {
+    VerificatieAgent.init(function() {
+      var stats = VerificatieAgent.getStats();
+      var badge = document.getElementById('verificatie-badge');
+      if (badge) badge.textContent = stats.wacht;
+    });
   }
   // Load live stats from Supabase
   if (window.TechMaatDB) {

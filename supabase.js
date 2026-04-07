@@ -104,6 +104,80 @@ var TechMaatDB = {
     });
   },
 
+  // ─── Documenten & Verificatie ────────────────────────────
+
+  // Upload a file to Supabase Storage
+  uploadDocument: function(technicusId, docType, file) {
+    var ext = file.name.split('.').pop().toLowerCase();
+    var path = technicusId + '/' + docType + '_' + Date.now() + '.' + ext;
+    return fetch(SUPABASE_URL + '/storage/v1/object/verificatie-docs/' + path, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': file.type,
+        'x-upsert': 'true'
+      },
+      body: file
+    }).then(function(r) {
+      if (!r.ok) throw new Error('Upload mislukt: ' + r.statusText);
+      return path;
+    });
+  },
+
+  // Get a signed URL for viewing a stored file
+  getSignedUrl: function(path, expiresIn) {
+    expiresIn = expiresIn || 3600;
+    return fetch(SUPABASE_URL + '/storage/v1/object/sign/verificatie-docs/' + path, {
+      method: 'POST',
+      headers: this._headers(),
+      body: JSON.stringify({ expiresIn: expiresIn })
+    }).then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.signedURL) return SUPABASE_URL + '/storage/v1' + data.signedURL;
+      return null;
+    });
+  },
+
+  // Insert a document record
+  insertDocument: function(data) {
+    return fetch(SUPABASE_URL + '/rest/v1/documenten', {
+      method: 'POST',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Get all documenten
+  getAllDocumenten: function() {
+    return fetch(SUPABASE_URL + '/rest/v1/documenten?order=created_at.desc', {
+      headers: this._headers()
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Get documenten by status
+  getDocumentenByStatus: function(status) {
+    return fetch(SUPABASE_URL + '/rest/v1/documenten?status=eq.' + status + '&order=created_at.asc', {
+      headers: this._headers()
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Get documenten for a specific technicus
+  getDocumentenByTechnicus: function(technicusId) {
+    return fetch(SUPABASE_URL + '/rest/v1/documenten?technicus_id=eq.' + technicusId + '&order=created_at.desc', {
+      headers: this._headers()
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Update a document (status, notitie, vervaldatum, etc.)
+  updateDocument: function(id, data) {
+    return fetch(SUPABASE_URL + '/rest/v1/documenten?id=eq.' + id, {
+      method: 'PATCH',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
   // ─── Auth ──────────────────────────────────────────────
 
   _AUTH_SALT: 'techmaat_salt_2026',

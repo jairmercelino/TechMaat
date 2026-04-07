@@ -120,7 +120,7 @@
       </div>
 
       <!-- Technicus Form -->
-      <form id="form-technicus" action="https://formspree.io/f/xaqlakdb" method="POST"
+      <form id="form-technicus"
         class="bg-white p-6 sm:p-8 md:p-10 rounded-xl shadow-xl">
         <input type="hidden" name="type" value="technicus"/>
 
@@ -262,7 +262,70 @@
           <textarea name="omschrijving" rows="3" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Vertel iets over je ervaring, specialiteiten en wat je zoekt..."></textarea>
         </div>
 
-        <div class="mb-8">
+        <!-- KvK nummer -->
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">KvK Nummer</label>
+          <input name="kvk_nummer" type="text" pattern="[0-9]{8}" maxlength="8" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="12345678"/>
+          <p class="text-xs text-tm-text-light mt-1">Je 8-cijferig KvK-nummer als ZZP'er.</p>
+        </div>
+
+        <!-- Documenten uploaden -->
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-tm-blue mb-3 uppercase tracking-widest">Documenten uploaden</label>
+          <p class="text-sm text-tm-text-light mb-4">Upload bewijs van je certificeringen en verzekering. Toegestane formaten: PDF, JPG, PNG (max 10MB per bestand).</p>
+
+          <div class="space-y-3">
+            <!-- Always visible: Verzekeringspolis -->
+            <div class="bg-tm-light rounded-lg p-4">
+              <label class="block text-sm font-bold text-tm-text mb-2">Verzekeringspolis (AVB / Beroepsaansprakelijkheid)</label>
+              <input type="file" name="doc_verzekering" accept=".pdf,.jpg,.jpeg,.png" class="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-tm-orange file:text-white file:font-bold file:cursor-pointer hover:file:bg-tm-orange-dark"/>
+            </div>
+
+            <!-- Always visible: KvK uittreksel -->
+            <div class="bg-tm-light rounded-lg p-4">
+              <label class="block text-sm font-bold text-tm-text mb-2">KvK Uittreksel</label>
+              <input type="file" name="doc_kvk" accept=".pdf,.jpg,.jpeg,.png" class="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-tm-orange file:text-white file:font-bold file:cursor-pointer hover:file:bg-tm-orange-dark"/>
+            </div>
+
+            <!-- Conditional: VCA (shown when VCA Basis or VCA VOL is checked) -->
+            <div id="upload-vca" class="bg-tm-light rounded-lg p-4 hidden">
+              <label class="block text-sm font-bold text-tm-text mb-2">VCA Certificaat</label>
+              <input type="file" name="doc_vca" accept=".pdf,.jpg,.jpeg,.png" class="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-tm-orange file:text-white file:font-bold file:cursor-pointer hover:file:bg-tm-orange-dark"/>
+            </div>
+
+            <!-- Conditional: NEN 3140 -->
+            <div id="upload-nen" class="bg-tm-light rounded-lg p-4 hidden">
+              <label class="block text-sm font-bold text-tm-text mb-2">NEN 3140 Certificaat</label>
+              <input type="file" name="doc_nen3140" accept=".pdf,.jpg,.jpeg,.png" class="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-tm-orange file:text-white file:font-bold file:cursor-pointer hover:file:bg-tm-orange-dark"/>
+            </div>
+
+            <!-- Conditional: F-gassen -->
+            <div id="upload-fgassen" class="bg-tm-light rounded-lg p-4 hidden">
+              <label class="block text-sm font-bold text-tm-text mb-2">F-gassen Certificaat</label>
+              <input type="file" name="doc_fgassen" accept=".pdf,.jpg,.jpeg,.png" class="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-tm-orange file:text-white file:font-bold file:cursor-pointer hover:file:bg-tm-orange-dark"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compliance checkboxes -->
+        <div class="mb-8 space-y-3">
+          <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Bevestigingen</label>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="akkoord_training" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
+            <span class="text-sm text-tm-text-light">Ik bevestig dat ik beschik over de juiste opleiding en/of training voor de opgegeven specialismen.</span>
+          </label>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="akkoord_ervaring" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
+            <span class="text-sm text-tm-text-light">Ik bevestig dat ik minimaal 2 jaar werkervaring heb in mijn vakgebied.</span>
+          </label>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="akkoord_verzekering" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
+            <span class="text-sm text-tm-text-light">Ik bevestig dat ik beschik over een geldige beroepsaansprakelijkheidsverzekering (AVB).</span>
+          </label>
+
           <label class="flex items-start gap-3 cursor-pointer">
             <input type="checkbox" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
             <span class="text-sm text-tm-text-light">
@@ -272,13 +335,21 @@
           </label>
         </div>
 
-        <button class="w-full kinetic-gradient text-white py-5 rounded-lg font-bold text-xl shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase tracking-tight cursor-pointer" type="submit">
+        <!-- Upload progress / status -->
+        <div id="upload-status" class="hidden mb-6">
+          <div class="bg-tm-light rounded-lg p-4 text-center">
+            <span class="material-symbols-outlined text-tm-orange text-3xl animate-spin">progress_activity</span>
+            <p class="text-sm text-tm-text-light mt-2" id="upload-status-text">Documenten uploaden...</p>
+          </div>
+        </div>
+
+        <button id="btn-submit-technicus" class="w-full kinetic-gradient text-white py-5 rounded-lg font-bold text-xl shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase tracking-tight cursor-pointer" type="submit">
           Aanmelden als Technicus
         </button>
       </form>
 
       <!-- Bedrijf Form -->
-      <form id="form-bedrijf" action="https://formspree.io/f/xaqlakdb" method="POST"
+      <form id="form-bedrijf"
         class="bg-white p-6 sm:p-8 md:p-10 rounded-xl shadow-xl hidden">
         <input type="hidden" name="type" value="bedrijf"/>
 
@@ -333,7 +404,24 @@
           <textarea name="omschrijving" rows="4" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-3 px-4" placeholder="Beschrijf wat voor technisch personeel u zoekt, welke vaardigheden nodig zijn en de verwachte duur..."></textarea>
         </div>
 
-        <div class="mb-8">
+        <div class="mb-8 space-y-3">
+          <label class="block text-sm font-bold text-tm-blue mb-2 uppercase tracking-widest">Bevestigingen</label>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="akkoord_werkwijze" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
+            <span class="text-sm text-tm-text-light">Ik heb kennisgenomen van de <a href="voorwaarden.html" class="text-tm-orange underline hover:text-tm-orange-dark">werkwijze van TechMaat</a> en begrijp hoe het platform functioneert.</span>
+          </label>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="akkoord_commissie" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
+            <span class="text-sm text-tm-text-light">Ik ga akkoord met de commissiestructuur van TechMaat (10-15% per opdracht, betaald door het bedrijf).</span>
+          </label>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="akkoord_dataverwerking" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
+            <span class="text-sm text-tm-text-light">Ik ga akkoord met de verwerking van bedrijfsgegevens conform het <a href="privacy.html" class="text-tm-orange underline hover:text-tm-orange-dark">privacybeleid</a>.</span>
+          </label>
+
           <label class="flex items-start gap-3 cursor-pointer">
             <input type="checkbox" required class="rounded text-tm-orange focus:ring-tm-orange mt-1"/>
             <span class="text-sm text-tm-text-light">
@@ -390,10 +478,10 @@
 
 <script>
 function switchTab(tab) {
-  const tabTechnicus = document.getElementById('tab-technicus');
-  const tabBedrijf = document.getElementById('tab-bedrijf');
-  const formTechnicus = document.getElementById('form-technicus');
-  const formBedrijf = document.getElementById('form-bedrijf');
+  var tabTechnicus = document.getElementById('tab-technicus');
+  var tabBedrijf = document.getElementById('tab-bedrijf');
+  var formTechnicus = document.getElementById('form-technicus');
+  var formBedrijf = document.getElementById('form-bedrijf');
 
   if (tab === 'technicus') {
     tabTechnicus.className = 'flex-1 py-4 px-6 font-bold text-lg transition-all flex items-center justify-center gap-2 cursor-pointer bg-tm-orange text-white';
@@ -408,35 +496,204 @@ function switchTab(tab) {
   }
 }
 
-// Init default tab + support #bedrijf hash
-window.addEventListener('DOMContentLoaded', function() {
-  switchTab(window.location.hash === '#bedrijf' ? 'bedrijf' : 'technicus');
+// ─── Conditional upload fields ─────────────────────────
+function updateUploadFields() {
+  var form = document.getElementById('form-technicus');
+  var vcaChecked = form.querySelector('input[value="VCA Basis"]:checked') || form.querySelector('input[value="VCA VOL"]:checked');
+  var nenChecked = form.querySelector('input[value="NEN 3140"]:checked');
+  var fgasChecked = form.querySelector('input[value="F-gassen"]:checked');
+
+  document.getElementById('upload-vca').classList.toggle('hidden', !vcaChecked);
+  document.getElementById('upload-nen').classList.toggle('hidden', !nenChecked);
+  document.getElementById('upload-fgassen').classList.toggle('hidden', !fgasChecked);
+}
+
+// Listen for certificate checkbox changes
+document.querySelectorAll('#form-technicus input[name="certificeringen"]').forEach(function(cb) {
+  cb.addEventListener('change', updateUploadFields);
 });
 
-// Save to Supabase on form submit (alongside Formspree)
+// ─── File validation ───────────────────────────────────
+var ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
+var MAX_SIZE = 10 * 1024 * 1024; // 10MB
+
+function validateFile(file) {
+  if (!file) return null;
+  if (ALLOWED_TYPES.indexOf(file.type) === -1) return 'Ongeldig bestandstype. Gebruik PDF, JPG of PNG.';
+  if (file.size > MAX_SIZE) return 'Bestand te groot. Maximaal 10MB.';
+  return null;
+}
+
+function collectFiles(form) {
+  var files = [];
+  var fileInputs = [
+    { name: 'doc_verzekering', type: 'verzekering' },
+    { name: 'doc_kvk', type: 'kvk' },
+    { name: 'doc_vca', type: 'vca' },
+    { name: 'doc_nen3140', type: 'nen_3140' },
+    { name: 'doc_fgassen', type: 'f_gassen' }
+  ];
+  for (var i = 0; i < fileInputs.length; i++) {
+    var input = form.querySelector('input[name="' + fileInputs[i].name + '"]');
+    if (input && input.files && input.files[0]) {
+      var err = validateFile(input.files[0]);
+      if (err) return { error: fileInputs[i].type + ': ' + err };
+      files.push({ file: input.files[0], type: fileInputs[i].type });
+    }
+  }
+  return { files: files };
+}
+
+// ─── Technicus submit (with file uploads) ──────────────
 document.getElementById('form-technicus').addEventListener('submit', function(e) {
-  if (!window.TechMaatDB) return; // Formspree still works as fallback
+  e.preventDefault();
   var form = e.target;
+  var btn = document.getElementById('btn-submit-technicus');
+  var statusDiv = document.getElementById('upload-status');
+  var statusText = document.getElementById('upload-status-text');
+
+  // Collect form data
   var specs = []; form.querySelectorAll('input[name="specialismen"]:checked').forEach(function(c) { specs.push(c.value); });
   var certs = []; form.querySelectorAll('input[name="certificeringen"]:checked').forEach(function(c) { certs.push(c.value); });
-  TechMaatDB.insertTechnicus({
+
+  // Validate files
+  var result = collectFiles(form);
+  if (result.error) { alert(result.error); return; }
+  var files = result.files;
+
+  // Disable button, show progress
+  btn.disabled = true;
+  btn.textContent = 'Bezig met aanmelden...';
+  statusDiv.classList.remove('hidden');
+  statusText.textContent = 'Gegevens opslaan...';
+
+  var technicusData = {
     naam: form.naam.value, email: form.email.value, telefoon: form.telefoon.value,
     woonplaats: form.woonplaats.value, specialismen: specs, certificeringen: certs,
     uurtarief: parseFloat(form.uurtarief.value) || null, werkradius: parseInt(form.werkradius.value) || null,
     beschikbaarheid: form.beschikbaarheid.value, ploegendienst: form.ploegendienst.value,
     kilometervergoeding: parseFloat(form.kilometervergoeding.value) || null,
-    omschrijving: form.omschrijving.value
+    omschrijving: form.omschrijving.value,
+    kvk_nummer: form.kvk_nummer.value || null,
+    akkoord_training: !!form.akkoord_training.checked,
+    akkoord_ervaring: !!form.akkoord_ervaring.checked,
+    akkoord_verzekering: !!form.akkoord_verzekering.checked,
+    verificatie_status: files.length > 0 ? 'in_review' : 'niet_geverifieerd'
+  };
+
+  if (!window.TechMaatDB) {
+    // Fallback: just submit to Formspree
+    form.submit();
+    return;
+  }
+
+  // 1. Insert technicus into Supabase
+  TechMaatDB.insertTechnicus(technicusData).then(function(res) {
+    var technicus = Array.isArray(res) ? res[0] : res;
+    if (!technicus || !technicus.id) throw new Error('Opslaan mislukt');
+
+    // 2. Upload files to Storage + create document records
+    if (files.length === 0) return technicus;
+
+    statusText.textContent = 'Documenten uploaden (0/' + files.length + ')...';
+
+    var uploadChain = Promise.resolve();
+    var uploaded = 0;
+    files.forEach(function(f) {
+      uploadChain = uploadChain.then(function() {
+        return TechMaatDB.uploadDocument(technicus.id, f.type, f.file).then(function(path) {
+          return TechMaatDB.insertDocument({
+            technicus_id: technicus.id,
+            type: f.type,
+            bestandsnaam: f.file.name,
+            storage_path: path
+          });
+        }).then(function() {
+          uploaded++;
+          statusText.textContent = 'Documenten uploaden (' + uploaded + '/' + files.length + ')...';
+        });
+      });
+    });
+
+    return uploadChain.then(function() { return technicus; });
+  }).then(function(technicus) {
+    // 3. Also POST to Formspree for email notification (without files)
+    var formData = new FormData();
+    formData.append('type', 'technicus');
+    formData.append('naam', form.naam.value);
+    formData.append('email', form.email.value);
+    formData.append('telefoon', form.telefoon.value);
+    formData.append('woonplaats', form.woonplaats.value);
+    formData.append('specialismen', specs.join(', '));
+    formData.append('certificeringen', certs.join(', '));
+    formData.append('documenten_uploaded', files.length + ' bestanden');
+    fetch('https://formspree.io/f/xaqlakdb', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+
+    // 4. Show success
+    statusDiv.innerHTML = '<div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">' +
+      '<span class="material-symbols-outlined text-green-600 text-4xl mb-2">check_circle</span>' +
+      '<h3 class="font-headline font-bold text-green-800 text-lg mb-1">Aanmelding ontvangen!</h3>' +
+      '<p class="text-sm text-green-700">Bedankt voor je aanmelding. ' +
+      (files.length > 0 ? 'Je documenten worden binnen 48 uur geverifieerd. ' : '') +
+      'We nemen zo snel mogelijk contact op.</p></div>';
+    btn.style.display = 'none';
+  }).catch(function(err) {
+    statusDiv.innerHTML = '<div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">' +
+      '<span class="material-symbols-outlined text-red-500 text-3xl mb-1">error</span>' +
+      '<p class="text-sm text-red-700">Er ging iets mis: ' + err.message + '. Probeer het opnieuw.</p></div>';
+    btn.disabled = false;
+    btn.textContent = 'Aanmelden als Technicus';
   });
 });
 
+// ─── Bedrijf submit ────────────────────────────────────
 document.getElementById('form-bedrijf').addEventListener('submit', function(e) {
-  if (!window.TechMaatDB) return;
+  e.preventDefault();
   var form = e.target;
-  TechMaatDB.insertBedrijf({
+
+  var data = {
     bedrijfsnaam: form.bedrijfsnaam.value, contactpersoon: form.contactpersoon.value,
     email: form.email.value, telefoon: form.telefoon.value, locatie: form.locatie.value,
-    branche: form.branche.value, type_werk: form.type_werk.value, omschrijving: form.omschrijving.value
+    branche: form.branche.value, type_werk: form.type_werk.value, omschrijving: form.omschrijving.value,
+    akkoord_werkwijze: !!form.akkoord_werkwijze.checked,
+    akkoord_commissie: !!form.akkoord_commissie.checked,
+    akkoord_dataverwerking: !!form.akkoord_dataverwerking.checked
+  };
+
+  if (!window.TechMaatDB) {
+    form.submit();
+    return;
+  }
+
+  var btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Bezig met aanmelden...';
+
+  TechMaatDB.insertBedrijf(data).then(function() {
+    // Also POST to Formspree
+    var formData = new FormData();
+    formData.append('type', 'bedrijf');
+    formData.append('bedrijfsnaam', form.bedrijfsnaam.value);
+    formData.append('email', form.email.value);
+    formData.append('contactpersoon', form.contactpersoon.value);
+    fetch('https://formspree.io/f/xaqlakdb', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+
+    // Show success
+    form.innerHTML = '<div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">' +
+      '<span class="material-symbols-outlined text-green-600 text-4xl mb-2">check_circle</span>' +
+      '<h3 class="font-headline font-bold text-green-800 text-lg mb-1">Aanmelding ontvangen!</h3>' +
+      '<p class="text-sm text-green-700">Bedankt voor uw aanmelding. We nemen zo snel mogelijk contact op om de samenwerking te bespreken.</p></div>';
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Aanmelden als Bedrijf';
+    alert('Er ging iets mis. Probeer het opnieuw.');
   });
+});
+
+// ─── Init ──────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  switchTab(window.location.hash === '#bedrijf' ? 'bedrijf' : 'technicus');
+  updateUploadFields();
 });
 </script>
 <script src="supabase.js"></script>

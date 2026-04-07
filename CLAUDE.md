@@ -42,6 +42,7 @@ techmaat/
 ├── 404.html            # Custom 404 page
 ├── supabase.js         # Supabase REST client (TechMaatDB) + auth functions
 ├── supabase-auth-setup.sql  # SQL to run in Supabase Dashboard (table + RPC + users)
+├── verificatie-setup.sql   # SQL for documenten table + verificatie columns (run in Supabase)
 ├── cookies.js          # AVG cookie consent banner
 ├── sitemap.xml         # SEO sitemap
 ├── robots.txt          # Crawler rules (disallow dashboard + agents)
@@ -50,7 +51,8 @@ techmaat/
 └── agents/
     ├── inbox.js        # Inbox Agent — classifies form submissions
     ├── matching.js     # Matching Agent — scores technicus-bedrijf fit (0-100)
-    └── factuur.js      # Factuur Agent — invoice generation with commission
+    ├── factuur.js      # Factuur Agent — invoice generation with commission
+    └── verificatie.js  # Verificatie Agent — document review queue
 ```
 
 ## Database (Supabase)
@@ -58,6 +60,7 @@ Tables created with RLS policies:
 - **technici** — naam, email, telefoon, woonplaats, specialismen[], certificeringen[], uurtarief, werkradius, beschikbaarheid, ploegendienst, kilometervergoeding, omschrijving, status, created_at
 - **bedrijven** — bedrijfsnaam, contactpersoon, email, telefoon, locatie, branche, type_werk, omschrijving, status, created_at
 - **klussen** — bedrijf_id (FK), titel, omschrijving, locatie, urgentie, duur, specialisme, status, created_at
+- **documenten** — technicus_id (FK), type, bestandsnaam, storage_path, status (wacht/goedgekeurd/afgekeurd), notitie, vervaldatum, beoordeeld_door, beoordeeld_op, created_at
 
 - **admin_users** — email, password_hash (SHA-256), naam, role, created_at
   - RLS enabled, no direct SELECT policy (anon cannot read this table)
@@ -76,13 +79,14 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 
 ## AI Agents (7 total)
 
-### Active (3/7)
+### Active (4/7)
 1. **Inbox Agent** (`agents/inbox.js`) — Reads/classifies submissions. Filter tabs (Alle/Technici/Bedrijven). Expandable cards. Currently runs on demo data (Formspree API key = null).
 2. **Matching Agent** (`agents/matching.js`) — Scores technicus-bedrijf fit (0-100). Criteria: specialisme (40pts), type werk (20pts), beschikbaarheid (20pts), certificeringen (20pts). Two-column UI with score bars.
 3. **Factuur Agent** (`agents/factuur.js`) — Invoice overview with commission calc (10-15%). Status tracking (concept/verzonden/betaald/verlopen). Summary cards. Demo invoices.
 
-### Inactive (4/7)
-4. **Verificatie Agent** — Check VCA, NEN 3140, KvK documents. No code yet.
+4. **Verificatie Agent** (`agents/verificatie.js`) — Document review queue for uploaded certificates, insurance, KvK. Admin approve/reject with notes + expiry tracking. Auto-updates technicus verificatie_status.
+
+### Inactive (3/7)
 5. **Analytics Agent** — KPI analysis, trends. Placeholder page only.
 6. **CRM Agent** — Relationship management, follow-ups. Card only.
 7. **Content Agent** — Social media / LinkedIn content generation. Card only.
@@ -116,6 +120,11 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 - 404 page
 - Partner account (QK Techniek)
 
+### 🔴 Action Required
+1. **Run verificatie-setup.sql** in Supabase Dashboard SQL Editor — creates documenten table + adds verification columns
+2. **Create Storage bucket** `verificatie-docs` in Supabase Dashboard → Storage (private, PDF/JPG/PNG, 10MB max)
+3. **Add Storage policies**: INSERT + SELECT for anon on `verificatie-docs` bucket
+
 ### ✅ Completed (Phase 2 — 7 april 2026)
 - Public technici browse page (technici.html) with filters (specialisme, beschikbaarheid, ploegendienst, zoeken)
 - Public klussen browse page (klussen.html) with filters (specialisme, urgentie, duur, zoeken)
@@ -125,6 +134,14 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 - Navigation updated across all pages (Technici + Klussen links)
 - Sitemap updated with new pages
 - Cookie consent now properly blocks analytics
+- **Verificatie & compliance flow:**
+  - Document upload during technicus registration (VCA, NEN 3140, F-gassen, verzekering, KvK)
+  - Conditional upload fields (only show when certificate checkbox is checked)
+  - Compliance checkboxes for technici (training, ervaring, verzekering)
+  - Compliance checkboxes for bedrijven (werkwijze, commissie, dataverwerking)
+  - Refactored submit flow: JS-based with upload progress, Formspree email notification
+  - Verificatie Agent (4th active agent): admin review queue, approve/reject, expiry tracking
+  - Auto-update verificatie_status on technici when all docs are approved
 
 ### ✅ Completed (sessions 6-7 april 2026)
 - Landing page, registration form, all legal pages
