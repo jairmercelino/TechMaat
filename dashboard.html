@@ -160,8 +160,8 @@
           <div class="flex items-center justify-between mb-3">
             <span class="material-symbols-outlined text-tm-orange">euro</span>
           </div>
-          <p class="text-3xl font-headline font-bold text-tm-blue">&euro;0</p>
-          <p class="text-sm text-tm-text-light mt-1">Omzet deze maand</p>
+          <p class="text-3xl font-headline font-bold text-tm-blue" id="kpi-omzet">&euro;0</p>
+          <p class="text-sm text-tm-text-light mt-1">Commissie totaal</p>
         </div>
       </div>
 
@@ -172,7 +172,7 @@
             <h2 class="text-xl font-headline font-bold text-tm-blue">AI Agents</h2>
             <p class="text-sm text-tm-text-light">Automatiseer je platform met intelligente agents</p>
           </div>
-          <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">2 / 7 actief</span>
+          <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">3 / 7 actief</span>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           <!-- Inbox Agent (ACTIEF) -->
@@ -200,11 +200,12 @@
             <h3 class="font-bold text-tm-blue mb-1">Matching Agent</h3>
             <p class="text-xs text-tm-text-light leading-relaxed">Koppelt technici aan klussen via AI</p>
           </div>
-          <!-- Factuur Agent -->
-          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted cursor-pointer" onclick="navigateTo('facturen', document.querySelector('[data-page=facturen]'))">
+          <!-- Factuur Agent (ACTIEF) -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border-2 border-green-400 hover:border-green-500 transition-colors relative cursor-pointer" onclick="navigateTo('facturen', document.querySelector('[data-page=facturen]'))">
+            <div class="absolute -top-2 -right-2 bg-green-500 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">Live</div>
             <div class="flex items-start justify-between mb-4">
-              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">receipt_long</span></div>
-              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+              <div class="w-10 h-10 bg-tm-orange rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">receipt_long</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span><span class="text-xs text-green-600 font-medium">Actief</span></div>
             </div>
             <h3 class="font-bold text-tm-blue mb-1">Factuur Agent</h3>
             <p class="text-xs text-tm-text-light leading-relaxed">Genereert en verstuurt facturen</p>
@@ -302,13 +303,8 @@
         <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Facturen</h1>
         <p class="text-tm-text-light mt-1">Automatische facturatie en betalingsoverzicht</p>
       </div>
-      <div class="bg-white rounded-xl shadow-sm p-8 text-center">
-        <span class="material-symbols-outlined text-tm-muted text-6xl mb-4">receipt_long</span>
-        <h3 class="font-headline font-bold text-xl text-tm-blue mb-2">Factuur Agent</h3>
-        <p class="text-tm-text-light max-w-md mx-auto mb-6">Genereert automatisch facturen na afgeronde opdrachten. Commissie (10-15%) wordt berekend en gefactureerd aan het bedrijf. Stripe integratie komt in Phase 4.</p>
-        <span class="inline-flex items-center gap-2 text-sm text-tm-text-light bg-tm-light px-4 py-2 rounded-full">
-          <span class="w-2 h-2 rounded-full bg-gray-300"></span> Binnenkort beschikbaar
-        </span>
+      <div id="facturen-container">
+        <p class="text-tm-text-light text-sm">Laden...</p>
       </div>
     </div>
 
@@ -398,6 +394,7 @@
 
 <script src="supabase.js"></script>
 <script src="agents/inbox.js"></script>
+<script src="agents/factuur.js"></script>
 <script src="agents/matching.js"></script>
 <script>
 // Auth check
@@ -458,6 +455,9 @@ function navigateTo(page, btn) {
   if (page === 'matching' && window.MatchingAgent) {
     MatchingAgent.renderMatching('matching-container');
   }
+  if (page === 'facturen' && window.FactuurAgent) {
+    FactuurAgent.renderFacturen('facturen-container', 'alle');
+  }
 
   window.scrollTo(0, 0);
 }
@@ -517,6 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
     first.classList.add('text-white', 'bg-white/10', 'border-l-4', 'border-tm-orange');
     first.classList.remove('text-white/70');
   }
+  if (window.FactuurAgent) FactuurAgent.init();
   if (window.InboxAgent) {
     InboxAgent.init();
     setTimeout(function() {
