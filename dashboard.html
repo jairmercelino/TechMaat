@@ -172,7 +172,7 @@
             <h2 class="text-xl font-headline font-bold text-tm-blue">AI Agents</h2>
             <p class="text-sm text-tm-text-light">Automatiseer je platform met intelligente agents</p>
           </div>
-          <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">1 / 7 actief</span>
+          <span class="text-xs font-bold text-tm-text-light bg-tm-muted px-3 py-1 rounded-full">2 / 7 actief</span>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           <!-- Inbox Agent (ACTIEF) -->
@@ -190,11 +190,12 @@
             <h3 class="font-bold text-tm-blue mb-1">Inbox Agent</h3>
             <p class="text-xs text-tm-text-light leading-relaxed">Leest en classificeert inkomende berichten</p>
           </div>
-          <!-- Matching Agent -->
-          <div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted cursor-pointer" onclick="navigateTo('matching', document.querySelector('[data-page=matching]'))">
+          <!-- Matching Agent (ACTIEF) -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border-2 border-green-400 hover:border-green-500 transition-colors relative cursor-pointer" onclick="navigateTo('matching', document.querySelector('[data-page=matching]'))">
+            <div class="absolute -top-2 -right-2 bg-green-500 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">Live</div>
             <div class="flex items-start justify-between mb-4">
-              <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">swap_horiz</span></div>
-              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-300"></span><span class="text-xs text-gray-400 font-medium">Inactief</span></div>
+              <div class="w-10 h-10 bg-tm-orange rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl">swap_horiz</span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span><span class="text-xs text-green-600 font-medium">Actief</span></div>
             </div>
             <h3 class="font-bold text-tm-blue mb-1">Matching Agent</h3>
             <p class="text-xs text-tm-text-light leading-relaxed">Koppelt technici aan klussen via AI</p>
@@ -290,13 +291,8 @@
         <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Matching</h1>
         <p class="text-tm-text-light mt-1">AI-gestuurde koppeling van technici aan klussen</p>
       </div>
-      <div class="bg-white rounded-xl shadow-sm p-8 text-center">
-        <span class="material-symbols-outlined text-tm-muted text-6xl mb-4">swap_horiz</span>
-        <h3 class="font-headline font-bold text-xl text-tm-blue mb-2">Matching Agent</h3>
-        <p class="text-tm-text-light max-w-md mx-auto mb-6">De Matching Agent koppelt technici aan klussen op basis van specialisme, locatie, beschikbaarheid en ratings. Wordt aangedreven door Claude API.</p>
-        <span class="inline-flex items-center gap-2 text-sm text-tm-text-light bg-tm-light px-4 py-2 rounded-full">
-          <span class="w-2 h-2 rounded-full bg-gray-300"></span> Binnenkort beschikbaar
-        </span>
+      <div id="matching-container">
+        <p class="text-tm-text-light text-sm">Laden...</p>
       </div>
     </div>
 
@@ -402,6 +398,7 @@
 
 <script src="supabase.js"></script>
 <script src="agents/inbox.js"></script>
+<script src="agents/matching.js"></script>
 <script>
 // Auth check
 (function() {
@@ -453,6 +450,9 @@ function navigateTo(page, btn) {
   }
   if (page === 'bedrijven' && window.InboxAgent) {
     renderBedrijven();
+  }
+  if (page === 'matching' && window.MatchingAgent) {
+    MatchingAgent.renderMatching('matching-container');
   }
 
   window.scrollTo(0, 0);
@@ -520,6 +520,9 @@ document.addEventListener('DOMContentLoaded', function() {
       var badge = document.getElementById('inbox-badge');
       if (badge) badge.textContent = stats.nieuw;
     }, 500);
+  }
+  if (window.MatchingAgent) {
+    MatchingAgent.init();
   }
   // Load live stats from Supabase
   if (window.TechMaatDB) {
