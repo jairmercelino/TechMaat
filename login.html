@@ -101,37 +101,42 @@
 
     <!-- Note -->
     <p class="text-center text-white/40 text-xs mt-6">
-      Alleen voor geautoriseerde beheerders. Wordt later beveiligd via Supabase Auth.
+      Alleen voor geautoriseerde beheerders.
     </p>
   </div>
 </div>
 
+<script src="supabase.js"></script>
 <script>
-// Temporary credentials — will be replaced by Supabase Auth
-var VALID_USERS = [
-  { email: 'admin@techmaat.nl', password: 'TechMaat2026!', role: 'admin', naam: 'Jair' },
-  { email: 'info@jmmechanica.nl', password: 'TechMaat2026!', role: 'admin', naam: 'Jair' },
-  { email: 'info@qktechniek.nl', password: 'TechMaat2026!', role: 'partner', naam: 'Partner QK Techniek' }
-];
-
 function handleLogin(e) {
   e.preventDefault();
   var email = document.getElementById('login-email').value.trim().toLowerCase();
   var password = document.getElementById('login-password').value;
   var errorEl = document.getElementById('login-error');
+  var submitBtn = document.querySelector('#login-form button[type="submit"]');
 
-  var match = VALID_USERS.find(function(u) {
-    return u.email === email && u.password === password;
+  // Disable button while loading
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Bezig...';
+  errorEl.classList.add('hidden');
+
+  TechMaatDB.login(email, password).then(function(session) {
+    if (session) {
+      window.location.href = 'dashboard.html';
+    } else {
+      errorEl.classList.remove('hidden');
+      document.getElementById('login-password').value = '';
+      document.getElementById('login-password').focus();
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Inloggen';
+    }
+  }).catch(function(err) {
+    console.error('Login error:', err);
+    errorEl.classList.remove('hidden');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Inloggen';
   });
 
-  if (match) {
-    sessionStorage.setItem('tm_auth', JSON.stringify({ email: match.email, role: match.role, naam: match.naam, time: Date.now() }));
-    window.location.href = 'dashboard.html';
-  } else {
-    errorEl.classList.remove('hidden');
-    document.getElementById('login-password').value = '';
-    document.getElementById('login-password').focus();
-  }
   return false;
 }
 
@@ -148,7 +153,7 @@ function togglePassword() {
 }
 
 // If already logged in, redirect
-if (sessionStorage.getItem('tm_auth')) {
+if (TechMaatDB.getSession()) {
   window.location.href = 'dashboard.html';
 }
 </script>

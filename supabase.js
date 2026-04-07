@@ -59,5 +59,81 @@ var TechMaatDB = {
         total: (results[0].length || 0) + (results[1].length || 0)
       };
     });
+  },
+
+  // ─── Auth ──────────────────────────────────────────────
+
+  _AUTH_SALT: 'techmaat_salt_2026',
+  _SESSION_KEY: 'tm_auth',
+  _SESSION_TTL: 8 * 60 * 60 * 1000, // 8 hours
+
+  /**
+   * Hash a password with SHA-256 + salt using the Web Crypto API.
+   * Returns a hex string.
+   */
+  _hashPassword: function(password) {
+    var encoder = new TextEncoder();
+    var data = encoder.encode(password + this._AUTH_SALT);
+    return crypto.subtle.digest('SHA-256', data).then(function(buf) {
+      return Array.from(new Uint8Array(buf))
+        .map(function(b) { return b.toString(16).padStart(2, '0'); })
+        .join('');
+    });
+  },
+
+  /**
+   * Login with email + password.
+   * Hashes the password client-side, calls the verify_login RPC in Supabase.
+   * Returns the user object { id, email, naam, role } or null.
+   */
+  login: function(email, password) {
+    var self = this;
+    return this._hashPassword(password).then(function(hash) {
+      return fetch(SUPABASE_URL + '/rest/v1/rpc/verify_login', {
+        method: 'POST',
+        headers: self._headers(),
+        body: JSON.stringify({ p_email: email, p_hash: hash })
+      }).then(function(r) { return r.json(); });
+    }).then(function(user) {
+      if (user && user.email) {
+        var session = {
+          id: user.id,
+          email: user.email,
+          naam: user.naam,
+          role: user.role,
+          time: Date.now()
+        };
+        sessionStorage.setItem(self._SESSION_KEY, JSON.stringify(session));
+        return session;
+      }
+      return null;
+    });
+  },
+
+  /**
+   * Get current session from sessionStorage.
+   * Returns the user object or null if expired / not present.
+   */
+  getSession: function() {
+    var raw = sessionStorage.getItem(this._SESSION_KEY);
+    if (!raw) return null;
+    try {
+      var session = JSON.parse(raw);
+      if (Date.now() - session.time > this._SESSION_TTL) {
+        this.logout();
+        return null;
+      }
+      return session;
+    } catch (e) {
+      this.logout();
+      return null;
+    }
+  },
+
+  /**
+   * Clear the session (logout).
+   */
+  logout: function() {
+    sessionStorage.removeItem(this._SESSION_KEY);
   }
 };

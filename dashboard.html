@@ -399,9 +399,8 @@
 <script>
 // Auth check
 (function() {
-  var auth = sessionStorage.getItem('tm_auth');
-  if (!auth) { window.location.href = 'login.html'; return; }
-  var user = JSON.parse(auth);
+  var user = TechMaatDB.getSession();
+  if (!user) { window.location.href = 'login.html'; return; }
   var emailEl = document.getElementById('user-email');
   var settingsEl = document.getElementById('settings-email');
   if (emailEl) emailEl.textContent = user.naam || user.email;
@@ -413,7 +412,7 @@
 })();
 
 function logout() {
-  sessionStorage.removeItem('tm_auth');
+  TechMaatDB.logout();
   window.location.href = 'login.html';
 }
 

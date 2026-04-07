@@ -15,7 +15,7 @@ Dutch marketplace platform connecting ZZP (freelance) technicians with companies
 - Styling: Tailwind CDN (same config in every HTML file)
 - Database: Supabase (URL: jvyexvymbmtdovuhanjt.supabase.co)
 - Forms: Formspree (ID: xaqlakdb) + Supabase dual-write
-- Auth: Hardcoded sessionStorage (MUST migrate to Supabase Auth)
+- Auth: Supabase custom auth (SHA-256 hashed passwords + verify_login RPC)
 - Hosting: GitHub Pages
 - Future: Claude API (matching), Stripe (payments), SendGrid (email)
 
@@ -38,7 +38,8 @@ techmaat/
 ├── voorwaarden.html    # Terms of service
 ├── verzekering.html    # Insurance info for ZZP technicians
 ├── 404.html            # Custom 404 page
-├── supabase.js         # Supabase REST client (TechMaatDB)
+├── supabase.js         # Supabase REST client (TechMaatDB) + auth functions
+├── supabase-auth-setup.sql  # SQL to run in Supabase Dashboard (table + RPC + users)
 ├── cookies.js          # AVG cookie consent banner
 ├── sitemap.xml         # SEO sitemap
 ├── robots.txt          # Crawler rules (disallow dashboard + agents)
@@ -56,7 +57,11 @@ Tables created with RLS policies:
 - **bedrijven** — bedrijfsnaam, contactpersoon, email, telefoon, locatie, branche, type_werk, omschrijving, status, created_at
 - **klussen** — bedrijf_id (FK), titel, omschrijving, locatie, urgentie, duur, specialisme, status, created_at
 
-RLS: anon can INSERT into technici/bedrijven (form submissions) and SELECT from all tables.
+- **admin_users** — email, password_hash (SHA-256), naam, role, created_at
+  - RLS enabled, no direct SELECT policy (anon cannot read this table)
+  - Login via `verify_login(p_email, p_hash)` RPC function (SECURITY DEFINER)
+
+RLS: anon can INSERT into technici/bedrijven (form submissions) and SELECT from all tables. admin_users is protected — accessible only via verify_login RPC.
 
 ## Login Accounts
 | Email | Password | Role | Access |
@@ -65,7 +70,7 @@ RLS: anon can INSERT into technici/bedrijven (form submissions) and SELECT from 
 | info@jmmechanica.nl | TechMaat2026! | admin | Full dashboard |
 | info@qktechniek.nl | TechMaat2026! | partner | No Facturen, no Instellingen |
 
-⚠️ SECURITY: These are hardcoded in login.html. Must migrate to Supabase Auth ASAP.
+Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via Supabase RPC (verify_login). No plaintext passwords in source code.
 
 ## AI Agents (7 total)
 
@@ -110,13 +115,13 @@ RLS: anon can INSERT into technici/bedrijven (form submissions) and SELECT from 
 - Partner account (QK Techniek)
 
 ### 🔴 Critical Issues (fix before sharing URL)
-1. Hardcoded passwords in login.html — visible in page source
-2. SessionStorage auth easily bypassable
+1. ~~Hardcoded passwords in login.html~~ ✅ Fixed — uses Supabase verify_login RPC
+2. ~~SessionStorage auth easily bypassable~~ ✅ Improved — 8h TTL, server-side password check
 3. Cookie consent doesn't actually block anything
 4. aanmelden.html missing from sitemap.xml
 
 ### 🟡 Next Steps (prioritized)
-1. Supabase Auth (replace hardcoded login)
+1. ~~Supabase Auth (replace hardcoded login)~~ ✅ Done
 2. Own domain (techmaat.nl) + professional email
 3. Activate "Koppel" button + email notifications
 4. PDF invoice generation
