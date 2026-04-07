@@ -114,21 +114,33 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 - 404 page
 - Partner account (QK Techniek)
 
-### 🔴 Critical Issues (fix before sharing URL)
-1. ~~Hardcoded passwords in login.html~~ ✅ Fixed — uses Supabase verify_login RPC
-2. ~~SessionStorage auth easily bypassable~~ ✅ Improved — 8h TTL, server-side password check
-3. Cookie consent doesn't actually block anything
-4. aanmelden.html missing from sitemap.xml
+### 🔴 Action Required
+1. **Run supabase-auth-setup.sql** in Supabase Dashboard SQL Editor — login won't work until this is done
+2. Cookie consent doesn't actually block analytics — implement before adding Google Analytics
+3. Add aanmelden.html to sitemap.xml
+
+### ✅ Completed (sessions 6-7 april 2026)
+- Landing page, registration form, all legal pages
+- Supabase connected (technici, bedrijven, klussen, admin_users tables)
+- Formspree + Supabase dual-write on registration
+- Login migrated to Supabase Auth (SHA-256 + verify_login RPC)
+- Role-based access (admin/partner)
+- 3/7 AI agents active (Inbox, Matching, Factuur)
+- Dashboard with working sidebar navigation (8 sections)
+- Cookie banner, SEO, favicon, 404 page
+- CLAUDE.md project guide
 
 ### 🟡 Next Steps (prioritized)
-1. ~~Supabase Auth (replace hardcoded login)~~ ✅ Done
-2. Own domain (techmaat.nl) + professional email
-3. Activate "Koppel" button + email notifications
-4. PDF invoice generation
-5. Verificatie Agent (document upload + check)
-6. Real data in agents (replace demo data)
-7. Analytics Agent
+1. Own domain (techmaat.nl) + professional email
+2. Activate "Koppel" button in Matching + email notifications
+3. PDF invoice generation
+4. Verificatie Agent (document upload + check)
+5. Replace demo data with live Supabase data in all agents
+6. Analytics Agent
+7. Build remaining agents (CRM, Content)
 8. Stripe integration (Phase 4)
+9. Supabase Auth upgrade — use built-in auth with email verification
+10. Migrate from Tailwind CDN to local build
 
 ## Workflow Rules
 - Always push to `jairmercelino/TechMaat`, never JM-Mechanica
