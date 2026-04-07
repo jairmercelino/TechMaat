@@ -47,6 +47,49 @@ var TechMaatDB = {
     }).then(function(r) { return r.json(); });
   },
 
+  // Get all klussen
+  getKlussen: function() {
+    return fetch(SUPABASE_URL + '/rest/v1/klussen?order=created_at.desc', {
+      headers: this._headers()
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Insert a klus
+  insertKlus: function(data) {
+    return fetch(SUPABASE_URL + '/rest/v1/klussen', {
+      method: 'POST',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Update a klus by id
+  updateKlus: function(id, data) {
+    return fetch(SUPABASE_URL + '/rest/v1/klussen?id=eq.' + id, {
+      method: 'PATCH',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Update a technicus by id
+  updateTechnicus: function(id, data) {
+    return fetch(SUPABASE_URL + '/rest/v1/technici?id=eq.' + id, {
+      method: 'PATCH',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Update a bedrijf by id
+  updateBedrijf: function(id, data) {
+    return fetch(SUPABASE_URL + '/rest/v1/bedrijven?id=eq.' + id, {
+      method: 'PATCH',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
   // Get counts
   getStats: function() {
     return Promise.all([

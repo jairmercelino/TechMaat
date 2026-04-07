@@ -104,6 +104,10 @@
       <span class="material-symbols-outlined text-xl">business</span>
       <span class="font-medium">Bedrijven</span>
     </button>
+    <button onclick="navigateTo('klussen', this)" data-page="klussen" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-left">
+      <span class="material-symbols-outlined text-xl">work</span>
+      <span class="font-medium">Klussen</span>
+    </button>
 
     <div class="px-4 mt-6 mb-4">
       <p class="text-white/40 text-[10px] font-bold uppercase tracking-widest">Inzicht</p>
@@ -326,6 +330,86 @@
       <div id="bedrijven-container"></div>
     </div>
 
+    <!-- ==================== KLUSSEN ==================== -->
+    <div id="page-klussen" class="page-section">
+      <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-headline font-bold text-tm-blue">Klussen</h1>
+          <p class="text-tm-text-light mt-1">Beheer opdrachten en zoek technici</p>
+        </div>
+        <button onclick="showKlusForm()" class="bg-tm-orange text-white px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-tm-orange-dark transition-colors cursor-pointer flex items-center gap-2 self-start">
+          <span class="material-symbols-outlined text-lg">add</span> Nieuwe klus
+        </button>
+      </div>
+
+      <!-- Nieuwe klus form (hidden by default) -->
+      <div id="klus-form-wrapper" class="hidden mb-8">
+        <form id="klus-form" class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+          <h2 class="text-lg font-headline font-bold text-tm-blue mb-6">Nieuwe klus plaatsen</h2>
+          <div class="grid md:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Titel</label>
+              <input name="titel" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm" placeholder="Storing hydraulisch systeem"/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Locatie</label>
+              <input name="locatie" required class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm" placeholder="Rotterdam"/>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Specialisme</label>
+              <select name="specialisme" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+                <option value="">Selecteer...</option>
+                <option>Hydrauliek</option>
+                <option>Elektrotechniek</option>
+                <option>Pneumatiek</option>
+                <option>Mechanica</option>
+                <option>PLC/Besturingen</option>
+                <option>Lassen</option>
+                <option>Koeltechniek</option>
+                <option>Instrumentatie</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Urgentie</label>
+              <select name="urgentie" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+                <option>Normaal</option>
+                <option>Hoog</option>
+                <option>Spoed</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Verwachte duur</label>
+              <select name="duur" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+                <option>1 dag</option>
+                <option>2-3 dagen</option>
+                <option>1 week</option>
+                <option>2-4 weken</option>
+                <option>1+ maand</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Bedrijf</label>
+              <select name="bedrijf_id" id="klus-bedrijf-select" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+                <option value="">Selecteer bedrijf...</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-6">
+            <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Omschrijving</label>
+            <textarea name="omschrijving" rows="3" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm" placeholder="Beschrijf de opdracht, benodigde vaardigheden en bijzonderheden..."></textarea>
+          </div>
+          <div class="flex gap-3">
+            <button type="submit" class="bg-tm-orange text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-tm-orange-dark transition-colors cursor-pointer">Plaatsen</button>
+            <button type="button" onclick="hideKlusForm()" class="bg-tm-light text-tm-text px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-tm-muted transition-colors cursor-pointer">Annuleren</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="klussen-container">
+        <p class="text-tm-text-light text-sm">Laden...</p>
+      </div>
+    </div>
+
     <!-- ==================== ANALYTICS ==================== -->
     <div id="page-analytics" class="page-section">
       <div class="mb-8">
@@ -445,10 +529,10 @@ function navigateTo(page, btn) {
   if (page === 'inbox' && window.InboxAgent) {
     InboxAgent.renderInbox('inbox-container', 'alle');
   }
-  if (page === 'technici' && window.InboxAgent) {
+  if (page === 'technici') {
     renderTechnici();
   }
-  if (page === 'bedrijven' && window.InboxAgent) {
+  if (page === 'bedrijven') {
     renderBedrijven();
   }
   if (page === 'matching' && window.MatchingAgent) {
@@ -457,56 +541,155 @@ function navigateTo(page, btn) {
   if (page === 'facturen' && window.FactuurAgent) {
     FactuurAgent.renderFacturen('facturen-container', 'alle');
   }
+  if (page === 'klussen') {
+    renderKlussen();
+  }
 
   window.scrollTo(0, 0);
 }
 
-function renderTechnici() {
-  var subs = InboxAgent.getSubmissions().filter(function(s) { return s.type === 'technicus'; });
-  var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
-  subs.forEach(function(s) {
-    html += '<div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">' +
-      '<div class="flex items-center gap-3 mb-3">' +
-      '<div class="w-10 h-10 bg-tm-orange/10 rounded-full flex items-center justify-center"><span class="material-symbols-outlined text-tm-orange">person</span></div>' +
-      '<div><h3 class="font-bold text-tm-blue">' + s.naam + '</h3><p class="text-xs text-tm-text-light">' + s.woonplaats + '</p></div>' +
-      '</div>' +
-      '<div class="flex flex-wrap gap-1.5 mb-3">' + (s.specialismen || []).map(function(sp) { return '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + sp + '</span>'; }).join('') + '</div>' +
-      '<div class="grid grid-cols-3 gap-2 text-xs text-tm-text-light">' +
-      '<div><span class="block font-bold text-tm-text">Tarief</span>&euro;' + s.uurtarief + '/uur</div>' +
-      '<div><span class="block font-bold text-tm-text">Radius</span>' + s.werkradius + ' km</div>' +
-      '<div><span class="block font-bold text-tm-text">Dienst</span>' + s.ploegendienst + '</div>' +
-      '</div>' +
-      '<div class="mt-3 pt-3 border-t border-tm-muted text-xs text-tm-text-light">' +
-      '<span class="font-bold text-tm-text">Cert: </span>' + (s.certificeringen || []).join(', ') +
-      ' &middot; <span class="font-bold text-tm-text">KM: </span>&euro;' + s.kilometervergoeding + '/km' +
-      '</div></div>';
-  });
-  html += '</div>';
-  if (subs.length === 0) html = '<div class="bg-white rounded-xl p-8 shadow-sm text-center text-tm-text-light">Nog geen technici aangemeld.</div>';
-  document.getElementById('technici-container').innerHTML = html;
+// ─── Klussen ────────────────────────────────────────────
+function showKlusForm() {
+  document.getElementById('klus-form-wrapper').classList.remove('hidden');
+  // Populate bedrijf dropdown
+  if (window.TechMaatDB) {
+    TechMaatDB.getBedrijven().then(function(bedrijven) {
+      var sel = document.getElementById('klus-bedrijf-select');
+      sel.innerHTML = '<option value="">Selecteer bedrijf...</option>';
+      bedrijven.forEach(function(b) {
+        sel.innerHTML += '<option value="' + b.id + '">' + (b.bedrijfsnaam || b.contactpersoon) + ' — ' + (b.locatie || '') + '</option>';
+      });
+    });
+  }
+}
+function hideKlusForm() {
+  document.getElementById('klus-form-wrapper').classList.add('hidden');
+  document.getElementById('klus-form').reset();
 }
 
-function renderBedrijven() {
-  var subs = InboxAgent.getSubmissions().filter(function(s) { return s.type === 'bedrijf'; });
-  var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
-  subs.forEach(function(s) {
-    html += '<div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">' +
-      '<div class="flex items-center gap-3 mb-3">' +
-      '<div class="w-10 h-10 bg-tm-blue/10 rounded-full flex items-center justify-center"><span class="material-symbols-outlined text-tm-blue">business</span></div>' +
-      '<div><h3 class="font-bold text-tm-blue">' + s.bedrijfsnaam + '</h3><p class="text-xs text-tm-text-light">' + s.locatie + '</p></div>' +
-      '</div>' +
-      '<div class="flex gap-2 mb-3">' +
-      '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + s.branche + '</span>' +
-      '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + s.type_werk + '</span>' +
-      '</div>' +
-      '<p class="text-sm text-tm-text-light">' + s.omschrijving + '</p>' +
-      '<div class="mt-3 pt-3 border-t border-tm-muted text-xs text-tm-text-light">' +
-      '<span class="font-bold text-tm-text">Contact: </span>' + s.contactpersoon + ' &middot; ' + s.email +
-      '</div></div>';
+document.getElementById('klus-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var f = e.target;
+  var data = {
+    titel: f.titel.value,
+    locatie: f.locatie.value,
+    specialisme: f.specialisme.value,
+    urgentie: f.urgentie.value,
+    duur: f.duur.value,
+    omschrijving: f.omschrijving.value,
+    bedrijf_id: f.bedrijf_id.value ? parseInt(f.bedrijf_id.value) : null,
+    status: 'open'
+  };
+  if (window.TechMaatDB) {
+    TechMaatDB.insertKlus(data).then(function() {
+      hideKlusForm();
+      renderKlussen();
+    });
+  }
+});
+
+var urgentieColors = { Spoed: 'bg-red-100 text-red-700', Hoog: 'bg-orange-100 text-orange-700', Normaal: 'bg-green-100 text-green-700' };
+var statusColors = { open: 'bg-blue-100 text-blue-700', toegewezen: 'bg-yellow-100 text-yellow-700', afgerond: 'bg-green-100 text-green-700', geannuleerd: 'bg-gray-100 text-gray-500' };
+
+function renderKlussen() {
+  var container = document.getElementById('klussen-container');
+  if (!window.TechMaatDB) { container.innerHTML = '<p class="text-tm-text-light text-sm">Database niet beschikbaar.</p>'; return; }
+  container.innerHTML = '<p class="text-tm-text-light text-sm">Laden...</p>';
+  TechMaatDB.getKlussen().then(function(klussen) {
+    if (!klussen || klussen.length === 0) {
+      container.innerHTML = '<div class="bg-white rounded-xl p-8 shadow-sm text-center"><span class="material-symbols-outlined text-tm-muted text-5xl mb-3">work</span><p class="text-tm-text-light">Nog geen klussen geplaatst. Maak je eerste klus aan.</p></div>';
+      return;
+    }
+    var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+    klussen.forEach(function(k) {
+      var uc = urgentieColors[k.urgentie] || urgentieColors.Normaal;
+      var sc = statusColors[k.status] || statusColors.open;
+      html += '<div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:shadow-md transition-shadow">' +
+        '<div class="flex items-start justify-between mb-3">' +
+        '<h3 class="font-bold text-tm-blue text-lg">' + (k.titel || 'Zonder titel') + '</h3>' +
+        '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full ' + uc + '">' + (k.urgentie || 'Normaal') + '</span>' +
+        '</div>' +
+        '<p class="text-sm text-tm-text-light mb-3 line-clamp-2">' + (k.omschrijving || '') + '</p>' +
+        '<div class="flex flex-wrap gap-2 mb-3">' +
+        (k.specialisme ? '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + k.specialisme + '</span>' : '') +
+        (k.locatie ? '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span>' + k.locatie + '</span>' : '') +
+        (k.duur ? '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + k.duur + '</span>' : '') +
+        '</div>' +
+        '<div class="flex items-center justify-between pt-3 border-t border-tm-muted">' +
+        '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full ' + sc + '">' + (k.status || 'open') + '</span>' +
+        '<span class="text-xs text-tm-text-light">' + new Date(k.created_at).toLocaleDateString('nl-NL') + '</span>' +
+        '</div></div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
   });
-  html += '</div>';
-  if (subs.length === 0) html = '<div class="bg-white rounded-xl p-8 shadow-sm text-center text-tm-text-light">Nog geen bedrijven aangemeld.</div>';
-  document.getElementById('bedrijven-container').innerHTML = html;
+}
+
+// ─── Technici (live Supabase) ───────────────────────────
+function renderTechnici() {
+  var container = document.getElementById('technici-container');
+  if (!window.TechMaatDB) { container.innerHTML = '<p class="text-tm-text-light text-sm">Database niet beschikbaar.</p>'; return; }
+  container.innerHTML = '<p class="text-tm-text-light text-sm">Laden...</p>';
+  TechMaatDB.getTechnici().then(function(technici) {
+    if (!technici || technici.length === 0) {
+      container.innerHTML = '<div class="bg-white rounded-xl p-8 shadow-sm text-center text-tm-text-light">Nog geen technici aangemeld.</div>';
+      return;
+    }
+    var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+    technici.forEach(function(s) {
+      html += '<div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">' +
+        '<div class="flex items-center gap-3 mb-3">' +
+        '<div class="w-10 h-10 bg-tm-orange/10 rounded-full flex items-center justify-center"><span class="material-symbols-outlined text-tm-orange">person</span></div>' +
+        '<div><h3 class="font-bold text-tm-blue">' + (s.naam || 'Onbekend') + '</h3><p class="text-xs text-tm-text-light">' + (s.woonplaats || '') + '</p></div>' +
+        '<span class="ml-auto text-[11px] font-bold px-2 py-0.5 rounded-full ' + (s.status === 'actief' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700') + '">' + (s.status || 'nieuw') + '</span>' +
+        '</div>' +
+        '<div class="flex flex-wrap gap-1.5 mb-3">' + (s.specialismen || []).map(function(sp) { return '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + sp + '</span>'; }).join('') + '</div>' +
+        '<div class="grid grid-cols-3 gap-2 text-xs text-tm-text-light">' +
+        '<div><span class="block font-bold text-tm-text">Tarief</span>&euro;' + (s.uurtarief || '—') + '/uur</div>' +
+        '<div><span class="block font-bold text-tm-text">Radius</span>' + (s.werkradius || '—') + ' km</div>' +
+        '<div><span class="block font-bold text-tm-text">Dienst</span>' + (s.ploegendienst || '—') + '</div>' +
+        '</div>' +
+        '<div class="mt-3 pt-3 border-t border-tm-muted text-xs text-tm-text-light">' +
+        '<span class="font-bold text-tm-text">Cert: </span>' + (s.certificeringen || []).join(', ') +
+        (s.kilometervergoeding ? ' &middot; <span class="font-bold text-tm-text">KM: </span>&euro;' + s.kilometervergoeding + '/km' : '') +
+        ' &middot; <span class="font-bold text-tm-text">Beschikbaar: </span>' + (s.beschikbaarheid || '—') +
+        '</div></div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  });
+}
+
+// ─── Bedrijven (live Supabase) ──────────────────────────
+function renderBedrijven() {
+  var container = document.getElementById('bedrijven-container');
+  if (!window.TechMaatDB) { container.innerHTML = '<p class="text-tm-text-light text-sm">Database niet beschikbaar.</p>'; return; }
+  container.innerHTML = '<p class="text-tm-text-light text-sm">Laden...</p>';
+  TechMaatDB.getBedrijven().then(function(bedrijven) {
+    if (!bedrijven || bedrijven.length === 0) {
+      container.innerHTML = '<div class="bg-white rounded-xl p-8 shadow-sm text-center text-tm-text-light">Nog geen bedrijven aangemeld.</div>';
+      return;
+    }
+    var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+    bedrijven.forEach(function(s) {
+      html += '<div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted">' +
+        '<div class="flex items-center gap-3 mb-3">' +
+        '<div class="w-10 h-10 bg-tm-blue/10 rounded-full flex items-center justify-center"><span class="material-symbols-outlined text-tm-blue">business</span></div>' +
+        '<div><h3 class="font-bold text-tm-blue">' + (s.bedrijfsnaam || 'Onbekend') + '</h3><p class="text-xs text-tm-text-light">' + (s.locatie || '') + '</p></div>' +
+        '<span class="ml-auto text-[11px] font-bold px-2 py-0.5 rounded-full ' + (s.status === 'actief' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700') + '">' + (s.status || 'nieuw') + '</span>' +
+        '</div>' +
+        '<div class="flex gap-2 mb-3">' +
+        (s.branche ? '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + s.branche + '</span>' : '') +
+        (s.type_werk ? '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + s.type_werk + '</span>' : '') +
+        '</div>' +
+        '<p class="text-sm text-tm-text-light">' + (s.omschrijving || '') + '</p>' +
+        '<div class="mt-3 pt-3 border-t border-tm-muted text-xs text-tm-text-light">' +
+        '<span class="font-bold text-tm-text">Contact: </span>' + (s.contactpersoon || '') + ' &middot; ' + (s.email || '') +
+        '</div></div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  });
 }
 
 // Init

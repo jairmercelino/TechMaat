@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Technici — TechMaat</title>
+<meta name="description" content="Bekijk beschikbare ZZP technici op TechMaat. Hydrauliek, elektrotechniek, PLC, mechanica — direct inzetbaar in heel Nederland."/>
+<meta property="og:title" content="Beschikbare Technici — TechMaat"/>
+<meta property="og:description" content="Vind de juiste technische specialist voor uw project. Direct beschikbaar."/>
+<meta property="og:url" content="https://jairmercelino.github.io/TechMaat/technici.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="nl_NL"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23003082'/><text x='16' y='22' font-size='16' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>TM</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { min-height: 100dvh; }
+</style>
+</head>
+<body class="bg-tm-surface font-body text-tm-text">
+
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-lg">TM</span>
+      </div>
+      <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
+    </a>
+    <div class="hidden md:flex gap-8 items-center">
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="technici.html">Technici</a>
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="klussen.html">Klussen</a>
+      <a href="aanmelden.html">
+        <button class="bg-tm-blue text-white px-6 py-2 rounded-lg font-bold cursor-pointer active:scale-95 transition-all hover:bg-tm-navy">Meld je aan</button>
+      </a>
+    </div>
+    <button class="md:hidden text-tm-blue" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-tm-muted px-6 py-4 space-y-4">
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="technici.html">Technici</a>
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="klussen.html">Klussen</a>
+    <a class="block" href="aanmelden.html">
+      <button class="w-full bg-tm-blue text-white px-6 py-3 rounded-lg font-bold">Meld je aan</button>
+    </a>
+  </div>
+  <div class="bg-tm-muted h-[1px]"></div>
+</header>
+
+<main class="pt-24 pb-16">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl sm:text-5xl font-headline font-bold text-tm-blue tracking-tight mb-3">Beschikbare Technici</h1>
+      <p class="text-lg text-tm-text-light max-w-2xl">Gekwalificeerde ZZP technici, direct inzetbaar. Filter op specialisme, locatie of beschikbaarheid.</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Specialisme</label>
+          <select id="filter-spec" onchange="applyFilters()" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+            <option value="">Alle specialismen</option>
+            <option>Hydrauliek</option>
+            <option>Elektrotechniek</option>
+            <option>Pneumatiek</option>
+            <option>Mechanica</option>
+            <option>PLC/Besturingen</option>
+            <option>Lassen</option>
+            <option>Koeltechniek</option>
+            <option>Instrumentatie</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Beschikbaarheid</label>
+          <select id="filter-beschikbaar" onchange="applyFilters()" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+            <option value="">Alle</option>
+            <option>Direct beschikbaar</option>
+            <option>Binnen 1 week</option>
+            <option>Binnen 1 maand</option>
+            <option>Op afspraak</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Ploegendienst</label>
+          <select id="filter-ploegen" onchange="applyFilters()" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+            <option value="">Alle</option>
+            <option>Dagdienst</option>
+            <option>2-ploegen</option>
+            <option>3-ploegen</option>
+            <option>5-ploegen (volcontinue)</option>
+            <option>Flexibel</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Zoeken</label>
+          <input id="filter-zoek" oninput="applyFilters()" type="text" placeholder="Naam of plaats..." class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results count -->
+    <p id="results-count" class="text-sm text-tm-text-light mb-4"></p>
+
+    <!-- Technici grid -->
+    <div id="technici-grid">
+      <div class="flex items-center justify-center py-16">
+        <div class="text-center">
+          <span class="material-symbols-outlined text-tm-muted text-5xl animate-pulse">hourglass_top</span>
+          <p class="text-tm-text-light mt-3">Technici laden...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 bg-tm-blue rounded-xl p-8 md:p-12 text-center text-white">
+      <h2 class="text-2xl md:text-3xl font-headline font-bold mb-4">Ben jij een ZZP technicus?</h2>
+      <p class="text-white/70 max-w-lg mx-auto mb-6">Maak een profiel aan en ontvang direct relevante opdrachten in jouw regio. Gratis aanmelden.</p>
+      <a href="aanmelden.html">
+        <button class="bg-tm-orange text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-tm-orange-dark transition-colors cursor-pointer">Meld je aan als technicus</button>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-tm-navy bg-tm-blue text-white">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-tm-orange rounded-md flex items-center justify-center">
+          <span class="text-white font-headline font-bold text-sm">TM</span>
+        </div>
+        <span class="font-headline font-bold text-2xl text-tm-orange">TechMaat</span>
+      </div>
+      <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">Het platform dat vakmanschap en flexibiliteit verbindt.</p>
+      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2026 TechMaat. Alle rechten voorbehouden.</p>
+    </div>
+    <div class="grid grid-cols-3 gap-8">
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Platform</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="technici.html">Technici</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="klussen.html">Klussen</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="aanmelden.html">Aanmelden</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Juridisch</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="privacy.html">Privacybeleid</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="voorwaarden.html">Voorwaarden</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="verzekering.html">Verzekering</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Contact</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="mailto:info@jmmechanica.nl">info@jmmechanica.nl</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="supabase.js"></script>
+<script>
+var allTechnici = [];
+
+function renderCards(list) {
+  var grid = document.getElementById('technici-grid');
+  var count = document.getElementById('results-count');
+  count.textContent = list.length + ' technicus' + (list.length !== 1 ? 'en' : '') + ' gevonden';
+
+  if (list.length === 0) {
+    grid.innerHTML = '<div class="bg-white rounded-xl p-12 shadow-sm text-center"><span class="material-symbols-outlined text-tm-muted text-5xl mb-3">search_off</span><p class="text-tm-text-light">Geen technici gevonden met deze filters.</p></div>';
+    return;
+  }
+
+  var html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">';
+  list.forEach(function(s) {
+    var initials = (s.naam || '?').split(' ').map(function(n) { return n[0]; }).join('').substring(0, 2).toUpperCase();
+    html += '<div class="bg-white rounded-xl p-5 shadow-sm border border-tm-muted hover:shadow-md hover:border-tm-orange/30 transition-all">' +
+      '<div class="flex items-center gap-3 mb-4">' +
+      '<div class="w-12 h-12 bg-tm-orange/10 rounded-full flex items-center justify-center"><span class="font-headline font-bold text-tm-orange">' + initials + '</span></div>' +
+      '<div class="flex-1 min-w-0">' +
+      '<h3 class="font-bold text-tm-blue truncate">' + (s.naam || 'Onbekend') + '</h3>' +
+      '<p class="text-xs text-tm-text-light flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span>' + (s.woonplaats || 'Onbekend') + '</p>' +
+      '</div>' +
+      '<div class="text-right">' +
+      '<p class="text-lg font-headline font-bold text-tm-blue">&euro;' + (s.uurtarief || '—') + '</p>' +
+      '<p class="text-[10px] text-tm-text-light">per uur</p>' +
+      '</div>' +
+      '</div>' +
+      '<div class="flex flex-wrap gap-1.5 mb-3">' + (s.specialismen || []).map(function(sp) { return '<span class="text-[11px] bg-tm-light text-tm-blue px-2 py-0.5 rounded-full font-medium">' + sp + '</span>'; }).join('') + '</div>' +
+      '<div class="flex flex-wrap gap-1.5 mb-4">' + (s.certificeringen || []).map(function(c) { return '<span class="text-[11px] bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium flex items-center gap-0.5"><span class="material-symbols-outlined text-[10px]">verified</span>' + c + '</span>'; }).join('') + '</div>' +
+      '<div class="grid grid-cols-3 gap-2 text-xs text-tm-text-light border-t border-tm-muted pt-3">' +
+      '<div><span class="block font-bold text-tm-text mb-0.5">Radius</span>' + (s.werkradius || '—') + ' km</div>' +
+      '<div><span class="block font-bold text-tm-text mb-0.5">Dienst</span>' + (s.ploegendienst || '—') + '</div>' +
+      '<div><span class="block font-bold text-tm-text mb-0.5">Status</span>' +
+      '<span class="inline-flex items-center gap-1">' +
+      (s.beschikbaarheid === 'Direct beschikbaar' ? '<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>' : '') +
+      (s.beschikbaarheid || '—') + '</span></div>' +
+      '</div></div>';
+  });
+  html += '</div>';
+  grid.innerHTML = html;
+}
+
+function applyFilters() {
+  var spec = document.getElementById('filter-spec').value;
+  var besch = document.getElementById('filter-beschikbaar').value;
+  var ploeg = document.getElementById('filter-ploegen').value;
+  var zoek = document.getElementById('filter-zoek').value.toLowerCase();
+
+  var filtered = allTechnici.filter(function(t) {
+    if (spec && (!t.specialismen || t.specialismen.indexOf(spec) === -1)) return false;
+    if (besch && t.beschikbaarheid !== besch) return false;
+    if (ploeg && t.ploegendienst !== ploeg) return false;
+    if (zoek) {
+      var haystack = ((t.naam || '') + ' ' + (t.woonplaats || '') + ' ' + (t.specialismen || []).join(' ')).toLowerCase();
+      if (haystack.indexOf(zoek) === -1) return false;
+    }
+    return true;
+  });
+  renderCards(filtered);
+}
+
+// Load technici from Supabase
+if (window.TechMaatDB) {
+  TechMaatDB.getTechnici().then(function(data) {
+    allTechnici = data || [];
+    renderCards(allTechnici);
+  });
+}
+</script>
+<script src="cookies.js" defer></script>
+</body>
+</html>

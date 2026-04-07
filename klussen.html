@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="light" lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Klussen — TechMaat</title>
+<meta name="description" content="Bekijk beschikbare technische opdrachten op TechMaat. Hydrauliek, elektrotechniek, PLC, mechanica — klussen in heel Nederland."/>
+<meta property="og:title" content="Beschikbare Klussen — TechMaat"/>
+<meta property="og:description" content="Vind technische opdrachten die bij jouw expertise passen. Direct reageren."/>
+<meta property="og:url" content="https://jairmercelino.github.io/TechMaat/klussen.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="nl_NL"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23003082'/><text x='16' y='22' font-size='16' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>TM</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tm-blue": "#003082",
+          "tm-orange": "#ff6600",
+          "tm-orange-dark": "#cc5200",
+          "tm-navy": "#001a4d",
+          "tm-light": "#f0f4ff",
+          "tm-muted": "#e0e8f5",
+          "tm-text": "#0a1a3a",
+          "tm-text-light": "#4a5568",
+          "tm-surface": "#f7f9ff",
+        },
+        fontFamily: {
+          headline: ["Space Grotesk", "sans-serif"],
+          body: ["Manrope", "sans-serif"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .kinetic-gradient { background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%); }
+  body { min-height: 100dvh; }
+</style>
+</head>
+<body class="bg-tm-surface font-body text-tm-text">
+
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-tm-blue rounded-lg flex items-center justify-center">
+        <span class="text-white font-headline font-bold text-lg">TM</span>
+      </div>
+      <span class="text-2xl font-bold text-tm-blue font-headline tracking-tight">TechMaat</span>
+    </a>
+    <div class="hidden md:flex gap-8 items-center">
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="technici.html">Technici</a>
+      <a class="text-tm-text hover:text-tm-orange transition-colors duration-300 font-medium" href="klussen.html">Klussen</a>
+      <a href="aanmelden.html">
+        <button class="bg-tm-blue text-white px-6 py-2 rounded-lg font-bold cursor-pointer active:scale-95 transition-all hover:bg-tm-navy">Meld je aan</button>
+      </a>
+    </div>
+    <button class="md:hidden text-tm-blue" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-tm-muted px-6 py-4 space-y-4">
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="technici.html">Technici</a>
+    <a class="block text-tm-text hover:text-tm-orange font-medium py-2" href="klussen.html">Klussen</a>
+    <a class="block" href="aanmelden.html">
+      <button class="w-full bg-tm-blue text-white px-6 py-3 rounded-lg font-bold">Meld je aan</button>
+    </a>
+  </div>
+  <div class="bg-tm-muted h-[1px]"></div>
+</header>
+
+<main class="pt-24 pb-16">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl sm:text-5xl font-headline font-bold text-tm-blue tracking-tight mb-3">Beschikbare Klussen</h1>
+      <p class="text-lg text-tm-text-light max-w-2xl">Technische opdrachten van bedrijven in heel Nederland. Filter op specialisme, urgentie of locatie.</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Specialisme</label>
+          <select id="filter-spec" onchange="applyFilters()" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+            <option value="">Alle specialismen</option>
+            <option>Hydrauliek</option>
+            <option>Elektrotechniek</option>
+            <option>Pneumatiek</option>
+            <option>Mechanica</option>
+            <option>PLC/Besturingen</option>
+            <option>Lassen</option>
+            <option>Koeltechniek</option>
+            <option>Instrumentatie</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Urgentie</label>
+          <select id="filter-urgentie" onchange="applyFilters()" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+            <option value="">Alle</option>
+            <option>Spoed</option>
+            <option>Hoog</option>
+            <option>Normaal</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Duur</label>
+          <select id="filter-duur" onchange="applyFilters()" class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm">
+            <option value="">Alle</option>
+            <option>1 dag</option>
+            <option>2-3 dagen</option>
+            <option>1 week</option>
+            <option>2-4 weken</option>
+            <option>1+ maand</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-tm-blue mb-1.5 uppercase tracking-widest">Zoeken</label>
+          <input id="filter-zoek" oninput="applyFilters()" type="text" placeholder="Titel of locatie..." class="w-full bg-tm-light border-none rounded-lg focus:ring-2 focus:ring-tm-orange py-2.5 px-4 text-sm"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results count -->
+    <p id="results-count" class="text-sm text-tm-text-light mb-4"></p>
+
+    <!-- Klussen grid -->
+    <div id="klussen-grid">
+      <div class="flex items-center justify-center py-16">
+        <div class="text-center">
+          <span class="material-symbols-outlined text-tm-muted text-5xl animate-pulse">hourglass_top</span>
+          <p class="text-tm-text-light mt-3">Klussen laden...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 bg-tm-blue rounded-xl p-8 md:p-12 text-center text-white">
+      <h2 class="text-2xl md:text-3xl font-headline font-bold mb-4">Zoekt u technisch personeel?</h2>
+      <p class="text-white/70 max-w-lg mx-auto mb-6">Plaats een opdracht en ontvang binnen uren een match met gekwalificeerde technici. Geen wervingskosten.</p>
+      <a href="aanmelden.html#bedrijf">
+        <button class="bg-tm-orange text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-tm-orange-dark transition-colors cursor-pointer">Meld uw bedrijf aan</button>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-tm-navy bg-tm-blue text-white">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-tm-orange rounded-md flex items-center justify-center">
+          <span class="text-white font-headline font-bold text-sm">TM</span>
+        </div>
+        <span class="font-headline font-bold text-2xl text-tm-orange">TechMaat</span>
+      </div>
+      <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">Het platform dat vakmanschap en flexibiliteit verbindt.</p>
+      <p class="font-body text-sm leading-relaxed mt-8 opacity-50">&copy; 2026 TechMaat. Alle rechten voorbehouden.</p>
+    </div>
+    <div class="grid grid-cols-3 gap-8">
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Platform</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="technici.html">Technici</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="klussen.html">Klussen</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="aanmelden.html">Aanmelden</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Juridisch</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="privacy.html">Privacybeleid</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="voorwaarden.html">Voorwaarden</a>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="verzekering.html">Verzekering</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Contact</h4>
+        <a class="text-white/70 hover:text-white underline decoration-tm-orange underline-offset-4 transition-all duration-200" href="mailto:info@jmmechanica.nl">info@jmmechanica.nl</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="supabase.js"></script>
+<script>
+var allKlussen = [];
+var urgentieColors = { Spoed: 'bg-red-100 text-red-700 border-red-200', Hoog: 'bg-orange-100 text-orange-700 border-orange-200', Normaal: 'bg-green-100 text-green-700 border-green-200' };
+
+function renderCards(list) {
+  var grid = document.getElementById('klussen-grid');
+  var count = document.getElementById('results-count');
+  count.textContent = list.length + ' klus' + (list.length !== 1 ? 'sen' : '') + ' gevonden';
+
+  if (list.length === 0) {
+    grid.innerHTML = '<div class="bg-white rounded-xl p-12 shadow-sm text-center"><span class="material-symbols-outlined text-tm-muted text-5xl mb-3">search_off</span><p class="text-tm-text-light">Geen klussen gevonden met deze filters.</p></div>';
+    return;
+  }
+
+  var html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">';
+  list.forEach(function(k) {
+    var uc = urgentieColors[k.urgentie] || urgentieColors.Normaal;
+    var isSpoed = k.urgentie === 'Spoed';
+    html += '<div class="bg-white rounded-xl shadow-sm border border-tm-muted hover:shadow-md hover:border-tm-orange/30 transition-all overflow-hidden' + (isSpoed ? ' ring-2 ring-red-200' : '') + '">' +
+      (isSpoed ? '<div class="bg-red-500 text-white text-[11px] font-bold text-center py-1 uppercase tracking-wider">Spoed — Direct nodig</div>' : '') +
+      '<div class="p-5">' +
+      '<div class="flex items-start justify-between mb-3">' +
+      '<h3 class="font-bold text-tm-blue text-lg leading-tight flex-1">' + (k.titel || 'Zonder titel') + '</h3>' +
+      '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full ml-2 flex-shrink-0 ' + uc + '">' + (k.urgentie || 'Normaal') + '</span>' +
+      '</div>' +
+      '<p class="text-sm text-tm-text-light mb-4 line-clamp-2">' + (k.omschrijving || 'Geen omschrijving') + '</p>' +
+      '<div class="flex flex-wrap gap-2 mb-4">' +
+      (k.specialisme ? '<span class="text-[11px] bg-tm-light text-tm-blue px-2.5 py-1 rounded-full font-medium">' + k.specialisme + '</span>' : '') +
+      (k.locatie ? '<span class="text-[11px] bg-tm-light text-tm-blue px-2.5 py-1 rounded-full font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">location_on</span>' + k.locatie + '</span>' : '') +
+      (k.duur ? '<span class="text-[11px] bg-tm-light text-tm-blue px-2.5 py-1 rounded-full font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">schedule</span>' + k.duur + '</span>' : '') +
+      '</div>' +
+      '<div class="flex items-center justify-between pt-3 border-t border-tm-muted">' +
+      '<span class="text-xs text-tm-text-light">' + new Date(k.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' }) + '</span>' +
+      '<a href="aanmelden.html" class="text-sm font-bold text-tm-orange hover:text-tm-orange-dark transition-colors flex items-center gap-1">Reageer <span class="material-symbols-outlined text-base">arrow_forward</span></a>' +
+      '</div></div></div>';
+  });
+  html += '</div>';
+  grid.innerHTML = html;
+}
+
+function applyFilters() {
+  var spec = document.getElementById('filter-spec').value;
+  var urg = document.getElementById('filter-urgentie').value;
+  var duur = document.getElementById('filter-duur').value;
+  var zoek = document.getElementById('filter-zoek').value.toLowerCase();
+
+  var filtered = allKlussen.filter(function(k) {
+    if (k.status && k.status !== 'open') return false;
+    if (spec && k.specialisme !== spec) return false;
+    if (urg && k.urgentie !== urg) return false;
+    if (duur && k.duur !== duur) return false;
+    if (zoek) {
+      var haystack = ((k.titel || '') + ' ' + (k.locatie || '') + ' ' + (k.specialisme || '') + ' ' + (k.omschrijving || '')).toLowerCase();
+      if (haystack.indexOf(zoek) === -1) return false;
+    }
+    return true;
+  });
+  renderCards(filtered);
+}
+
+// Load klussen from Supabase
+if (window.TechMaatDB) {
+  TechMaatDB.getKlussen().then(function(data) {
+    allKlussen = data || [];
+    // Show only open klussen by default
+    var open = allKlussen.filter(function(k) { return !k.status || k.status === 'open'; });
+    renderCards(open);
+  });
+}
+</script>
+<script src="cookies.js" defer></script>
+</body>
+</html>

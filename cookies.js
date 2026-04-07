@@ -1,9 +1,44 @@
 /**
  * TechMaat Cookie Consent Banner (AVG/GDPR)
  * Include via <script src="cookies.js" defer></script>
+ *
+ * Blocks analytics scripts until the user explicitly accepts all cookies.
+ * Usage: call TechMaatCookies.loadAnalytics(GA_ID) after this script.
  */
 (function() {
-  if (localStorage.getItem('tm_cookies_accepted')) return;
+  // Expose a global helper so pages can conditionally load analytics
+  window.TechMaatCookies = {
+    /** Returns 'all', 'essential', or null (no choice yet) */
+    getConsent: function() {
+      return localStorage.getItem('tm_cookies_accepted');
+    },
+
+    /** Only injects the GA script if the user accepted all cookies */
+    loadAnalytics: function(gaId) {
+      if (!gaId) return;
+      if (this.getConsent() !== 'all') return;
+
+      // Prevent double-loading
+      if (document.querySelector('script[src*="googletagmanager"]')) return;
+
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', gaId, { anonymize_ip: true });
+    }
+  };
+
+  // If the user already made a choice, load analytics and skip the banner
+  if (localStorage.getItem('tm_cookies_accepted')) {
+    window.TechMaatCookies.loadAnalytics(window.TM_GA_ID);
+    return;
+  }
 
   var banner = document.createElement('div');
   banner.id = 'cookie-banner';
@@ -23,10 +58,13 @@
   document.getElementById('cookie-accept').addEventListener('click', function() {
     localStorage.setItem('tm_cookies_accepted', 'all');
     banner.remove();
+    // Now load analytics since user accepted
+    window.TechMaatCookies.loadAnalytics(window.TM_GA_ID);
   });
 
   document.getElementById('cookie-decline').addEventListener('click', function() {
     localStorage.setItem('tm_cookies_accepted', 'essential');
     banner.remove();
+    // Analytics stays blocked
   });
 })();

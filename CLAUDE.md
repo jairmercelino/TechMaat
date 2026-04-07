@@ -37,6 +37,8 @@ techmaat/
 ├── privacy.html        # AVG/GDPR privacy policy
 ├── voorwaarden.html    # Terms of service
 ├── verzekering.html    # Insurance info for ZZP technicians
+├── technici.html       # Public browse page — technician profiles with filters
+├── klussen.html        # Public browse page — job listings with filters
 ├── 404.html            # Custom 404 page
 ├── supabase.js         # Supabase REST client (TechMaatDB) + auth functions
 ├── supabase-auth-setup.sql  # SQL to run in Supabase Dashboard (table + RPC + users)
@@ -100,7 +102,7 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 - Certifications: VCA Basis, VCA VOL, NEN 3140, F-gassen
 - Shift types: Dagdienst, 2-ploegen, 3-ploegen, 5-ploegen (volcontinue), Flexibel
 
-## Current Phase: Phase 1 (Waitlist & Validation)
+## Current Phase: Phase 2 (Platform MVP)
 
 ### ✅ Completed
 - Landing page with waitlist form
@@ -114,10 +116,15 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 - 404 page
 - Partner account (QK Techniek)
 
-### 🔴 Action Required
-1. **Run supabase-auth-setup.sql** in Supabase Dashboard SQL Editor — login won't work until this is done
-2. Cookie consent doesn't actually block analytics — implement before adding Google Analytics
-3. Add aanmelden.html to sitemap.xml
+### ✅ Completed (Phase 2 — 7 april 2026)
+- Public technici browse page (technici.html) with filters (specialisme, beschikbaarheid, ploegendienst, zoeken)
+- Public klussen browse page (klussen.html) with filters (specialisme, urgentie, duur, zoeken)
+- Klussen management in dashboard (create, list, status tracking)
+- Dashboard Technici/Bedrijven pages now load live data from Supabase (replaced demo data)
+- Supabase CRUD methods for klussen, update methods for technici/bedrijven
+- Navigation updated across all pages (Technici + Klussen links)
+- Sitemap updated with new pages
+- Cookie consent now properly blocks analytics
 
 ### ✅ Completed (sessions 6-7 april 2026)
 - Landing page, registration form, all legal pages
