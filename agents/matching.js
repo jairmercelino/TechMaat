@@ -5,8 +5,10 @@
 (function() {
   var technici = [];
   var bedrijven = [];
+  var koppelingen = [];
   var isDemo = true;
   var selectedBedrijfIndex = -1;
+  var FORMSPREE_URL = 'https://formspree.io/f/xaqlakdb';
 
   // Branche → verwachte specialismen mapping
   var BRANCHE_SPECIALISMEN = {
@@ -146,6 +148,186 @@
     return html;
   }
 
+  function findExistingKoppeling(technicusId, bedrijfId) {
+    for (var i = 0; i < koppelingen.length; i++) {
+      if (koppelingen[i].technicus_id === technicusId && koppelingen[i].bedrijf_id === bedrijfId) {
+        return koppelingen[i];
+      }
+    }
+    return null;
+  }
+
+  function renderKoppelButton(technicus, bedrijf) {
+    if (!technicus.id || !bedrijf.id) {
+      return '<button class="text-[11px] bg-tm-muted text-tm-text-light px-3 py-1.5 rounded-lg font-medium cursor-not-allowed opacity-50" disabled>Koppel</button>';
+    }
+
+    var existing = findExistingKoppeling(technicus.id, bedrijf.id);
+    if (existing) {
+      var statusMap = {
+        'in_afwachting': { label: 'In afwachting', cls: 'bg-yellow-100 text-yellow-700' },
+        'geaccepteerd': { label: 'Gekoppeld', cls: 'bg-green-100 text-green-700' },
+        'afgewezen': { label: 'Afgewezen', cls: 'bg-red-100 text-red-500' },
+        'voltooid': { label: 'Voltooid', cls: 'bg-tm-light text-tm-blue' }
+      };
+      var s = statusMap[existing.status] || statusMap['in_afwachting'];
+      return '<span class="text-[11px] ' + s.cls + ' px-3 py-1.5 rounded-lg font-medium">' + s.label + '</span>';
+    }
+
+    return '<button class="text-[11px] bg-tm-orange text-white px-3 py-1.5 rounded-lg font-medium hover:bg-tm-orange-dark transition-colors" ' +
+      'onclick="event.stopPropagation(); MatchingAgent.showKoppelModal(\'' + technicus.id + '\', \'' + bedrijf.id + '\')">Koppel</button>';
+  }
+
+  function showKoppelModal(technicusId, bedrijfId) {
+    var technicus = technici.find(function(t) { return t.id === technicusId; });
+    var bedrijf = bedrijven.find(function(b) { return b.id === bedrijfId; });
+    if (!technicus || !bedrijf) return;
+
+    var result = matchScore(technicus, bedrijf);
+
+    // Remove existing modal if any
+    var existing = document.getElementById('koppel-modal');
+    if (existing) existing.remove();
+
+    var modal = document.createElement('div');
+    modal.id = 'koppel-modal';
+    modal.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/50';
+    modal.innerHTML =
+      '<div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden">' +
+        '<div class="bg-tm-blue px-6 py-4">' +
+          '<h3 class="font-headline font-bold text-white text-lg">Koppeling bevestigen</h3>' +
+        '</div>' +
+        '<div class="px-6 py-5">' +
+          '<div class="flex items-center gap-3 mb-4">' +
+            '<div class="flex-1 text-center">' +
+              '<div class="w-12 h-12 bg-tm-orange/10 rounded-full flex items-center justify-center mx-auto mb-1"><span class="material-symbols-outlined text-tm-orange">person</span></div>' +
+              '<p class="text-sm font-bold text-tm-blue">' + (technicus.naam || 'Technicus') + '</p>' +
+              '<p class="text-[11px] text-tm-text-light">' + (technicus.woonplaats || '') + '</p>' +
+            '</div>' +
+            '<div class="flex-shrink-0">' +
+              '<span class="material-symbols-outlined text-tm-orange text-3xl">swap_horiz</span>' +
+            '</div>' +
+            '<div class="flex-1 text-center">' +
+              '<div class="w-12 h-12 bg-tm-blue/10 rounded-full flex items-center justify-center mx-auto mb-1"><span class="material-symbols-outlined text-tm-blue">business</span></div>' +
+              '<p class="text-sm font-bold text-tm-blue">' + (bedrijf.bedrijfsnaam || 'Bedrijf') + '</p>' +
+              '<p class="text-[11px] text-tm-text-light">' + (bedrijf.locatie || '') + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="bg-tm-light rounded-xl p-3 mb-4">' +
+            '<div class="flex items-center justify-between mb-1">' +
+              '<span class="text-xs font-bold text-tm-blue">Match score</span>' +
+              '<span class="text-sm font-bold ' + (result.score >= 75 ? 'text-green-600' : result.score >= 50 ? 'text-tm-orange' : 'text-red-500') + '">' + result.score + '%</span>' +
+            '</div>' +
+            renderScoreBar(result.score) +
+          '</div>' +
+          '<div class="mb-4">' +
+            '<label class="text-xs font-bold text-tm-blue block mb-1">Notitie (optioneel)</label>' +
+            '<textarea id="koppel-notitie" rows="2" class="w-full border border-tm-muted rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-tm-orange" placeholder="Eventuele opmerkingen..."></textarea>' +
+          '</div>' +
+          '<p class="text-[11px] text-tm-text-light mb-4">Beide partijen ontvangen een e-mail notificatie over deze koppeling.</p>' +
+        '</div>' +
+        '<div class="flex gap-3 px-6 pb-5">' +
+          '<button onclick="document.getElementById(\'koppel-modal\').remove()" class="flex-1 text-sm font-medium text-tm-text-light bg-tm-light hover:bg-tm-muted rounded-lg py-2.5 transition-colors">Annuleren</button>' +
+          '<button id="koppel-confirm-btn" onclick="MatchingAgent.confirmKoppeling(\'' + technicusId + '\', \'' + bedrijfId + '\')" class="flex-1 text-sm font-bold text-white bg-tm-orange hover:bg-tm-orange-dark rounded-lg py-2.5 transition-colors">Koppel nu</button>' +
+        '</div>' +
+      '</div>';
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.remove();
+    });
+
+    document.body.appendChild(modal);
+  }
+
+  function confirmKoppeling(technicusId, bedrijfId) {
+    var technicus = technici.find(function(t) { return t.id === technicusId; });
+    var bedrijf = bedrijven.find(function(b) { return b.id === bedrijfId; });
+    if (!technicus || !bedrijf) return;
+
+    var btn = document.getElementById('koppel-confirm-btn');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Bezig...';
+    }
+
+    var result = matchScore(technicus, bedrijf);
+    var notitie = (document.getElementById('koppel-notitie') || {}).value || '';
+
+    var koppelData = {
+      technicus_id: technicusId,
+      bedrijf_id: bedrijfId,
+      technicus_naam: technicus.naam || 'Onbekend',
+      bedrijf_naam: bedrijf.bedrijfsnaam || 'Onbekend',
+      score: result.score,
+      redenen: result.reasons,
+      status: 'in_afwachting',
+      notitie: notitie || null
+    };
+
+    // Save to Supabase
+    var savePromise = window.TechMaatDB
+      ? TechMaatDB.insertKoppeling(koppelData)
+      : Promise.resolve(koppelData);
+
+    // Send email notification via Formspree
+    var emailData = {
+      _subject: 'TechMaat — Nieuwe koppeling: ' + koppelData.technicus_naam + ' ↔ ' + koppelData.bedrijf_naam,
+      type: 'koppeling',
+      technicus: koppelData.technicus_naam,
+      technicus_email: technicus.email || '',
+      bedrijf: koppelData.bedrijf_naam,
+      bedrijf_email: bedrijf.email || '',
+      score: result.score + '%',
+      redenen: result.reasons.join(', '),
+      notitie: notitie || '(geen)'
+    };
+
+    var emailPromise = fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(emailData)
+    }).catch(function() { /* email failure is non-blocking */ });
+
+    Promise.all([savePromise, emailPromise]).then(function(results) {
+      var saved = Array.isArray(results[0]) ? results[0][0] : results[0];
+      if (saved && saved.id) {
+        koppelingen.push(saved);
+      } else {
+        // Fallback: add locally so UI updates
+        koppelData.id = 'local-' + Date.now();
+        koppelingen.push(koppelData);
+      }
+
+      // Close modal and re-render
+      var modal = document.getElementById('koppel-modal');
+      if (modal) modal.remove();
+
+      showSuccessToast(koppelData.technicus_naam, koppelData.bedrijf_naam);
+
+      // Re-render matching view
+      renderMatching('section-matching');
+    }).catch(function() {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Koppel nu';
+      }
+    });
+  }
+
+  function showSuccessToast(techNaam, bedrijfNaam) {
+    var toast = document.createElement('div');
+    toast.className = 'fixed bottom-6 right-6 z-[101] bg-green-600 text-white px-5 py-3 rounded-xl shadow-lg flex items-center gap-3 animate-slide-up';
+    toast.innerHTML = '<span class="material-symbols-outlined">check_circle</span>' +
+      '<div><p class="font-bold text-sm">Koppeling aangemaakt</p>' +
+      '<p class="text-xs opacity-90">' + techNaam + ' ↔ ' + bedrijfNaam + '</p></div>';
+    document.body.appendChild(toast);
+    setTimeout(function() {
+      toast.style.transition = 'opacity 0.3s';
+      toast.style.opacity = '0';
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3500);
+  }
+
   function renderMatchResults(bedrijf) {
     if (!bedrijf) {
       return '<div class="bg-white rounded-xl p-8 shadow-sm text-center text-tm-text-light">' +
@@ -177,7 +359,7 @@
         '<p class="text-[11px] text-tm-text-light">' + (t.woonplaats || '') + ' &middot; &euro;' + (t.uurtarief || '?') + '/uur</p>' +
         '</div>' +
         '</div>' +
-        '<button class="text-[11px] bg-tm-muted text-tm-text-light px-3 py-1.5 rounded-lg font-medium cursor-not-allowed opacity-50" disabled>Koppel</button>' +
+        renderKoppelButton(t, bedrijf) +
         '</div>' +
         renderScoreBar(m.score) +
         '<div class="flex flex-wrap gap-1.5 mt-3">' +
@@ -254,10 +436,12 @@
     if (window.TechMaatDB) {
       Promise.all([
         TechMaatDB.getTechnici(),
-        TechMaatDB.getBedrijven()
+        TechMaatDB.getBedrijven(),
+        TechMaatDB.getKoppelingen ? TechMaatDB.getKoppelingen() : Promise.resolve([])
       ]).then(function(results) {
         var dbTechnici = Array.isArray(results[0]) ? results[0] : [];
         var dbBedrijven = Array.isArray(results[1]) ? results[1] : [];
+        koppelingen = Array.isArray(results[2]) ? results[2] : [];
 
         if (dbTechnici.length > 0 || dbBedrijven.length > 0) {
           technici = dbTechnici;
@@ -290,6 +474,8 @@
     findMatches: findMatches,
     findJobsForTechnicus: findJobsForTechnicus,
     renderMatching: renderMatching,
-    selectBedrijf: selectBedrijf
+    selectBedrijf: selectBedrijf,
+    showKoppelModal: showKoppelModal,
+    confirmKoppeling: confirmKoppeling
   };
 })();

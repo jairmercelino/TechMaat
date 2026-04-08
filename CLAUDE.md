@@ -43,6 +43,8 @@ techmaat/
 ├── supabase.js         # Supabase REST client (TechMaatDB) + auth functions
 ├── supabase-auth-setup.sql  # SQL to run in Supabase Dashboard (table + RPC + users)
 ├── verificatie-setup.sql   # SQL for documenten table + verificatie columns (run in Supabase)
+├── koppelingen-setup.sql   # SQL for koppelingen table (run in Supabase)
+├── facturen-setup.sql      # SQL for facturen table (run in Supabase)
 ├── cookies.js          # AVG cookie consent banner
 ├── sitemap.xml         # SEO sitemap
 ├── robots.txt          # Crawler rules (disallow dashboard + agents)
@@ -52,7 +54,10 @@ techmaat/
     ├── inbox.js        # Inbox Agent — classifies form submissions
     ├── matching.js     # Matching Agent — scores technicus-bedrijf fit (0-100)
     ├── factuur.js      # Factuur Agent — invoice generation with commission
-    └── verificatie.js  # Verificatie Agent — document review queue
+    ├── verificatie.js  # Verificatie Agent — document review queue
+    ├── analytics.js    # Analytics Agent — KPI dashboard, trends, distributions
+    ├── crm.js          # CRM Agent — contact management, follow-ups, notities
+    └── content.js      # Content Agent — social media content generation
 ```
 
 ## Database (Supabase)
@@ -79,17 +84,14 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 
 ## AI Agents (7 total)
 
-### Active (4/7)
-1. **Inbox Agent** (`agents/inbox.js`) — Reads/classifies submissions. Filter tabs (Alle/Technici/Bedrijven). Expandable cards. Currently runs on demo data (Formspree API key = null).
-2. **Matching Agent** (`agents/matching.js`) — Scores technicus-bedrijf fit (0-100). Criteria: specialisme (40pts), type werk (20pts), beschikbaarheid (20pts), certificeringen (20pts). Two-column UI with score bars.
-3. **Factuur Agent** (`agents/factuur.js`) — Invoice overview with commission calc (10-15%). Status tracking (concept/verzonden/betaald/verlopen). Summary cards. Demo invoices.
-
-4. **Verificatie Agent** (`agents/verificatie.js`) — Document review queue for uploaded certificates, insurance, KvK. Admin approve/reject with notes + expiry tracking. Auto-updates technicus verificatie_status.
-
-### Inactive (3/7)
-5. **Analytics Agent** — KPI analysis, trends. Placeholder page only.
-6. **CRM Agent** — Relationship management, follow-ups. Card only.
-7. **Content Agent** — Social media / LinkedIn content generation. Card only.
+### Active (7/7)
+1. **Inbox Agent** (`agents/inbox.js`) — Reads/classifies submissions from Supabase. Filter tabs (Alle/Technici/Bedrijven). Expandable cards.
+2. **Matching Agent** (`agents/matching.js`) — Scores technicus-bedrijf fit (0-100). Koppel button with confirmation modal, Supabase save, email notification. Status tracking.
+3. **Factuur Agent** (`agents/factuur.js`) — Invoice management with commission calc (10-15%). PDF generation (jsPDF). Create new invoices with live preview. Saves to Supabase.
+4. **Verificatie Agent** (`agents/verificatie.js`) — Document review queue for uploaded certificates, insurance, KvK. Admin approve/reject with notes + expiry tracking.
+5. **Analytics Agent** (`agents/analytics.js`) — KPI dashboard, weekly trend charts (registraties, klussen), specialisme/beschikbaarheid verdeling, koppeling/factuur status, top matches, omzet/commissie tracking.
+6. **CRM Agent** (`agents/crm.js`) — Contact management, follow-up tracking (auto-detects contacts without koppelingen), contact detail modal with koppelingen history, notities per contact (localStorage). Filter tabs.
+7. **Content Agent** (`agents/content.js`) — Social media / LinkedIn content generation. 5 templates (technicus spotlight, klus, bedrijf welkom, platform stats, werving). One-click generate from live data, copy to clipboard, post history (localStorage).
 
 ### Agent Architecture
 - Each agent is a vanilla JS IIFE exposing `window.AgentName`
@@ -120,10 +122,10 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 - 404 page
 - Partner account (QK Techniek)
 
-### 🔴 Action Required
-1. **Run verificatie-setup.sql** in Supabase Dashboard SQL Editor — creates documenten table + adds verification columns
-2. **Create Storage bucket** `verificatie-docs` in Supabase Dashboard → Storage (private, PDF/JPG/PNG, 10MB max)
-3. **Add Storage policies**: INSERT + SELECT for anon on `verificatie-docs` bucket
+### ✅ Completed (Supabase setup — 8 april 2026)
+- verificatie-setup.sql executed (documenten table + verificatie columns)
+- Storage bucket `verificatie-docs` created (private, PDF/JPG/PNG, 10MB max)
+- Storage policies added (INSERT + SELECT for anon on `verificatie-docs`)
 
 ### ✅ Completed (Phase 2 — 7 april 2026)
 - Public technici browse page (technici.html) with filters (specialisme, beschikbaarheid, ploegendienst, zoeken)
@@ -154,17 +156,32 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 - Cookie banner, SEO, favicon, 404 page
 - CLAUDE.md project guide
 
+### ✅ Completed (8 april 2026)
+- **Koppel button activated** in Matching Agent — confirmation modal, save to Supabase `koppelingen` table, email notification via Formspree
+- Koppeling status tracking (in_afwachting/geaccepteerd/afgewezen/voltooid)
+- Success toast notification after koppeling
+- Supabase `koppelingen` table with RLS policies
+- **PDF invoice generation** — professional Dutch invoices via jsPDF with TechMaat branding, commission calc, BTW
+- **Nieuwe factuur button** — create invoices from dashboard with technicus/bedrijf dropdowns, live preview, auto-PDF download
+- PDF download button per factuur in the invoice table
+- **All agents migrated to live Supabase data** (with demo fallback):
+  - Inbox Agent: loads technici + bedrijven from Supabase as submissions
+  - Factuur Agent: loads/saves from `facturen` table in Supabase
+  - Matching Agent: already loaded from Supabase (phase 2)
+  - Verificatie Agent: already loaded from Supabase (phase 2)
+
+- **Analytics Agent** built (5th active agent) — KPI cards, trend charts, distributions, status overviews, top matches, revenue tracking
+- **CRM Agent** built (6th) — contact management, follow-up detection, notities, contact detail modal
+- **Content Agent** built (7th) — 5 content templates, one-click generate, copy to clipboard, post history
+- **All 7/7 agents now active**
+
 ### 🟡 Next Steps (prioritized)
-1. Own domain (techmaat.nl) + professional email
-2. Activate "Koppel" button in Matching + email notifications
-3. PDF invoice generation
-4. Verificatie Agent (document upload + check)
-5. Replace demo data with live Supabase data in all agents
-6. Analytics Agent
-7. Build remaining agents (CRM, Content)
-8. Stripe integration (Phase 4)
-9. Supabase Auth upgrade — use built-in auth with email verification
-10. Migrate from Tailwind CDN to local build
+1. Own domain (techmaat.nl) + professional email — domain available 5 mei 2026
+4. Analytics Agent
+5. Build remaining agents (CRM, Content)
+6. Stripe integration (Phase 4)
+7. Supabase Auth upgrade — use built-in auth with email verification
+8. Migrate from Tailwind CDN to local build
 
 ## Workflow Rules
 - Always push to `jairmercelino/TechMaat`, never JM-Mechanica

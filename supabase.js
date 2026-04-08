@@ -104,6 +104,33 @@ var TechMaatDB = {
     });
   },
 
+  // ─── Facturen ─────────────────────────────────────────
+
+  // Insert a factuur
+  insertFactuur: function(data) {
+    return fetch(SUPABASE_URL + '/rest/v1/facturen', {
+      method: 'POST',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Get all facturen
+  getFacturen: function() {
+    return fetch(SUPABASE_URL + '/rest/v1/facturen?order=created_at.desc', {
+      headers: this._headers()
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Update a factuur by id
+  updateFactuur: function(id, data) {
+    return fetch(SUPABASE_URL + '/rest/v1/facturen?id=eq.' + id, {
+      method: 'PATCH',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
   // ─── Documenten & Verificatie ────────────────────────────
 
   // Upload a file to Supabase Storage
@@ -175,6 +202,41 @@ var TechMaatDB = {
       method: 'PATCH',
       headers: this._headers(),
       body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
+  // ─── Koppelingen ───────────────────────────────────────
+
+  // Insert a koppeling
+  insertKoppeling: function(data) {
+    return fetch(SUPABASE_URL + '/rest/v1/koppelingen', {
+      method: 'POST',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Get all koppelingen
+  getKoppelingen: function() {
+    return fetch(SUPABASE_URL + '/rest/v1/koppelingen?order=created_at.desc', {
+      headers: this._headers()
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Update a koppeling by id
+  updateKoppeling: function(id, data) {
+    data.updated_at = new Date().toISOString();
+    return fetch(SUPABASE_URL + '/rest/v1/koppelingen?id=eq.' + id, {
+      method: 'PATCH',
+      headers: this._headers(),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
+  },
+
+  // Check if koppeling already exists
+  getKoppelingByPair: function(technicusId, bedrijfId) {
+    return fetch(SUPABASE_URL + '/rest/v1/koppelingen?technicus_id=eq.' + technicusId + '&bedrijf_id=eq.' + bedrijfId + '&limit=1', {
+      headers: this._headers()
     }).then(function(r) { return r.json(); });
   },
 

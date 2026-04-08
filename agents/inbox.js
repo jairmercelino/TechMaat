@@ -170,8 +170,70 @@
   }
 
   function init() {
-    // Try Formspree API first, fallback to demo
-    if (FORMSPREE_API_KEY) {
+    // Load from Supabase first, then try Formspree, fallback to demo
+    if (window.TechMaatDB) {
+      Promise.all([
+        TechMaatDB.getTechnici(),
+        TechMaatDB.getBedrijven()
+      ]).then(function(results) {
+        var dbTechnici = Array.isArray(results[0]) ? results[0] : [];
+        var dbBedrijven = Array.isArray(results[1]) ? results[1] : [];
+
+        if (dbTechnici.length > 0 || dbBedrijven.length > 0) {
+          // Map technici to inbox format
+          var techSubs = dbTechnici.map(function(t) {
+            return {
+              type: 'technicus',
+              id: t.id,
+              naam: t.naam || 'Onbekend',
+              email: t.email || '',
+              telefoon: t.telefoon || '',
+              woonplaats: t.woonplaats || '',
+              specialismen: t.specialismen || [],
+              certificeringen: t.certificeringen || [],
+              uurtarief: t.uurtarief || '0',
+              werkradius: t.werkradius || '0',
+              beschikbaarheid: t.beschikbaarheid || '',
+              ploegendienst: t.ploegendienst || '',
+              kilometervergoeding: t.kilometervergoeding || '0',
+              omschrijving: t.omschrijving || '',
+              submitted_at: t.created_at || new Date().toISOString(),
+              _status: t.status === 'nieuw' ? 'nieuw' : 'gezien'
+            };
+          });
+
+          // Map bedrijven to inbox format
+          var bedrijfSubs = dbBedrijven.map(function(b) {
+            return {
+              type: 'bedrijf',
+              id: b.id,
+              bedrijfsnaam: b.bedrijfsnaam || 'Onbekend',
+              contactpersoon: b.contactpersoon || '',
+              email: b.email || '',
+              telefoon: b.telefoon || '',
+              locatie: b.locatie || '',
+              branche: b.branche || '',
+              type_werk: b.type_werk || '',
+              omschrijving: b.omschrijving || '',
+              submitted_at: b.created_at || new Date().toISOString(),
+              _status: b.status === 'nieuw' ? 'nieuw' : 'gezien'
+            };
+          });
+
+          submissions = techSubs.concat(bedrijfSubs);
+          submissions.sort(function(a, b) {
+            return new Date(b.submitted_at) - new Date(a.submitted_at);
+          });
+          isDemo = false;
+        } else {
+          submissions = DEMO_DATA;
+        }
+        updateDashboard();
+      }).catch(function() {
+        submissions = DEMO_DATA;
+        updateDashboard();
+      });
+    } else if (FORMSPREE_API_KEY) {
       fetch('https://formspree.io/api/0/forms/' + FORMSPREE_FORM_ID + '/submissions', {
         headers: { 'Authorization': 'Bearer ' + FORMSPREE_API_KEY }
       })
