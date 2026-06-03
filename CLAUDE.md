@@ -5,8 +5,8 @@ Dutch marketplace platform connecting ZZP (freelance) technicians with companies
 
 ## Repository
 - **Repo:** jairmercelino/TechMaat (NEVER push to JM-Mechanica)
-- **Live:** https://jairmercelino.github.io/TechMaat/
-- **Domain:** techmaat.nl (in quarantine, not yet active)
+- **Live:** https://techmaat.nl/
+- **Domain:** techmaat.nl (live — GitHub Pages via Hostnet DNS, HTTPS enforced)
 - **Owner:** Jair Mercelino
 - **Partner:** QK Techniek (info@qktechniek.nl)
 
@@ -108,7 +108,7 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 - Certifications: VCA Basis, VCA VOL, NEN 3140, F-gassen
 - Shift types: Dagdienst, 2-ploegen, 3-ploegen, 5-ploegen (volcontinue), Flexibel
 
-## Current Phase: Phase 2 (Platform MVP)
+## Current Phase: Phase 3 (Full Agent Suite)
 
 ### ✅ Completed
 - Landing page with waitlist form
@@ -177,6 +177,10 @@ Auth: Passwords are SHA-256 hashed (salt: techmaat_salt_2026) and verified via S
 
 ### 🟡 Next Steps (prioritized)
 1. Own domain (techmaat.nl) + professional email — domain available 5 mei 2026
+2. Stripe integration (payments)
+3. Supabase Auth upgrade — use built-in auth with email verification
+4. SendGrid email integration (transactional emails)
+5. Migrate from Tailwind CDN to local build
 4. Analytics Agent
 5. Build remaining agents (CRM, Content)
 6. Stripe integration (Phase 4)
