@@ -4,4 +4,4 @@ Allow: /
 Disallow: /dashboard.html
 Disallow: /agents/
 
-Sitemap: https://jairmercelino.github.io/TechMaat/sitemap.xml
+Sitemap: https://techmaat.nl/sitemap.xml
